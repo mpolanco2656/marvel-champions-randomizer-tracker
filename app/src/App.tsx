@@ -28,9 +28,9 @@ export default function App() {
   // Hero filters
   const [playerCount, setPlayerCount] = useState<number>(2);
   const [complexity, setComplexity] = useState<Complexity | 'Any'>('Any');
-  const [playstyle] = useState<Playstyle | 'Any'>('Any');
-  const [tier] = useState<Tier | 'Any'>('Any');
-  const [optimization] = useState<PlayerOptimization | 'Any'>('Any');
+  const [playstyle, setPlaystyle] = useState<Playstyle | 'Any'>('Any');
+  const [tier, setTier] = useState<Tier | 'Any'>('Any');
+  const [optimization, setOptimization] = useState<PlayerOptimization | 'Any'>('Any');
   const [onlyUnplayed, setOnlyUnplayed] = useState(false);
 
   // Villain filters
@@ -240,6 +240,12 @@ export default function App() {
             setDifficulty={setDifficulty}
             complexity={complexity}
             setComplexity={setComplexity}
+            playstyle={playstyle}
+            setPlaystyle={setPlaystyle}
+            tier={tier}
+            setTier={setTier}
+            optimization={optimization}
+            setOptimization={setOptimization}
             modularCount={modularCount}
             setModularCount={setModularCount}
             onlyUnplayed={onlyUnplayed}

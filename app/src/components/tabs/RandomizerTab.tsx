@@ -9,6 +9,12 @@ interface RandomizerTabProps {
   setDifficulty: (difficulty: 'Any' | 'Easy' | 'Medium' | 'Hard' | 'Expert') => void;
   complexity: 'Any' | 'Beginner' | 'Intermediate' | 'Advanced';
   setComplexity: (complexity: 'Any' | 'Beginner' | 'Intermediate' | 'Advanced') => void;
+  playstyle: 'Any' | 'Control' | 'Aggro' | 'All-rounder' | 'Resource Engine' | 'Support' | 'Setup';
+  setPlaystyle: (playstyle: 'Any' | 'Control' | 'Aggro' | 'All-rounder' | 'Resource Engine' | 'Support' | 'Setup') => void;
+  tier: 'Any' | 'S+' | 'S' | 'A' | 'B' | 'C';
+  setTier: (tier: 'Any' | 'S+' | 'S' | 'A' | 'B' | 'C') => void;
+  optimization: 'Any' | 'Solo' | 'Multiplayer' | 'Both';
+  setOptimization: (optimization: 'Any' | 'Solo' | 'Multiplayer' | 'Both') => void;
   modularCount: number;
   setModularCount: (count: number) => void;
   onlyUnplayed: boolean;
@@ -39,6 +45,12 @@ export default function RandomizerTab({
   setDifficulty,
   complexity,
   setComplexity,
+  playstyle,
+  setPlaystyle,
+  tier,
+  setTier,
+  optimization,
+  setOptimization,
   modularCount,
   setModularCount,
   onlyUnplayed,
@@ -175,6 +187,53 @@ export default function RandomizerTab({
               <option value={1}>1 Set</option>
               <option value={2}>2 Sets</option>
               <option value={3}>3 Sets</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold mb-2">Estilo de Juego</label>
+            <select
+              value={playstyle}
+              onChange={(e) => setPlaystyle(e.target.value as any)}
+              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
+            >
+              <option value="Any">Cualquiera</option>
+              <option value="Control">Control</option>
+              <option value="Aggro">Aggro</option>
+              <option value="All-rounder">All-rounder</option>
+              <option value="Resource Engine">Resource Engine</option>
+              <option value="Support">Support</option>
+              <option value="Setup">Setup</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold mb-2">Tier</label>
+            <select
+              value={tier}
+              onChange={(e) => setTier(e.target.value as any)}
+              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
+            >
+              <option value="Any">Cualquiera</option>
+              <option value="S+">S+ (Top tier)</option>
+              <option value="S">S (Excelente)</option>
+              <option value="A">A (Bueno)</option>
+              <option value="B">B (Promedio)</option>
+              <option value="C">C (Bajo)</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold mb-2">Optimización</label>
+            <select
+              value={optimization}
+              onChange={(e) => setOptimization(e.target.value as any)}
+              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
+            >
+              <option value="Any">Cualquiera</option>
+              <option value="Solo">Solo</option>
+              <option value="Multiplayer">Multiplayer</option>
+              <option value="Both">Ambos</option>
             </select>
           </div>
         </div>
