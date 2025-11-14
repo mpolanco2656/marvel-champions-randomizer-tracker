@@ -1,7 +1,7 @@
 import type { Hero, Villain, ModularSet } from '../types';
-import { campaigns, scenarioPacks } from '../data';
+import { campaigns, scenarioPacks, heroPacks } from '../data';
 
-export function getOwnedSources(campaignKeys: string[], packKeys: string[]): string[] {
+export function getOwnedSources(campaignKeys: string[], packKeys: string[], heroPackKeys: string[]): string[] {
   const sources = new Set<string>();
 
   campaignKeys.forEach(campaignKey => {
@@ -12,6 +12,11 @@ export function getOwnedSources(campaignKeys: string[], packKeys: string[]): str
   packKeys.forEach(packKey => {
     const pack = scenarioPacks.find(p => p.key === packKey);
     if (pack) sources.add(pack.name);
+  });
+
+  heroPackKeys.forEach(heroPackKey => {
+    const heroPack = heroPacks.find(p => p.key === heroPackKey);
+    if (heroPack) sources.add(heroPack.name);
   });
 
   return Array.from(sources);

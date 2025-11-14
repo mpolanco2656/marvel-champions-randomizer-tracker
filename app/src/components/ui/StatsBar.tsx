@@ -37,11 +37,11 @@ export default function StatsBar({ stats }: StatsBarProps) {
         </p>
       </div>
 
-      {/* % Héroes */}
+      {/* % Hero Packs */}
       <div className="bg-black bg-opacity-40 rounded-lg p-4 text-center">
-        <p className="text-gray-400 text-sm mb-1">% Héroes</p>
+        <p className="text-gray-400 text-sm mb-1">% Hero Packs</p>
         <p className="text-3xl font-bold text-pink-400">
-          {stats.collectionPercentage.heroes}
+          {stats.collectionPercentage.heroPacks}
         </p>
       </div>
     </div>

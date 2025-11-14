@@ -4,7 +4,7 @@ import { useLocalStorage } from './useLocalStorage';
 const INITIAL_COLLECTION: Collection = {
   campaigns: ['core'],
   scenarioPacks: [],
-  heroes: []
+  heroPacks: []
 };
 
 export function useCollection() {

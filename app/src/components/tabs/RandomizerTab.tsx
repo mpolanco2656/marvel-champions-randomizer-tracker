@@ -93,8 +93,8 @@ export default function RandomizerTab({
           <div className="text-xs text-gray-400">Scenarios</div>
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold text-red-400">{stats.collectionPercentage.heroes}%</div>
-          <div className="text-xs text-gray-400">Héroes</div>
+          <div className="text-2xl font-bold text-red-400">{stats.collectionPercentage.heroPacks}%</div>
+          <div className="text-xs text-gray-400">Hero Packs</div>
         </div>
       </div>
 
