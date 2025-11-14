@@ -2,6 +2,28 @@
 
 **Web app completa para randomizar setups de Marvel Champions: The Card Game** con collection tracking, historial de juegos, modo campaña y guía de progresión.
 
+## 📂 Dos Versiones Disponibles
+
+Este repositorio contiene **dos implementaciones** de la misma aplicación:
+
+| Versión | Ubicación | Framework | Puerto | Recomendado |
+|---------|-----------|-----------|--------|-------------|
+| **Refactorizada** | `/app` | Vite + React + TypeScript | 5173 | ✅ **Sí** - Moderna y modular |
+| **Original** | `/deprecated` | Create React App + TypeScript | 3000 | ⚠️ Solo referencia |
+
+### ¿Cuál usar?
+
+- **`/app`** (Vite) - Recomendado para:
+  - Desarrollo nuevo
+  - Mejor rendimiento (build 5-10x más rápido)
+  - Estructura modular y mantenible
+  - Tailwind CSS 4
+
+- **`/deprecated`** (CRA) - Solo para:
+  - Referencia histórica
+  - Comparación con versión original
+  - Compatibilidad con proyectos CRA existentes
+
 ## ✨ Características
 
 - 🎲 **Randomizer Inteligente**: Genera setups completos con filtros avanzados
@@ -72,6 +94,24 @@ app/
 ├── public/               # Archivos estáticos
 └── package.json
 ```
+
+## 🔄 Alternar Entre Versiones
+
+Puedes ejecutar **ambas versiones simultáneamente** en diferentes puertos:
+
+```bash
+# Terminal 1 - Versión Refactorizada (Vite)
+cd app
+npm install  # Solo la primera vez
+npm run dev  # Se abre en http://localhost:5173
+
+# Terminal 2 - Versión Original (CRA)
+cd deprecated
+npm install  # Solo la primera vez
+npm start    # Se abre en http://localhost:3000
+```
+
+Ambas apps son **100% funcionales** y comparten los mismos datos en localStorage del navegador.
 
 ## 🎮 Uso
 
@@ -177,9 +217,13 @@ Las contribuciones son bienvenidas. Por favor:
 
 Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 
-## 🎯 Archivo Original
+## 🎯 Archivo Original (marvel-champions-ultimate.tsx)
 
-El archivo monolítico original `marvel-champions-ultimate.tsx` se mantiene en la raíz para referencia y uso local independiente.
+El archivo monolítico original `marvel-champions-ultimate.tsx` se mantiene en la raíz del proyecto para referencia.
+
+**Nota**: Este archivo **NO se puede ejecutar directamente**. Es solo el componente React. Para usarlo:
+- **Opción 1**: La versión `/deprecated` ya usa este archivo
+- **Opción 2**: Cópialo a un proyecto nuevo siguiendo `/docs/REACT_PROJECT_SETUP.md`
 
 ## 💡 Créditos
 
