@@ -81,7 +81,7 @@ export default function RandomizerTab({
           <div className="text-xs text-gray-400">Juegos</div>
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold text-green-400">{stats.winRate.toFixed(0)}%</div>
+          <div className="text-2xl font-bold text-green-400">{Number.isFinite(stats.winRate) ? stats.winRate.toFixed(1) : "0.0"}%</div>
           <div className="text-xs text-gray-400">Win Rate</div>
         </div>
         <div className="text-center">

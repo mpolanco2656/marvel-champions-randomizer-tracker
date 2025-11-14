@@ -28,7 +28,7 @@ export default function HistoryTab({
             <div className="text-sm text-gray-400">Total Juegos</div>
           </div>
           <div className="bg-green-900 bg-opacity-50 rounded p-4 text-center">
-            <div className="text-3xl font-bold">{stats.winRate.toFixed(1)}%</div>
+            <div className="text-3xl font-bold">{Number.isFinite(stats.winRate) ? stats.winRate.toFixed(1) : "0.0"}%</div>
             <div className="text-sm text-gray-400">Win Rate</div>
           </div>
           <div className="bg-purple-900 bg-opacity-50 rounded p-4 text-center">

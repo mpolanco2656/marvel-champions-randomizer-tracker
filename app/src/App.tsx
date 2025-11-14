@@ -211,7 +211,7 @@ export default function App() {
   // Calculate stats
   const stats = {
     gamesPlayed: history.length,
-    winRate: history.filter(g => g.result === 'win').length / history.length * 100 || 0,
+    winRate: history.length > 0 ? (history.filter(g => g.result === 'win').length / history.length * 100) : 0,
     uniqueHeroes: new Set(history.flatMap(g => g.heroes)).size,
     uniqueVillains: new Set(history.map(g => g.villain)).size,
     mostPlayed: heroes.reduce((acc, hero) => {
@@ -219,9 +219,9 @@ export default function App() {
       return count > acc.count ? { hero: hero.name, count } : acc;
     }, { hero: '', count: 0 }),
     collectionPercentage: {
-      campaigns: (collection.campaigns.length / campaigns.length * 100).toFixed(0),
-      scenarioPacks: (collection.scenarioPacks.length / scenarioPacks.length * 100).toFixed(0),
-      heroes: ((heroes.filter(h => getOwnedSourcesList().includes(h.source)).length / heroes.length) * 100).toFixed(0)
+      campaigns: campaigns.length > 0 ? (collection.campaigns.length / campaigns.length * 100).toFixed(0) : '0',
+      scenarioPacks: scenarioPacks.length > 0 ? (collection.scenarioPacks.length / scenarioPacks.length * 100).toFixed(0) : '0',
+      heroes: heroes.length > 0 ? ((heroes.filter(h => getOwnedSourcesList().includes(h.source)).length / heroes.length) * 100).toFixed(0) : '0'
     }
   };
 
