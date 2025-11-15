@@ -1,6 +1,5 @@
 import type { Campaign, Collection, CampaignScenario, Villain, ModularSet } from '../../types';
 import { Check, Shuffle } from 'lucide-react';
-import { useState } from 'react';
 import { selectThematicModulars } from '../../utils/gameLogic';
 
 interface CampaignRandomizerTabProps {
@@ -8,10 +7,14 @@ interface CampaignRandomizerTabProps {
   villains: Villain[];
   collection: Collection;
   activeCampaign: string | null;
+  randomMode: 'campaign' | 'mixed';
   campaignScenarios: CampaignScenario[];
+  mixedScenarios: CampaignScenario[];
   generateCampaignScenarios: (campaignKey: string) => void;
   markScenarioComplete: (index: number) => void;
-  modularSets: ModularSet[];
+  setRandomMode: (mode: 'campaign' | 'mixed') => void;
+  setMixedScenarios: (scenarios: CampaignScenario[]) => void;
+  markMixedScenarioComplete: (index: number) => void;
   thematicPairing: boolean;
   modularCount: number;
   filterModulars: () => ModularSet[];
@@ -22,16 +25,18 @@ export default function CampaignRandomizerTab({
   villains,
   collection,
   activeCampaign,
+  randomMode,
   campaignScenarios,
+  mixedScenarios,
   generateCampaignScenarios,
   markScenarioComplete,
-  modularSets,
+  setRandomMode,
+  setMixedScenarios,
+  markMixedScenarioComplete,
   thematicPairing,
   modularCount,
   filterModulars,
 }: CampaignRandomizerTabProps) {
-  const [randomMode, setRandomMode] = useState<'campaign' | 'mixed'>('campaign');
-  const [mixedScenarios, setMixedScenarios] = useState<CampaignScenario[]>([]);
 
   const filteredCampaigns = campaigns.filter(c => collection.campaigns.includes(c.key));
   const activeCampaignData = campaigns.find(c => c.key === activeCampaign);
@@ -78,14 +83,6 @@ export default function CampaignRandomizerTab({
     });
 
     setMixedScenarios(scenarios);
-  };
-
-  const markMixedScenarioComplete = (index: number) => {
-    setMixedScenarios(prev =>
-      prev.map((scenario, i) =>
-        i === index ? { ...scenario, completed: true } : scenario
-      )
-    );
   };
 
   const currentScenarios = randomMode === 'campaign' ? campaignScenarios : mixedScenarios;

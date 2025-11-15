@@ -3,6 +3,7 @@ import type { Hero, Villain, ModularSet, Complexity, Playstyle, Tier, PlayerOpti
 import { campaigns, scenarioPacks, heroPacks, heroes, villains, modularSets, progressionGuide } from './data';
 import { useCollection } from './hooks/useCollection';
 import { useGameHistory } from './hooks/useGameHistory';
+import { useCampaignRandomizer } from './hooks/useCampaignRandomizer';
 import { getOwnedSources, generateWarningsAndSuggestions, selectThematicModulars } from './utils/gameLogic';
 import Header from './components/layout/Header';
 import TabNavigation from './components/layout/TabNavigation';
@@ -22,10 +23,19 @@ export default function App() {
   const { collection, setCollection } = useCollection();
   const { history, addGame, clearHistory } = useGameHistory();
 
-  // Campaign mode
-  const [activeCampaign, setActiveCampaign] = useState<string | null>(null);
-  const [campaignProgress, setCampaignProgress] = useState<number>(0);
-  const [campaignScenarios, setCampaignScenarios] = useState<CampaignScenario[]>([]);
+  // Campaign Randomizer
+  const {
+    activeCampaign,
+    randomMode,
+    campaignScenarios,
+    mixedScenarios,
+    setActiveCampaign,
+    setRandomMode,
+    setCampaignScenarios,
+    setMixedScenarios,
+    markCampaignScenarioComplete,
+    markMixedScenarioComplete
+  } = useCampaignRandomizer();
 
   // Hero filters
   const [playerCount, setPlayerCount] = useState<number>(2);
@@ -195,16 +205,10 @@ export default function App() {
 
     setCampaignScenarios(scenarios);
     setActiveCampaign(campaignKey);
-    setCampaignProgress(0);
   };
 
   const markScenarioComplete = (index: number) => {
-    setCampaignScenarios(prev =>
-      prev.map((scenario, i) =>
-        i === index ? { ...scenario, completed: true } : scenario
-      )
-    );
-    setCampaignProgress(prev => prev + 1);
+    markCampaignScenarioComplete(index);
   };
 
   const exportSetup = () => {
@@ -304,10 +308,14 @@ export default function App() {
             villains={villains}
             collection={collection}
             activeCampaign={activeCampaign}
+            randomMode={randomMode}
             campaignScenarios={campaignScenarios}
+            mixedScenarios={mixedScenarios}
             generateCampaignScenarios={generateCampaignScenarios}
             markScenarioComplete={markScenarioComplete}
-            modularSets={modularSets}
+            setRandomMode={setRandomMode}
+            setMixedScenarios={setMixedScenarios}
+            markMixedScenarioComplete={markMixedScenarioComplete}
             thematicPairing={thematicPairing}
             modularCount={modularCount}
             filterModulars={filterModulars}

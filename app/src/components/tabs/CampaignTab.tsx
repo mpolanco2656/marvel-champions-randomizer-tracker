@@ -1,6 +1,6 @@
 import type { Campaign, Collection } from '../../types';
 import { Check } from 'lucide-react';
-import { useState } from 'react';
+import { useCampaignTracker } from '../../hooks/useCampaignTracker';
 
 interface CampaignTabProps {
   campaigns: Campaign[];
@@ -11,30 +11,16 @@ export default function CampaignTab({
   campaigns,
   collection,
 }: CampaignTabProps) {
-  const [activeCampaign, setActiveCampaign] = useState<string | null>(null);
-  const [completedScenarios, setCompletedScenarios] = useState<Record<string, number>>({});
+  const {
+    activeCampaign,
+    completedScenarios,
+    setActiveCampaign,
+    toggleScenario,
+    getCompletedCount
+  } = useCampaignTracker();
 
   const filteredCampaigns = campaigns.filter(c => collection.campaigns.includes(c.key));
   const activeCampaignData = campaigns.find(c => c.key === activeCampaign);
-
-  const toggleScenario = (campaignKey: string, scenarioIndex: number) => {
-    setCompletedScenarios(prev => {
-      const key = `${campaignKey}_${scenarioIndex}`;
-      const current = prev[key] || 0;
-      return {
-        ...prev,
-        [key]: current ? 0 : 1
-      };
-    });
-  };
-
-  const getCompletedCount = (campaignKey: string, totalScenarios: number) => {
-    let count = 0;
-    for (let i = 0; i < totalScenarios; i++) {
-      if (completedScenarios[`${campaignKey}_${i}`]) count++;
-    }
-    return count;
-  };
 
   return (
     <div className="space-y-6">
