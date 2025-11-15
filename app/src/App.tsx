@@ -34,7 +34,9 @@ export default function App() {
     setCampaignScenarios,
     setMixedScenarios,
     markCampaignScenarioComplete,
-    markMixedScenarioComplete
+    markMixedScenarioComplete,
+    clearCampaignScenarios,
+    clearMixedScenarios
   } = useCampaignRandomizer();
 
   // Hero filters
@@ -316,6 +318,8 @@ export default function App() {
             setRandomMode={setRandomMode}
             setMixedScenarios={setMixedScenarios}
             markMixedScenarioComplete={markMixedScenarioComplete}
+            clearCampaignScenarios={clearCampaignScenarios}
+            clearMixedScenarios={clearMixedScenarios}
             thematicPairing={thematicPairing}
             modularCount={modularCount}
             filterModulars={filterModulars}

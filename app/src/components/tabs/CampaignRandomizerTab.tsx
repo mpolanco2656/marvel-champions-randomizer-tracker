@@ -1,5 +1,5 @@
 import type { Campaign, Collection, CampaignScenario, Villain, ModularSet } from '../../types';
-import { Check, Shuffle } from 'lucide-react';
+import { Check, Shuffle, Trash2 } from 'lucide-react';
 import { selectThematicModulars } from '../../utils/gameLogic';
 
 interface CampaignRandomizerTabProps {
@@ -15,6 +15,8 @@ interface CampaignRandomizerTabProps {
   setRandomMode: (mode: 'campaign' | 'mixed') => void;
   setMixedScenarios: (scenarios: CampaignScenario[]) => void;
   markMixedScenarioComplete: (index: number) => void;
+  clearCampaignScenarios: () => void;
+  clearMixedScenarios: () => void;
   thematicPairing: boolean;
   modularCount: number;
   filterModulars: () => ModularSet[];
@@ -33,6 +35,8 @@ export default function CampaignRandomizerTab({
   setRandomMode,
   setMixedScenarios,
   markMixedScenarioComplete,
+  clearCampaignScenarios,
+  clearMixedScenarios,
   thematicPairing,
   modularCount,
   filterModulars,
@@ -272,6 +276,25 @@ export default function CampaignRandomizerTab({
                 🎉 ¡Todos los Escenarios Completados!
               </div>
             )}
+          </div>
+
+          {/* Clear Scenarios Button */}
+          <div className="mt-6">
+            <button
+              onClick={() => {
+                const message = randomMode === 'campaign'
+                  ? '¿Borrar todos los escenarios de esta campaña? Podrás generar nuevos modulares.'
+                  : '¿Borrar los 5 escenarios mezclados? Podrás generar 5 nuevos.';
+
+                if (window.confirm(message)) {
+                  randomMode === 'campaign' ? clearCampaignScenarios() : clearMixedScenarios();
+                }
+              }}
+              className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition-all flex items-center justify-center gap-2"
+            >
+              <Trash2 size={18} />
+              {randomMode === 'campaign' ? 'Borrar Escenarios de Campaña' : 'Borrar Escenarios Mezclados'}
+            </button>
           </div>
         </div>
       )}

@@ -1,5 +1,5 @@
 import type { Campaign, Collection } from '../../types';
-import { Check } from 'lucide-react';
+import { Check, RotateCcw } from 'lucide-react';
 import { useCampaignTracker } from '../../hooks/useCampaignTracker';
 
 interface CampaignTabProps {
@@ -16,7 +16,8 @@ export default function CampaignTab({
     completedScenarios,
     setActiveCampaign,
     toggleScenario,
-    getCompletedCount
+    getCompletedCount,
+    clearCampaign
   } = useCampaignTracker();
 
   const filteredCampaigns = campaigns.filter(c => collection.campaigns.includes(c.key));
@@ -122,6 +123,23 @@ export default function CampaignTab({
               );
             })}
           </div>
+
+          {/* Reset Campaign Button */}
+          {getCompletedCount(activeCampaign, activeCampaignData.villains.length) > 0 && (
+            <div className="mt-6">
+              <button
+                onClick={() => {
+                  if (window.confirm(`¿Resetear todo el progreso de ${activeCampaignData.name}?`)) {
+                    clearCampaign(activeCampaign);
+                  }
+                }}
+                className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition-all flex items-center justify-center gap-2"
+              >
+                <RotateCcw size={18} />
+                Resetear Progreso de Campaña
+              </button>
+            </div>
+          )}
 
           {getCompletedCount(activeCampaign, activeCampaignData.villains.length) === activeCampaignData.villains.length && (
             <div className="mt-6 bg-green-900 bg-opacity-40 rounded p-4 text-center">
