@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Hero, Villain, ModularSet, Complexity, Playstyle, Tier, PlayerOptimization } from './types';
+import type { Hero, Villain, ModularSet, Complexity, Playstyle, Tier, PlayerOptimization, CampaignScenario } from './types';
 import { campaigns, scenarioPacks, heroPacks, heroes, villains, modularSets, progressionGuide } from './data';
 import { useCollection } from './hooks/useCollection';
 import { useGameHistory } from './hooks/useGameHistory';
@@ -24,6 +24,7 @@ export default function App() {
   // Campaign mode
   const [activeCampaign, setActiveCampaign] = useState<string | null>(null);
   const [campaignProgress, setCampaignProgress] = useState<number>(0);
+  const [campaignScenarios, setCampaignScenarios] = useState<CampaignScenario[]>([]);
 
   // Hero filters
   const [playerCount, setPlayerCount] = useState<number>(2);
@@ -37,6 +38,10 @@ export default function App() {
   const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard' | 'Expert' | 'Any'>('Any');
   const [modularCount, setModularCount] = useState<number>(2);
   const [thematicPairing, setThematicPairing] = useState(false);
+
+  // Game mode settings
+  const [gameMode, setGameMode] = useState<'Standard' | 'Expert'>('Standard');
+  const [encounterVariant, setEncounterVariant] = useState<'I' | 'II' | 'III'>('I');
 
   // Help tooltips
   const [showComplexityHelp, setShowComplexityHelp] = useState(false);
@@ -161,32 +166,44 @@ export default function App() {
     alert('¡Juego guardado en historial!');
   };
 
-  const nextCampaignScenario = () => {
-    if (!activeCampaign) return;
-
-    const campaign = campaigns.find(c => c.key === activeCampaign);
+  const generateCampaignScenarios = (campaignKey: string) => {
+    const campaign = campaigns.find(c => c.key === campaignKey);
     if (!campaign) return;
 
-    if (campaignProgress >= campaign.villains.length) {
-      alert('¡Campaña completada!');
-      return;
-    }
+    const availableModulars = filterModulars();
 
-    const villainKey = campaign.villains[campaignProgress];
-    const villain = villains.find(v => v.key === villainKey);
-    if (villain) {
-      setRandomVillain(villain);
+    const scenarios: CampaignScenario[] = campaign.villains.map(villainKey => {
+      const villain = villains.find(v => v.key === villainKey);
+      if (!villain) return null;
 
-      const availableModulars = filterModulars();
-      const shuffled = availableModulars.sort(() => Math.random() - 0.5);
-      setRandomModulars(shuffled.slice(0, Math.min(modularCount, shuffled.length)));
+      // Generate random modulars for this scenario
+      let selectedModulars: ModularSet[];
+      if (thematicPairing) {
+        selectedModulars = selectThematicModulars(villain, availableModulars, modularCount);
+      } else {
+        const shuffled = [...availableModulars].sort(() => Math.random() - 0.5);
+        selectedModulars = shuffled.slice(0, Math.min(modularCount, shuffled.length));
+      }
 
-      setCampaignProgress(campaignProgress + 1);
+      return {
+        villain,
+        modulars: selectedModulars,
+        completed: false
+      };
+    }).filter((s): s is CampaignScenario => s !== null);
 
-      const { warnings: newWarnings, suggestions: newSuggestions } = generateWarningsAndSuggestions(randomHeroes, villain, playerCount);
-      setWarnings(newWarnings);
-      setSuggestions(newSuggestions);
-    }
+    setCampaignScenarios(scenarios);
+    setActiveCampaign(campaignKey);
+    setCampaignProgress(0);
+  };
+
+  const markScenarioComplete = (index: number) => {
+    setCampaignScenarios(prev =>
+      prev.map((scenario, i) =>
+        i === index ? { ...scenario, completed: true } : scenario
+      )
+    );
+    setCampaignProgress(prev => prev + 1);
   };
 
   const exportSetup = () => {
@@ -252,6 +269,10 @@ export default function App() {
             setOnlyUnplayed={setOnlyUnplayed}
             thematicPairing={thematicPairing}
             setThematicPairing={setThematicPairing}
+            gameMode={gameMode}
+            setGameMode={setGameMode}
+            encounterVariant={encounterVariant}
+            setEncounterVariant={setEncounterVariant}
             showComplexityHelp={showComplexityHelp}
             setShowComplexityHelp={setShowComplexityHelp}
             showDifficultyHelp={showDifficultyHelp}
@@ -274,10 +295,9 @@ export default function App() {
             campaigns={campaigns}
             collection={collection}
             activeCampaign={activeCampaign}
-            setActiveCampaign={setActiveCampaign}
-            campaignProgress={campaignProgress}
-            setCampaignProgress={setCampaignProgress}
-            nextCampaignScenario={nextCampaignScenario}
+            campaignScenarios={campaignScenarios}
+            generateCampaignScenarios={generateCampaignScenarios}
+            markScenarioComplete={markScenarioComplete}
           />
         )}
 

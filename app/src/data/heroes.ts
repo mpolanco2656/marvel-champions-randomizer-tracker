@@ -1,13 +1,12 @@
 import type { Hero } from '../types';
 
 export const heroes: Hero[] = [
-  // Core Set
-  { name: "Captain America", aspect: "Leadership", tier: "A", complexity: "Beginner", playstyle: ["All-rounder"], optimization: "Both", wave: 0, source: "Core Set", description: "Sin debilidades, puede thwart 4-6 o atacar 4 turno 1", key: "cap" },
+  // Core Set (5 heroes: Iron Man, Captain Marvel, Spider-Man, Black Panther, She-Hulk)
+  { name: "Iron Man", aspect: "Aggression", tier: "B", complexity: "Advanced", playstyle: ["Setup", "Resource Engine"], optimization: "Multiplayer", wave: 0, source: "Core Set", description: "De cero a héroe - necesita setup", key: "ironman" },
   { name: "Captain Marvel", aspect: "Justice", tier: "S", complexity: "Beginner", playstyle: ["Resource Engine", "All-rounder"], optimization: "Both", wave: 0, source: "Core Set", description: "Energy Absorption = 3 recursos, 12 salud", key: "marvel" },
   { name: "Spider-Man", aspect: "Justice", tier: "A", complexity: "Beginner", playstyle: ["Control"], optimization: "Both", wave: 0, source: "Core Set", description: "Alta defensa, control con stun/confuse", key: "spidey" },
-  { name: "Iron Man", aspect: "Aggression", tier: "B", complexity: "Advanced", playstyle: ["Setup", "Resource Engine"], optimization: "Multiplayer", wave: 0, source: "Core Set", description: "De cero a héroe - necesita setup", key: "ironman" },
-  { name: "She-Hulk", aspect: "Aggression", tier: "C", complexity: "Intermediate", playstyle: ["Aggro"], optimization: "Both", wave: 0, source: "Core Set", description: "Límite de 4 cartas en mano", key: "shehulk" },
   { name: "Black Panther", aspect: "Protection", tier: "B", complexity: "Intermediate", playstyle: ["All-rounder"], optimization: "Both", wave: 0, source: "Core Set", description: "Retaliate y tecnología de Wakanda", key: "panther" },
+  { name: "She-Hulk", aspect: "Aggression", tier: "C", complexity: "Intermediate", playstyle: ["Aggro"], optimization: "Both", wave: 0, source: "Core Set", description: "Límite de 4 cartas en mano", key: "shehulk" },
 
   // Wave 1 - Rise of Red Skull
   { name: "Spider-Woman", aspect: "Justice", tier: "A", complexity: "Intermediate", playstyle: ["All-rounder", "Support"], optimization: "Multiplayer", wave: 1, source: "Rise of Red Skull", description: "Doble aspecto único", key: "spiderwoman" },
@@ -79,9 +78,9 @@ export const heroes: Hero[] = [
   { name: "Maria Hill", aspect: "Leadership", tier: "A", complexity: "Intermediate", playstyle: ["Support"], optimization: "Multiplayer", wave: 9, source: "Agents of S.H.I.E.L.D.", description: "Comando táctico SHIELD", key: "mariahill" },
   { name: "Nick Fury", aspect: "Justice", tier: "A", complexity: "Advanced", playstyle: ["All-rounder"], optimization: "Both", wave: 9, source: "Agents of S.H.I.E.L.D.", description: "Director de SHIELD", key: "nickfury" },
   { name: "Black Panther/Shuri", aspect: "Justice", tier: "B", complexity: "Intermediate", playstyle: ["All-rounder"], optimization: "Both", wave: 9, source: "Black Panther/Shuri Hero Pack", description: "Héroe dual Wakanda", key: "panthershuri" },
-  { name: "Silk", aspect: "Protection", tier: "A", complexity: "Intermediate", playstyle: ["Control"], optimization: "Both", wave: 9, source: "Silk Hero Pack", description: "Mecánicas de telaraña", key: "silk" },
-  { name: "Falcon", aspect: "Aggression", tier: "A", complexity: "Intermediate", playstyle: ["Support"], optimization: "Multiplayer", wave: 9, source: "Falcon Hero Pack", description: "Tácticas aéreas", key: "falcon" },
-  { name: "Winter Soldier", aspect: "Leadership", tier: "A", complexity: "Intermediate", playstyle: ["Aggro"], optimization: "Both", wave: 9, source: "Winter Soldier Hero Pack", description: "Maestría en armas", key: "wintersoldier" },
+  { name: "Silk", aspect: "Aggression", tier: "A", complexity: "Intermediate", playstyle: ["Control"], optimization: "Both", wave: 9, source: "Silk Hero Pack", description: "Mecánicas de telaraña", key: "silk" },
+  { name: "Falcon", aspect: "Leadership", tier: "A", complexity: "Intermediate", playstyle: ["Support"], optimization: "Multiplayer", wave: 9, source: "Falcon Hero Pack", description: "Tácticas aéreas", key: "falcon" },
+  { name: "Winter Soldier", aspect: "Protection", tier: "A", complexity: "Intermediate", playstyle: ["Aggro"], optimization: "Both", wave: 9, source: "Winter Soldier Hero Pack", description: "Maestría en armas", key: "wintersoldier" },
 
   // Civil War (Bonus Wave)
   { name: "Hulkling", aspect: "Protection", tier: "A", complexity: "Intermediate", playstyle: ["All-rounder"], optimization: "Multiplayer", wave: 9, source: "Civil War", description: "Cambio de forma", key: "hulkling" },

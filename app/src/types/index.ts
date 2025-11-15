@@ -87,6 +87,12 @@ export interface ProgressionItem {
   key: string;
 }
 
+export interface CampaignScenario {
+  villain: Villain;
+  modulars: ModularSet[];
+  completed: boolean;
+}
+
 export interface Stats {
   gamesPlayed: number;
   winRate: number;

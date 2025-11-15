@@ -88,7 +88,19 @@ export function selectThematicModulars(
   availableModulars: ModularSet[],
   count: number
 ): ModularSet[] {
-  // Venom Goblin gets Goblin Gear
+  // Ronan: AVOID hard modulars (difficulty >= 4) - considered unfun by community
+  if (villain.key === 'ronan') {
+    const easyModulars = availableModulars.filter(m => m.difficulty < 4);
+    if (easyModulars.length >= count) {
+      const shuffled = easyModulars.sort(() => Math.random() - 0.5);
+      return shuffled.slice(0, count);
+    }
+    // If not enough easy modulars, use all available
+    const shuffled = availableModulars.sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, Math.min(count, shuffled.length));
+  }
+
+  // Venom Goblin gets Goblin Gear (guaranteed)
   if (villain.key === 'venomgoblin') {
     const goblinGear = availableModulars.find(m => m.key === 'goblingear');
     if (goblinGear) {
@@ -103,6 +115,16 @@ export function selectThematicModulars(
       ['messofthings', 'powerdrain', 'interference', 'osborntech', 'gimmicks', 'streets'].includes(m.key)
     );
     const prioritized = [...spiderModulars, ...availableModulars.filter(m => !spiderModulars.includes(m))];
+    const shuffled = prioritized.sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, Math.min(count, shuffled.length));
+  }
+
+  // Minion Swarm villains prioritize minion-heavy modulars
+  if (villain.mechanics.includes('Minion Swarm')) {
+    const minionModulars = availableModulars.filter(m =>
+      ['mastersofevil', 'hydra', 'anachronauts'].includes(m.key)
+    );
+    const prioritized = [...minionModulars, ...availableModulars.filter(m => !minionModulars.includes(m))];
     const shuffled = prioritized.sort(() => Math.random() - 0.5);
     return shuffled.slice(0, Math.min(count, shuffled.length));
   }
