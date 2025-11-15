@@ -82,5 +82,7 @@ export const heroes: Hero[] = [
 
   // Wave 9 - Civil War
   { name: "Hulkling", aspect: "Protection", tier: "A", complexity: "Intermediate", playstyle: ["All-rounder"], optimization: "Multiplayer", wave: 9, source: "Civil War", description: "Cambio de forma", key: "hulkling" },
-  { name: "Tigra", aspect: "Aggression", tier: "A", complexity: "Intermediate", playstyle: ["Aggro"], optimization: "Both", wave: 9, source: "Civil War", description: "Combate feral", key: "tigra" }
+  { name: "Tigra", aspect: "Aggression", tier: "A", complexity: "Intermediate", playstyle: ["Aggro"], optimization: "Both", wave: 9, source: "Civil War", description: "Combate feral", key: "tigra" },
+  { name: "Wonder Man", aspect: "Justice", tier: "B", complexity: "Advanced", playstyle: ["All-rounder", "Resource Engine"], optimization: "Both", wave: 9, source: "Wonder Man Hero Pack", description: "Deckbuilding único con recursos Energy, Ionic Physiology", key: "wonderman" },
+  { name: "Hercules", aspect: "Leadership", tier: "B", complexity: "Intermediate", playstyle: ["Setup", "All-rounder"], optimization: "Both", wave: 9, source: "Hercules Hero Pack", description: "Completa Labores para ganar Regalos divinos", key: "hercules" }
 ];

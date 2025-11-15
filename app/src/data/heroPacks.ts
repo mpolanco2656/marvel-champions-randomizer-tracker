@@ -55,4 +55,8 @@ export const heroPacks: HeroPack[] = [
   { name: "Silk Hero Pack", key: "silk", hero: "silk", wave: 8 },
   { name: "Falcon Hero Pack", key: "falcon", hero: "falcon", wave: 8 },
   { name: "Winter Soldier Hero Pack", key: "wintersoldier", hero: "wintersoldier", wave: 8 },
+
+  // Wave 9 - Civil War (Bonus Wave)
+  { name: "Wonder Man Hero Pack", key: "wonderman", hero: "wonderman", wave: 9 },
+  { name: "Hercules Hero Pack", key: "hercules", hero: "hercules", wave: 9 },
 ];
