@@ -51,7 +51,7 @@ export default function App() {
 
   // Get owned content sources
   const getOwnedSourcesList = (): string[] => {
-    return getOwnedSources(collection.campaigns, collection.scenarioPacks, collection.heroPacks);
+    return getOwnedSources(collection.campaigns, collection.scenarioPacks, collection.heroPacks || []);
   };
 
   // Filter functions
@@ -221,7 +221,7 @@ export default function App() {
     collectionPercentage: {
       campaigns: campaigns.length > 0 ? (collection.campaigns.length / campaigns.length * 100).toFixed(0) : '0',
       scenarioPacks: scenarioPacks.length > 0 ? (collection.scenarioPacks.length / scenarioPacks.length * 100).toFixed(0) : '0',
-      heroPacks: heroPacks.length > 0 ? (collection.heroPacks.length / heroPacks.length * 100).toFixed(0) : '0'
+      heroPacks: heroPacks.length > 0 ? ((collection.heroPacks || []).length / heroPacks.length * 100).toFixed(0) : '0'
     }
   };
 

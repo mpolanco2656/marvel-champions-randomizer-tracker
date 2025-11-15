@@ -125,7 +125,7 @@ export default function CollectionTab({
       {/* Hero Packs */}
       <div className="bg-black bg-opacity-40 rounded-lg p-6">
         <h3 className="text-2xl font-bold text-blue-400 mb-4">
-          Hero Packs ({collection.heroPacks.length}/{heroPacks.length})
+          Hero Packs ({(collection.heroPacks || []).length}/{heroPacks.length})
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mb-4">
           {heroPacks.map(pack => (
@@ -134,17 +134,17 @@ export default function CollectionTab({
               onClick={() => {
                 setCollection(prev => ({
                   ...prev,
-                  heroPacks: prev.heroPacks.includes(pack.key)
-                    ? prev.heroPacks.filter(p => p !== pack.key)
-                    : [...prev.heroPacks, pack.key]
+                  heroPacks: (prev.heroPacks || []).includes(pack.key)
+                    ? (prev.heroPacks || []).filter(p => p !== pack.key)
+                    : [...(prev.heroPacks || []), pack.key]
                 }));
               }}
               className={`p-3 rounded cursor-pointer transition-all ${
-                collection.heroPacks.includes(pack.key) ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-700 hover:bg-gray-600'
+                (collection.heroPacks || []).includes(pack.key) ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-700 hover:bg-gray-600'
               }`}
             >
               <div className="flex items-center gap-2">
-                {collection.heroPacks.includes(pack.key) ? <Check size={16} /> : <X size={16} />}
+                {(collection.heroPacks || []).includes(pack.key) ? <Check size={16} /> : <X size={16} />}
                 <div>
                   <div className="text-sm font-bold">{pack.name}</div>
                   <div className="text-xs text-gray-300">Wave {pack.wave}</div>
