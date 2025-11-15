@@ -8,11 +8,12 @@ import Header from './components/layout/Header';
 import TabNavigation from './components/layout/TabNavigation';
 import RandomizerTab from './components/tabs/RandomizerTab';
 import CampaignTab from './components/tabs/CampaignTab';
+import CampaignRandomizerTab from './components/tabs/CampaignRandomizerTab';
 import CollectionTab from './components/tabs/CollectionTab';
 import HistoryTab from './components/tabs/HistoryTab';
 import ProgressionTab from './components/tabs/ProgressionTab';
 
-type TabType = 'randomizer' | 'campaign' | 'collection' | 'history' | 'progression';
+type TabType = 'randomizer' | 'campaign' | 'campaignrandomizer' | 'collection' | 'history' | 'progression';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('randomizer');
@@ -294,10 +295,22 @@ export default function App() {
           <CampaignTab
             campaigns={campaigns}
             collection={collection}
+          />
+        )}
+
+        {activeTab === 'campaignrandomizer' && (
+          <CampaignRandomizerTab
+            campaigns={campaigns}
+            villains={villains}
+            collection={collection}
             activeCampaign={activeCampaign}
             campaignScenarios={campaignScenarios}
             generateCampaignScenarios={generateCampaignScenarios}
             markScenarioComplete={markScenarioComplete}
+            modularSets={modularSets}
+            thematicPairing={thematicPairing}
+            modularCount={modularCount}
+            filterModulars={filterModulars}
           />
         )}
 

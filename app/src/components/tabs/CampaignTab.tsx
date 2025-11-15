@@ -1,50 +1,86 @@
-import type { Campaign, Collection, CampaignScenario } from '../../types';
-import { Check, X } from 'lucide-react';
+import type { Campaign, Collection } from '../../types';
+import { Check } from 'lucide-react';
+import { useState } from 'react';
 
 interface CampaignTabProps {
   campaigns: Campaign[];
   collection: Collection;
-  activeCampaign: string | null;
-  campaignScenarios: CampaignScenario[];
-  generateCampaignScenarios: (campaignKey: string) => void;
-  markScenarioComplete: (index: number) => void;
 }
 
 export default function CampaignTab({
   campaigns,
   collection,
-  activeCampaign,
-  campaignScenarios,
-  generateCampaignScenarios,
-  markScenarioComplete,
 }: CampaignTabProps) {
+  const [activeCampaign, setActiveCampaign] = useState<string | null>(null);
+  const [completedScenarios, setCompletedScenarios] = useState<Record<string, number>>({});
+
   const filteredCampaigns = campaigns.filter(c => collection.campaigns.includes(c.key));
   const activeCampaignData = campaigns.find(c => c.key === activeCampaign);
+
+  const toggleScenario = (campaignKey: string, scenarioIndex: number) => {
+    setCompletedScenarios(prev => {
+      const key = `${campaignKey}_${scenarioIndex}`;
+      const current = prev[key] || 0;
+      return {
+        ...prev,
+        [key]: current ? 0 : 1
+      };
+    });
+  };
+
+  const getCompletedCount = (campaignKey: string, totalScenarios: number) => {
+    let count = 0;
+    for (let i = 0; i < totalScenarios; i++) {
+      if (completedScenarios[`${campaignKey}_${i}`]) count++;
+    }
+    return count;
+  };
 
   return (
     <div className="space-y-6">
       <div className="bg-black bg-opacity-40 rounded-lg p-6">
-        <h2 className="text-3xl font-bold text-yellow-300 mb-4">Modo Campaña</h2>
-        <p className="text-gray-300 mb-6">Selecciona una campaña para generar todos los escenarios con modulares aleatorios.</p>
+        <h2 className="text-3xl font-bold text-yellow-300 mb-4">Campaign Tracker</h2>
+        <p className="text-gray-300 mb-6">
+          Rastrea tu progreso jugando campañas según el manual oficial. Los modulares están especificados en el rulebook de cada campaña.
+        </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredCampaigns.map(campaign => (
-            <div
-              key={campaign.key}
-              onClick={() => generateCampaignScenarios(campaign.key)}
-              className={`bg-gradient-to-br from-purple-800 to-blue-800 rounded-lg p-5 border-2 cursor-pointer transition-all ${
-                activeCampaign === campaign.key ? 'border-yellow-300' : 'border-yellow-400 hover:border-yellow-300'
-              }`}
-            >
-              <h3 className="text-xl font-bold text-yellow-300 mb-2">{campaign.name}</h3>
-              <div className="text-sm text-gray-300 mb-2">
-                Wave {campaign.wave === 0 ? 'Core' : campaign.wave} • {campaign.villains.length} Escenarios
+          {filteredCampaigns.map(campaign => {
+            const completed = getCompletedCount(campaign.key, campaign.villains.length);
+            const isActive = activeCampaign === campaign.key;
+
+            return (
+              <div
+                key={campaign.key}
+                onClick={() => setActiveCampaign(campaign.key)}
+                className={`bg-gradient-to-br from-purple-800 to-blue-800 rounded-lg p-5 border-2 cursor-pointer transition-all ${
+                  isActive ? 'border-yellow-300' : 'border-yellow-400 hover:border-yellow-300'
+                }`}
+              >
+                <h3 className="text-xl font-bold text-yellow-300 mb-2">{campaign.name}</h3>
+                <div className="text-sm text-gray-300 mb-2">
+                  Wave {campaign.wave === 0 ? 'Core' : campaign.wave} • {campaign.villains.length} Escenarios
+                </div>
+
+                <div className="bg-black bg-opacity-40 rounded p-3">
+                  <div className="text-sm font-bold mb-2">
+                    Progreso: {completed}/{campaign.villains.length}
+                  </div>
+                  <div className="w-full bg-gray-700 rounded h-2">
+                    <div
+                      className="bg-yellow-500 h-2 rounded transition-all"
+                      style={{ width: `${(completed / campaign.villains.length) * 100}%` }}
+                    />
+                  </div>
+                  {completed === campaign.villains.length && (
+                    <div className="text-center text-green-400 font-bold text-sm mt-2">
+                      ✓ ¡Completada!
+                    </div>
+                  )}
+                </div>
               </div>
-              {activeCampaign === campaign.key && (
-                <div className="text-xs text-green-400 mt-2">✓ Campaña activa - Ver escenarios abajo</div>
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {filteredCampaigns.length === 0 && (
@@ -54,109 +90,60 @@ export default function CampaignTab({
         )}
       </div>
 
-      {/* Scenarios List */}
-      {activeCampaign && campaignScenarios.length > 0 && (
+      {/* Scenario Checklist */}
+      {activeCampaign && activeCampaignData && (
         <div className="bg-black bg-opacity-40 rounded-lg p-6">
           <h3 className="text-2xl font-bold text-yellow-300 mb-4">
-            {activeCampaignData?.name} - Escenarios Generados
+            {activeCampaignData.name} - Checklist
           </h3>
           <p className="text-sm text-gray-400 mb-4">
-            Todos los escenarios han sido generados con sets modulares aleatorios. Marca cada uno como completado al terminar.
+            Consulta el manual de la campaña para los modulares oficiales de cada escenario.
           </p>
 
-          <div className="space-y-4">
-            {campaignScenarios.map((scenario, idx) => (
-              <div
-                key={idx}
-                className={`rounded-lg p-5 border-2 transition-all ${
-                  scenario.completed
-                    ? 'bg-green-900 bg-opacity-30 border-green-500'
-                    : 'bg-gradient-to-br from-red-800 to-orange-800 border-yellow-400'
-                }`}
-              >
-                <div className="flex justify-between items-start mb-3">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-sm font-bold text-gray-400">Escenario {idx + 1}</span>
-                      {scenario.completed && (
-                        <span className="bg-green-600 text-white text-xs px-2 py-1 rounded font-bold">
-                          ✓ COMPLETADO
-                        </span>
-                      )}
-                    </div>
-                    <h4 className="text-xl font-bold text-yellow-300">{scenario.villain.name}</h4>
-                    <div className="text-sm text-gray-300">{scenario.villain.source}</div>
-                  </div>
-                  <div className="bg-yellow-500 text-black px-3 py-2 rounded font-bold text-lg">
-                    {scenario.villain.difficulty}/10
-                  </div>
-                </div>
+          <div className="space-y-3">
+            {activeCampaignData.villains.map((villainKey, idx) => {
+              const isCompleted = completedScenarios[`${activeCampaign}_${idx}`];
 
-                <div className="bg-black bg-opacity-40 rounded p-3 mb-3">
-                  <div className="text-sm font-bold text-yellow-300">Mecánicas: {scenario.villain.mechanics}</div>
-                  <div className="text-xs text-gray-300 mt-1">{scenario.villain.description}</div>
-                </div>
-
-                {/* Modulars */}
-                <div className="mb-3">
-                  <div className="text-sm font-bold text-purple-300 mb-2">Sets Modulares:</div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    {scenario.modulars.map((modular, mIdx) => (
-                      <div key={mIdx} className="bg-purple-900 bg-opacity-40 rounded p-2">
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm font-bold">{modular.name}</span>
-                          <div className="flex gap-1">
-                            {[...Array(5)].map((_, i) => (
-                              <div
-                                key={i}
-                                className={`w-2 h-2 rounded-full ${
-                                  i < modular.difficulty ? 'bg-red-500' : 'bg-gray-600'
-                                }`}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                        <div className="text-xs text-gray-400">{modular.source}</div>
+              return (
+                <div
+                  key={idx}
+                  onClick={() => toggleScenario(activeCampaign, idx)}
+                  className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                    isCompleted
+                      ? 'bg-green-900 bg-opacity-30 border-green-500'
+                      : 'bg-gray-800 bg-opacity-50 border-gray-600 hover:border-yellow-400'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-6 h-6 rounded border-2 flex items-center justify-center ${
+                        isCompleted ? 'bg-green-600 border-green-400' : 'border-gray-500'
+                      }`}>
+                        {isCompleted && <Check size={16} className="text-white" />}
                       </div>
-                    ))}
+                      <div>
+                        <div className="text-sm text-gray-400">Escenario {idx + 1}</div>
+                        <div className="font-bold text-white capitalize">{villainKey.replace(/_/g, ' ')}</div>
+                      </div>
+                    </div>
+                    {isCompleted && (
+                      <span className="bg-green-600 text-white text-xs px-3 py-1 rounded font-bold">
+                        ✓ COMPLETADO
+                      </span>
+                    )}
                   </div>
                 </div>
-
-                {!scenario.completed && (
-                  <button
-                    onClick={() => markScenarioComplete(idx)}
-                    className="w-full bg-green-600 hover:bg-green-700 font-bold py-2 px-4 rounded flex items-center justify-center gap-2"
-                  >
-                    <Check size={16} />
-                    Marcar como Completado
-                  </button>
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
 
-          {/* Progress Summary */}
-          <div className="mt-6 bg-blue-900 bg-opacity-40 rounded p-4">
-            <div className="text-sm font-bold text-blue-300 mb-2">Progreso de la Campaña</div>
-            <div className="flex items-center gap-3">
-              <div className="flex-1 bg-gray-700 rounded h-3">
-                <div
-                  className="bg-yellow-500 h-3 rounded transition-all"
-                  style={{
-                    width: `${(campaignScenarios.filter(s => s.completed).length / campaignScenarios.length) * 100}%`
-                  }}
-                />
-              </div>
-              <div className="text-sm font-bold">
-                {campaignScenarios.filter(s => s.completed).length}/{campaignScenarios.length}
-              </div>
-            </div>
-            {campaignScenarios.every(s => s.completed) && (
-              <div className="mt-3 text-center text-green-400 font-bold text-lg">
+          {getCompletedCount(activeCampaign, activeCampaignData.villains.length) === activeCampaignData.villains.length && (
+            <div className="mt-6 bg-green-900 bg-opacity-40 rounded p-4 text-center">
+              <div className="text-green-400 font-bold text-lg">
                 🎉 ¡Campaña Completada!
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       )}
     </div>

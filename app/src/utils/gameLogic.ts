@@ -119,6 +119,16 @@ export function selectThematicModulars(
     return shuffled.slice(0, Math.min(count, shuffled.length));
   }
 
+  // Thanos prioritizes Infinity-themed modulars (Mad Titan's Shadow)
+  if (villain.key === 'thanos') {
+    const infinityModulars = availableModulars.filter(m =>
+      ['gauntlet', 'blackorder', 'childrenofthanos'].includes(m.key)
+    );
+    const prioritized = [...infinityModulars, ...availableModulars.filter(m => !infinityModulars.includes(m))];
+    const shuffled = prioritized.sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, Math.min(count, shuffled.length));
+  }
+
   // Minion Swarm villains prioritize minion-heavy modulars
   if (villain.mechanics.includes('Minion Swarm')) {
     const minionModulars = availableModulars.filter(m =>
