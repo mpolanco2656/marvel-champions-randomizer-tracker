@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Hero, Villain, ModularSet, Complexity, Playstyle, Tier, PlayerOptimization, CampaignScenario } from './types';
+import type { Hero, Villain, ModularSet, Complexity, Playstyle, Tier, PlayerOptimization } from './types';
 import { campaigns, scenarioPacks, heroPacks, heroes, villains, modularSets, progressionGuide } from './data';
 import { useCollection } from './hooks/useCollection';
 import { useGameHistory } from './hooks/useGameHistory';
@@ -179,40 +179,6 @@ export default function App() {
     alert('¡Juego guardado en historial!');
   };
 
-  const generateCampaignScenarios = (campaignKey: string) => {
-    const campaign = campaigns.find(c => c.key === campaignKey);
-    if (!campaign) return;
-
-    const availableModulars = filterModulars();
-
-    const scenarios: CampaignScenario[] = campaign.villains.map(villainKey => {
-      const villain = villains.find(v => v.key === villainKey);
-      if (!villain) return null;
-
-      // Generate random modulars for this scenario
-      let selectedModulars: ModularSet[];
-      if (thematicPairing) {
-        selectedModulars = selectThematicModulars(villain, availableModulars, modularCount);
-      } else {
-        const shuffled = [...availableModulars].sort(() => Math.random() - 0.5);
-        selectedModulars = shuffled.slice(0, Math.min(modularCount, shuffled.length));
-      }
-
-      return {
-        villain,
-        modulars: selectedModulars,
-        completed: false
-      };
-    }).filter((s): s is CampaignScenario => s !== null);
-
-    setCampaignScenarios(scenarios);
-    setActiveCampaign(campaignKey);
-  };
-
-  const markScenarioComplete = (index: number) => {
-    markCampaignScenarioComplete(index);
-  };
-
   const exportSetup = () => {
     const setup = {
       heroes: randomHeroes.map(h => h.name),
@@ -309,20 +275,19 @@ export default function App() {
             campaigns={campaigns}
             villains={villains}
             collection={collection}
+            modularSets={modularSets}
             activeCampaign={activeCampaign}
             randomMode={randomMode}
             campaignScenarios={campaignScenarios}
             mixedScenarios={mixedScenarios}
-            generateCampaignScenarios={generateCampaignScenarios}
-            markScenarioComplete={markScenarioComplete}
+            setActiveCampaign={setActiveCampaign}
+            setCampaignScenarios={setCampaignScenarios}
+            markScenarioComplete={markCampaignScenarioComplete}
             setRandomMode={setRandomMode}
             setMixedScenarios={setMixedScenarios}
             markMixedScenarioComplete={markMixedScenarioComplete}
             clearCampaignScenarios={clearCampaignScenarios}
             clearMixedScenarios={clearMixedScenarios}
-            thematicPairing={thematicPairing}
-            modularCount={modularCount}
-            filterModulars={filterModulars}
           />
         )}
 

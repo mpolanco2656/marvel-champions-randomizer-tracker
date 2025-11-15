@@ -1,49 +1,89 @@
 import type { Campaign, Collection, CampaignScenario, Villain, ModularSet } from '../../types';
 import { Check, Shuffle, Trash2, RefreshCw } from 'lucide-react';
+import { useState } from 'react';
 import { selectThematicModulars } from '../../utils/gameLogic';
+import { getOwnedSources } from '../../utils/gameLogic';
 
 interface CampaignRandomizerTabProps {
   campaigns: Campaign[];
   villains: Villain[];
   collection: Collection;
+  modularSets: ModularSet[];
   activeCampaign: string | null;
   randomMode: 'campaign' | 'mixed';
   campaignScenarios: CampaignScenario[];
   mixedScenarios: CampaignScenario[];
-  generateCampaignScenarios: (campaignKey: string) => void;
+  setActiveCampaign: (campaignKey: string | null) => void;
+  setCampaignScenarios: (scenarios: CampaignScenario[]) => void;
   markScenarioComplete: (index: number) => void;
   setRandomMode: (mode: 'campaign' | 'mixed') => void;
   setMixedScenarios: (scenarios: CampaignScenario[]) => void;
   markMixedScenarioComplete: (index: number) => void;
   clearCampaignScenarios: () => void;
   clearMixedScenarios: () => void;
-  thematicPairing: boolean;
-  modularCount: number;
-  filterModulars: () => ModularSet[];
 }
 
 export default function CampaignRandomizerTab({
   campaigns,
   villains,
   collection,
+  modularSets,
   activeCampaign,
   randomMode,
   campaignScenarios,
   mixedScenarios,
-  generateCampaignScenarios,
+  setActiveCampaign,
+  setCampaignScenarios,
   markScenarioComplete,
   setRandomMode,
   setMixedScenarios,
   markMixedScenarioComplete,
   clearCampaignScenarios,
   clearMixedScenarios,
-  thematicPairing,
-  modularCount,
-  filterModulars,
 }: CampaignRandomizerTabProps) {
+  // Independent state for Campaign Randomizer
+  const [thematicPairing, setThematicPairing] = useState(false);
+  const [modularCount, setModularCount] = useState(2);
 
   const filteredCampaigns = campaigns.filter(c => collection.campaigns.includes(c.key));
   const activeCampaignData = campaigns.find(c => c.key === activeCampaign);
+
+  // Filter modulars based on owned content
+  const filterModulars = (): ModularSet[] => {
+    const ownedSources = getOwnedSources(collection.campaigns, collection.scenarioPacks, collection.heroPacks || []);
+    return modularSets.filter(modular => ownedSources.includes(modular.source));
+  };
+
+  // Generate campaign scenarios with random modulars
+  const generateCampaignScenarios = (campaignKey: string) => {
+    const campaign = campaigns.find(c => c.key === campaignKey);
+    if (!campaign) return;
+
+    const availableModulars = filterModulars();
+
+    const scenarios: CampaignScenario[] = campaign.villains.map(villainKey => {
+      const villain = villains.find(v => v.key === villainKey);
+      if (!villain) return null;
+
+      // Generate random modulars for this scenario
+      let selectedModulars: ModularSet[];
+      if (thematicPairing) {
+        selectedModulars = selectThematicModulars(villain, availableModulars, modularCount);
+      } else {
+        const shuffled = [...availableModulars].sort(() => Math.random() - 0.5);
+        selectedModulars = shuffled.slice(0, Math.min(modularCount, shuffled.length));
+      }
+
+      return {
+        villain,
+        modulars: selectedModulars,
+        completed: false
+      };
+    }).filter((s): s is CampaignScenario => s !== null);
+
+    setCampaignScenarios(scenarios);
+    setActiveCampaign(campaignKey);
+  };
 
   const generateMixedScenarios = () => {
     // Get all owned villains from campaigns and scenario packs
@@ -122,6 +162,44 @@ export default function CampaignRandomizerTab({
           >
             Modo B: Villanos Mezclados (5 Random)
           </button>
+        </div>
+
+        {/* Configuration Options */}
+        <div className="bg-gray-800 bg-opacity-60 rounded-lg p-4 mb-6 space-y-4">
+          <h3 className="text-sm font-bold text-gray-300 mb-3">⚙️ Configuración de Modulares</h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Modular Count */}
+            <div>
+              <label className="block text-sm font-bold text-gray-300 mb-2">Cantidad de Modulares</label>
+              <select
+                value={modularCount}
+                onChange={(e) => setModularCount(Number(e.target.value))}
+                className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white"
+              >
+                <option value={1}>1 Set</option>
+                <option value={2}>2 Sets (Recomendado)</option>
+                <option value={3}>3 Sets</option>
+              </select>
+            </div>
+
+            {/* Thematic Pairing */}
+            <div>
+              <label className="block text-sm font-bold text-gray-300 mb-2">Emparejamiento</label>
+              <label className="flex items-center gap-3 cursor-pointer bg-gray-700 p-2 rounded border border-gray-600 hover:border-yellow-400 transition-all">
+                <input
+                  type="checkbox"
+                  checked={thematicPairing}
+                  onChange={(e) => setThematicPairing(e.target.checked)}
+                  className="w-5 h-5"
+                />
+                <span className="text-sm text-white">Emparejamiento Temático</span>
+              </label>
+              <p className="text-xs text-gray-400 mt-1">
+                Prioriza modulares con synergy temática con el villano
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Mode A: Campaign Selection */}
