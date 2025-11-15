@@ -172,24 +172,45 @@ export default function CollectionTab({
       {/* Summary */}
       <div className="bg-gradient-to-r from-green-900 to-blue-900 bg-opacity-60 rounded-lg p-6">
         <h3 className="text-xl font-bold text-yellow-300 mb-3">Resumen de Colección</h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div>
             <div className="text-3xl font-bold text-green-400">
               {heroes.filter(h => getOwnedSources().includes(h.source)).length}
+              <span className="text-xl ml-2">
+                ({heroes.length > 0 ? ((heroes.filter(h => getOwnedSources().includes(h.source)).length / heroes.length) * 100).toFixed(0) : '0'}%)
+              </span>
             </div>
             <div className="text-sm text-gray-400">Héroes Disponibles</div>
           </div>
           <div>
             <div className="text-3xl font-bold text-red-400">
               {villains.filter(v => getOwnedSources().includes(v.source)).length}
+              <span className="text-xl ml-2">
+                ({villains.length > 0 ? ((villains.filter(v => getOwnedSources().includes(v.source)).length / villains.length) * 100).toFixed(0) : '0'}%)
+              </span>
             </div>
             <div className="text-sm text-gray-400">Villanos Disponibles</div>
           </div>
           <div>
             <div className="text-3xl font-bold text-purple-400">
               {modularSets.filter(m => getOwnedSources().includes(m.source)).length}
+              <span className="text-xl ml-2">
+                ({modularSets.length > 0 ? ((modularSets.filter(m => getOwnedSources().includes(m.source)).length / modularSets.length) * 100).toFixed(0) : '0'}%)
+              </span>
             </div>
             <div className="text-sm text-gray-400">Sets Modulares</div>
+          </div>
+          <div>
+            <div className="text-3xl font-bold text-yellow-400">
+              {(() => {
+                const campaignPct = campaigns.length > 0 ? (collection.campaigns.length / campaigns.length) * 100 : 0;
+                const scenarioPct = scenarioPacks.length > 0 ? (collection.scenarioPacks.length / scenarioPacks.length) * 100 : 0;
+                const heroPackPct = heroPacks.length > 0 ? ((collection.heroPacks || []).length / heroPacks.length) * 100 : 0;
+                const totalPct = (campaignPct + scenarioPct + heroPackPct) / 3;
+                return totalPct.toFixed(0);
+              })()}%
+            </div>
+            <div className="text-sm text-gray-400">Total Colección</div>
           </div>
         </div>
       </div>
