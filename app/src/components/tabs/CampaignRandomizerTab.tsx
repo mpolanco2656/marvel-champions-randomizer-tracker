@@ -1,5 +1,5 @@
 import type { Campaign, Collection, CampaignScenario, Villain, ModularSet } from '../../types';
-import { Check, Shuffle, Trash2 } from 'lucide-react';
+import { Check, Shuffle, Trash2, RefreshCw } from 'lucide-react';
 import { selectThematicModulars } from '../../utils/gameLogic';
 
 interface CampaignRandomizerTabProps {
@@ -278,12 +278,28 @@ export default function CampaignRandomizerTab({
             )}
           </div>
 
-          {/* Clear Scenarios Button */}
-          <div className="mt-6">
+          {/* Action Buttons */}
+          <div className="mt-6 space-y-3">
+            {/* Re-generate Modulars (only for Campaign mode) */}
+            {randomMode === 'campaign' && activeCampaign && (
+              <button
+                onClick={() => {
+                  if (window.confirm('¿Re-generar modulares para esta campaña? Se mantendrá la misma campaña pero con nuevos sets modulares aleatorios.')) {
+                    generateCampaignScenarios(activeCampaign);
+                  }
+                }}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-all flex items-center justify-center gap-2"
+              >
+                <RefreshCw size={18} />
+                Re-generar Modulares (misma campaña)
+              </button>
+            )}
+
+            {/* Clear Scenarios Button */}
             <button
               onClick={() => {
                 const message = randomMode === 'campaign'
-                  ? '¿Borrar todos los escenarios de esta campaña? Podrás generar nuevos modulares.'
+                  ? '¿Borrar completamente esta campaña? Tendrás que seleccionar una nueva campaña.'
                   : '¿Borrar los 5 escenarios mezclados? Podrás generar 5 nuevos.';
 
                 if (window.confirm(message)) {
@@ -293,7 +309,7 @@ export default function CampaignRandomizerTab({
               className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition-all flex items-center justify-center gap-2"
             >
               <Trash2 size={18} />
-              {randomMode === 'campaign' ? 'Borrar Escenarios de Campaña' : 'Borrar Escenarios Mezclados'}
+              {randomMode === 'campaign' ? 'Borrar Campaña Completa' : 'Borrar Escenarios Mezclados'}
             </button>
           </div>
         </div>
