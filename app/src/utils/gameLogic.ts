@@ -109,10 +109,10 @@ export function selectThematicModulars(
     }
   }
 
-  // Spider-Man villains get spider modulars
+  // Spider-Man villains get spider modulars (Green Goblin + Sinister Motives sets)
   if (['greengoblin', 'venomgoblin', 'mysterio'].includes(villain.key)) {
     const spiderModulars = availableModulars.filter(m =>
-      ['messofthings', 'powerdrain', 'interference', 'osborntech', 'gimmicks', 'streets'].includes(m.key)
+      ['messofthings', 'powerdrain', 'interference', 'osborntech', 'gimmicks', 'goblingear', 'downtoearth', 'cityinchaos'].includes(m.key)
     );
     const prioritized = [...spiderModulars, ...availableModulars.filter(m => !spiderModulars.includes(m))];
     const shuffled = prioritized.sort(() => Math.random() - 0.5);
