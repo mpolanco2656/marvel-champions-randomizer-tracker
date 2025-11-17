@@ -26,7 +26,11 @@ export default function App() {
   const { history, addGame, clearHistory, importHistory } = useGameHistory();
 
   // Campaign Tracker
-  const { importCampaignData } = useCampaignTracker();
+  const {
+    activeCampaign: campaignTrackerActive,
+    completedScenarios,
+    importCampaignData
+  } = useCampaignTracker();
 
   // Campaign Randomizer
   const {
@@ -206,8 +210,6 @@ export default function App() {
 
   // Global Export/Import handlers
   const handleExportAll = () => {
-    const { activeCampaign: campaignTrackerActive, completedScenarios } = useCampaignTracker();
-
     const jsonData = exportAllData(
       collection,
       history,
