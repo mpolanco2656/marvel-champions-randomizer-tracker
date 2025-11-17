@@ -4,7 +4,9 @@ import { campaigns, scenarioPacks, heroPacks, heroes, villains, modularSets, pro
 import { useCollection } from './hooks/useCollection';
 import { useGameHistory } from './hooks/useGameHistory';
 import { useCampaignRandomizer } from './hooks/useCampaignRandomizer';
+import { useCampaignTracker } from './hooks/useCampaignTracker';
 import { getOwnedSources, generateWarningsAndSuggestions, selectThematicModulars } from './utils/gameLogic';
+import { exportAllData, downloadJSON, importFromFile, type FullExportData } from './utils/exportImport';
 import Header from './components/layout/Header';
 import TabNavigation from './components/layout/TabNavigation';
 import RandomizerTab from './components/tabs/RandomizerTab';
@@ -21,7 +23,14 @@ export default function App() {
 
   // Collection and History
   const { collection, setCollection } = useCollection();
-  const { history, addGame, clearHistory } = useGameHistory();
+  const { history, addGame, clearHistory, importHistory } = useGameHistory();
+
+  // Campaign Tracker
+  const {
+    activeCampaign: campaignTrackerActive,
+    completedScenarios,
+    importCampaignData
+  } = useCampaignTracker();
 
   // Campaign Randomizer
   const {
@@ -36,7 +45,8 @@ export default function App() {
     markCampaignScenarioComplete,
     markMixedScenarioComplete,
     clearCampaignScenarios,
-    clearMixedScenarios
+    clearMixedScenarios,
+    importCampaignRandomizerData
   } = useCampaignRandomizer();
 
   // Hero filters
@@ -198,6 +208,51 @@ export default function App() {
     alert('¡Setup copiado al clipboard!');
   };
 
+  // Global Export/Import handlers
+  const handleExportAll = () => {
+    const jsonData = exportAllData(
+      collection,
+      history,
+      { activeCampaign: campaignTrackerActive, completedScenarios },
+      { activeCampaign, randomMode, campaignScenarios, mixedScenarios }
+    );
+
+    const timestamp = new Date().toISOString().split('T')[0];
+    downloadJSON(jsonData, `marvel-champions-backup-${timestamp}.json`);
+  };
+
+  const handleImportAll = (file: File) => {
+    importFromFile(
+      file,
+      (data: FullExportData) => {
+        // Import collection
+        if (data.collection) {
+          setCollection(data.collection);
+        }
+
+        // Import history
+        if (data.history && data.history.history) {
+          importHistory(data.history.history);
+        }
+
+        // Import campaign tracker
+        if (data.campaign) {
+          importCampaignData(data.campaign);
+        }
+
+        // Import campaign randomizer
+        if (data.campaignRandom) {
+          importCampaignRandomizerData(data.campaignRandom);
+        }
+
+        alert('¡Todos los datos importados exitosamente!');
+      },
+      (error: string) => {
+        alert(`Error al importar: ${error}`);
+      }
+    );
+  };
+
   // Calculate stats
   const stats = {
     gamesPlayed: history.length,
@@ -218,7 +273,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-900 via-blue-900 to-purple-900 text-white p-4">
       <div className="max-w-7xl mx-auto">
-        <Header />
+        <Header onExport={handleExportAll} onImport={handleImportAll} />
         <TabNavigation activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab as TabType)} />
 
         {activeTab === 'randomizer' && (

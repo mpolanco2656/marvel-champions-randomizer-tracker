@@ -19,5 +19,9 @@ export function useGameHistory() {
     }
   };
 
-  return { history, addGame, clearHistory };
+  const importHistory = (importedHistory: GameHistory[]) => {
+    setHistory(importedHistory);
+  };
+
+  return { history, addGame, clearHistory, importHistory };
 }
