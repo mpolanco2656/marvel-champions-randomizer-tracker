@@ -1,5 +1,7 @@
-import { Check, X } from 'lucide-react';
+import { Check, X, Download, Upload } from 'lucide-react';
+import { useRef } from 'react';
 import type { Collection, Campaign, ScenarioPack, HeroPack, Hero, Villain, ModularSet } from '../../types';
+import { exportCollectionData, downloadJSON, importFromFile, type FullExportData } from '../../utils/exportImport';
 
 interface CollectionTabProps {
   collection: Collection;
@@ -24,8 +26,69 @@ export default function CollectionTab({
   modularSets,
   getOwnedSources,
 }: CollectionTabProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleExport = () => {
+    const jsonData = exportCollectionData(collection);
+    const timestamp = new Date().toISOString().split('T')[0];
+    downloadJSON(jsonData, `mc-collection-${timestamp}.json`);
+  };
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    importFromFile(
+      file,
+      (data: FullExportData) => {
+        if (data.collection) {
+          setCollection(data.collection);
+          alert('Colección importada exitosamente!');
+        } else {
+          alert('No se encontraron datos de colección en el archivo.');
+        }
+      },
+      (error: string) => {
+        alert(`Error al importar: ${error}`);
+      }
+    );
+
+    // Reset input
+    event.target.value = '';
+  };
+
   return (
     <div className="space-y-6">
+      {/* Export/Import Buttons */}
+      <div className="bg-black bg-opacity-40 rounded-lg p-4">
+        <div className="flex gap-3 justify-end">
+          <button
+            onClick={handleExport}
+            className="bg-blue-600 hover:bg-blue-700 font-bold py-2 px-4 rounded flex items-center gap-2"
+          >
+            <Download size={16} />
+            Export data to JSON
+          </button>
+          <button
+            onClick={handleImportClick}
+            className="bg-green-600 hover:bg-green-700 font-bold py-2 px-4 rounded flex items-center gap-2"
+          >
+            <Upload size={16} />
+            Import from JSON
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json"
+            onChange={handleFileChange}
+            className="hidden"
+          />
+        </div>
+      </div>
       {/* Campaigns */}
       <div className="bg-black bg-opacity-40 rounded-lg p-6">
         <h3 className="text-2xl font-bold text-yellow-300 mb-4">

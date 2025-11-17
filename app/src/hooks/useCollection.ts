@@ -44,13 +44,14 @@ export function useCollection() {
     if (!hasMigrated.current && isLegacyCollection(collection)) {
       hasMigrated.current = true;
 
-      const migratedHeroPacks = collection.heroes
-        ? migrateHeroesToHeroPacks(collection.heroes)
+      const legacyCollection = collection as LegacyCollection;
+      const migratedHeroPacks = legacyCollection.heroes
+        ? migrateHeroesToHeroPacks(legacyCollection.heroes)
         : [];
 
       setCollection({
-        campaigns: collection.campaigns || ['core'],
-        scenarioPacks: collection.scenarioPacks || [],
+        campaigns: legacyCollection.campaigns || ['core'],
+        scenarioPacks: legacyCollection.scenarioPacks || [],
         heroPacks: migratedHeroPacks
       });
     }

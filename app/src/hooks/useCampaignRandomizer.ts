@@ -67,6 +67,10 @@ export function useCampaignRandomizer() {
     }));
   };
 
+  const importCampaignRandomizerData = (importedState: CampaignRandomizerState) => {
+    setState(importedState);
+  };
+
   return {
     activeCampaign: state.activeCampaign,
     randomMode: state.randomMode,
@@ -79,6 +83,7 @@ export function useCampaignRandomizer() {
     markCampaignScenarioComplete,
     markMixedScenarioComplete,
     clearCampaignScenarios,
-    clearMixedScenarios
+    clearMixedScenarios,
+    importCampaignRandomizerData
   };
 }

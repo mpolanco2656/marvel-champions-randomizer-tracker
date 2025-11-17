@@ -54,12 +54,17 @@ export function useCampaignTracker() {
     });
   };
 
+  const importCampaignData = (importedState: CampaignTrackerState) => {
+    setState(importedState);
+  };
+
   return {
     activeCampaign: state.activeCampaign,
     completedScenarios: state.completedScenarios,
     setActiveCampaign,
     toggleScenario,
     getCompletedCount,
-    clearCampaign
+    clearCampaign,
+    importCampaignData
   };
 }

@@ -1,4 +1,7 @@
+import { Download, Upload } from 'lucide-react';
+import { useRef } from 'react';
 import type { GameHistory, Stats, Hero, Villain } from '../../types';
+import { exportHistoryData, downloadJSON, importFromFile, type FullExportData } from '../../utils/exportImport';
 
 interface HistoryTabProps {
   history: GameHistory[];
@@ -6,6 +9,7 @@ interface HistoryTabProps {
   heroes: Hero[];
   villains: Villain[];
   clearHistory: () => void;
+  importHistory: (history: GameHistory[]) => void;
 }
 
 export default function HistoryTab({
@@ -14,12 +18,72 @@ export default function HistoryTab({
   heroes,
   villains,
   clearHistory,
+  importHistory,
 }: HistoryTabProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleExport = () => {
+    const jsonData = exportHistoryData(history);
+    const timestamp = new Date().toISOString().split('T')[0];
+    downloadJSON(jsonData, `mc-history-${timestamp}.json`);
+  };
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    importFromFile(
+      file,
+      (data: FullExportData) => {
+        if (data.history && data.history.history) {
+          importHistory(data.history.history);
+          alert('Historial importado exitosamente!');
+        } else {
+          alert('No se encontraron datos de historial en el archivo.');
+        }
+      },
+      (error: string) => {
+        alert(`Error al importar: ${error}`);
+      }
+    );
+
+    // Reset input
+    event.target.value = '';
+  };
 
   return (
     <div className="space-y-6">
       <div className="bg-black bg-opacity-40 rounded-lg p-6">
-        <h2 className="text-3xl font-bold text-yellow-300 mb-4">Historial & Estadísticas</h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-3xl font-bold text-yellow-300">Historial & Estadísticas</h2>
+          <div className="flex gap-3">
+            <button
+              onClick={handleExport}
+              className="bg-blue-600 hover:bg-blue-700 font-bold py-2 px-4 rounded flex items-center gap-2"
+            >
+              <Download size={16} />
+              Export data to JSON
+            </button>
+            <button
+              onClick={handleImportClick}
+              className="bg-green-600 hover:bg-green-700 font-bold py-2 px-4 rounded flex items-center gap-2"
+            >
+              <Upload size={16} />
+              Import from JSON
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".json"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </div>
+        </div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">

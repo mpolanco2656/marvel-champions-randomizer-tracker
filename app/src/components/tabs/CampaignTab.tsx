@@ -1,6 +1,8 @@
 import type { Campaign, Collection } from '../../types';
-import { Check, RotateCcw } from 'lucide-react';
+import { Check, RotateCcw, Download, Upload } from 'lucide-react';
+import { useRef } from 'react';
 import { useCampaignTracker } from '../../hooks/useCampaignTracker';
+import { exportCampaignData, downloadJSON, importFromFile, type FullExportData } from '../../utils/exportImport';
 
 interface CampaignTabProps {
   campaigns: Campaign[];
@@ -17,8 +19,44 @@ export default function CampaignTab({
     setActiveCampaign,
     toggleScenario,
     getCompletedCount,
-    clearCampaign
+    clearCampaign,
+    importCampaignData
   } = useCampaignTracker();
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleExport = () => {
+    const jsonData = exportCampaignData(activeCampaign, completedScenarios);
+    const timestamp = new Date().toISOString().split('T')[0];
+    downloadJSON(jsonData, `mc-campaign-${timestamp}.json`);
+  };
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    importFromFile(
+      file,
+      (data: FullExportData) => {
+        if (data.campaign) {
+          importCampaignData(data.campaign);
+          alert('Progreso de campaña importado exitosamente!');
+        } else {
+          alert('No se encontraron datos de campaña en el archivo.');
+        }
+      },
+      (error: string) => {
+        alert(`Error al importar: ${error}`);
+      }
+    );
+
+    // Reset input
+    event.target.value = '';
+  };
 
   const filteredCampaigns = campaigns.filter(c => collection.campaigns.includes(c.key));
   const activeCampaignData = campaigns.find(c => c.key === activeCampaign);
@@ -26,7 +64,32 @@ export default function CampaignTab({
   return (
     <div className="space-y-6">
       <div className="bg-black bg-opacity-40 rounded-lg p-6">
-        <h2 className="text-3xl font-bold text-yellow-300 mb-4">Campaign Tracker</h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-3xl font-bold text-yellow-300">Campaign Tracker</h2>
+          <div className="flex gap-3">
+            <button
+              onClick={handleExport}
+              className="bg-blue-600 hover:bg-blue-700 font-bold py-2 px-4 rounded flex items-center gap-2"
+            >
+              <Download size={16} />
+              Export data to JSON
+            </button>
+            <button
+              onClick={handleImportClick}
+              className="bg-green-600 hover:bg-green-700 font-bold py-2 px-4 rounded flex items-center gap-2"
+            >
+              <Upload size={16} />
+              Import from JSON
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".json"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </div>
+        </div>
         <p className="text-gray-300 mb-6">
           Rastrea tu progreso jugando campañas según el manual oficial. Los modulares están especificados en el rulebook de cada campaña.
         </p>

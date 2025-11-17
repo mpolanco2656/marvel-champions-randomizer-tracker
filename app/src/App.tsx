@@ -21,7 +21,7 @@ export default function App() {
 
   // Collection and History
   const { collection, setCollection } = useCollection();
-  const { history, addGame, clearHistory } = useGameHistory();
+  const { history, addGame, clearHistory, importHistory } = useGameHistory();
 
   // Campaign Randomizer
   const {
@@ -36,7 +36,8 @@ export default function App() {
     markCampaignScenarioComplete,
     markMixedScenarioComplete,
     clearCampaignScenarios,
-    clearMixedScenarios
+    clearMixedScenarios,
+    importCampaignRandomizerData
   } = useCampaignRandomizer();
 
   // Hero filters
@@ -288,6 +289,7 @@ export default function App() {
             markMixedScenarioComplete={markMixedScenarioComplete}
             clearCampaignScenarios={clearCampaignScenarios}
             clearMixedScenarios={clearMixedScenarios}
+            importCampaignRandomizerData={importCampaignRandomizerData}
           />
         )}
 
@@ -312,6 +314,7 @@ export default function App() {
             villains={villains}
             stats={stats}
             clearHistory={clearHistory}
+            importHistory={importHistory}
           />
         )}
 
