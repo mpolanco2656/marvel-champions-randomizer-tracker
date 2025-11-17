@@ -1,7 +1,7 @@
 import type { Hero, Villain, ModularSet } from '../types';
-import { campaigns, scenarioPacks } from '../data';
+import { campaigns, scenarioPacks, heroPacks } from '../data';
 
-export function getOwnedSources(campaignKeys: string[], packKeys: string[]): string[] {
+export function getOwnedSources(campaignKeys: string[], packKeys: string[], heroPackKeys: string[]): string[] {
   const sources = new Set<string>();
 
   campaignKeys.forEach(campaignKey => {
@@ -12,6 +12,11 @@ export function getOwnedSources(campaignKeys: string[], packKeys: string[]): str
   packKeys.forEach(packKey => {
     const pack = scenarioPacks.find(p => p.key === packKey);
     if (pack) sources.add(pack.name);
+  });
+
+  heroPackKeys.forEach(heroPackKey => {
+    const heroPack = heroPacks.find(p => p.key === heroPackKey);
+    if (heroPack) sources.add(heroPack.name);
   });
 
   return Array.from(sources);
@@ -83,7 +88,19 @@ export function selectThematicModulars(
   availableModulars: ModularSet[],
   count: number
 ): ModularSet[] {
-  // Venom Goblin gets Goblin Gear
+  // Ronan: AVOID hard modulars (difficulty >= 4) - considered unfun by community
+  if (villain.key === 'ronan') {
+    const easyModulars = availableModulars.filter(m => m.difficulty < 4);
+    if (easyModulars.length >= count) {
+      const shuffled = easyModulars.sort(() => Math.random() - 0.5);
+      return shuffled.slice(0, count);
+    }
+    // If not enough easy modulars, use all available
+    const shuffled = availableModulars.sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, Math.min(count, shuffled.length));
+  }
+
+  // Venom Goblin gets Goblin Gear (guaranteed)
   if (villain.key === 'venomgoblin') {
     const goblinGear = availableModulars.find(m => m.key === 'goblingear');
     if (goblinGear) {
@@ -92,12 +109,32 @@ export function selectThematicModulars(
     }
   }
 
-  // Spider-Man villains get spider modulars
+  // Spider-Man villains get spider modulars (Green Goblin + Sinister Motives sets)
   if (['greengoblin', 'venomgoblin', 'mysterio'].includes(villain.key)) {
     const spiderModulars = availableModulars.filter(m =>
-      ['messofthings', 'powerdrain', 'interference', 'osborntech', 'gimmicks', 'streets'].includes(m.key)
+      ['messofthings', 'powerdrain', 'interference', 'osborntech', 'gimmicks', 'goblingear', 'downtoearth', 'cityinchaos'].includes(m.key)
     );
     const prioritized = [...spiderModulars, ...availableModulars.filter(m => !spiderModulars.includes(m))];
+    const shuffled = prioritized.sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, Math.min(count, shuffled.length));
+  }
+
+  // Thanos prioritizes Infinity-themed modulars (Mad Titan's Shadow)
+  if (villain.key === 'thanos') {
+    const infinityModulars = availableModulars.filter(m =>
+      ['gauntlet', 'blackorder', 'childrenofthanos'].includes(m.key)
+    );
+    const prioritized = [...infinityModulars, ...availableModulars.filter(m => !infinityModulars.includes(m))];
+    const shuffled = prioritized.sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, Math.min(count, shuffled.length));
+  }
+
+  // Minion Swarm villains prioritize minion-heavy modulars
+  if (villain.mechanics.includes('Minion Swarm')) {
+    const minionModulars = availableModulars.filter(m =>
+      ['mastersofevil', 'hydra', 'anachronauts'].includes(m.key)
+    );
+    const prioritized = [...minionModulars, ...availableModulars.filter(m => !minionModulars.includes(m))];
     const shuffled = prioritized.sort(() => Math.random() - 0.5);
     return shuffled.slice(0, Math.min(count, shuffled.length));
   }

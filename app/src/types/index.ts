@@ -51,6 +51,13 @@ export interface ScenarioPack {
   wave: number;
 }
 
+export interface HeroPack {
+  name: string;
+  key: string;
+  hero: string;
+  wave: number;
+}
+
 export interface GameHistory {
   id: string;
   date: string;
@@ -63,7 +70,7 @@ export interface GameHistory {
 export interface Collection {
   campaigns: string[];
   scenarioPacks: string[];
-  heroes: string[];
+  heroPacks: string[];
 }
 
 export interface ProgressionPhase {
@@ -80,6 +87,12 @@ export interface ProgressionItem {
   key: string;
 }
 
+export interface CampaignScenario {
+  villain: Villain;
+  modulars: ModularSet[];
+  completed: boolean;
+}
+
 export interface Stats {
   gamesPlayed: number;
   winRate: number;
@@ -92,6 +105,6 @@ export interface Stats {
   collectionPercentage: {
     campaigns: string;
     scenarioPacks: string;
-    heroes: string;
+    heroPacks: string;
   };
 }

@@ -1,0 +1,151 @@
+# Marvel Champions: Complete Progression Guide & Randomizer Design Research
+
+**As of November 2025, Marvel Champions includes 9 campaign boxes, 42 hero packs, 7 scenario packs, and 79+ modular encounter sets**—creating an overwhelming amount of content for players planning structured progression. This research provides complete product catalogs, community classification systems, and design insights for building an interactive tool that helps experienced players navigate this expansive card game.
+
+## Complete content universe through Wave 10
+
+The Marvel Champions product line has grown substantially since its 2019 release. **The Core Set launched with 5 heroes** (Iron Man, Captain Marvel, Spider-Man, Black Panther, She-Hulk) and 3 villains (Rhino, Klaw, Ultron), establishing the foundational difficulty curve. Through November 2025, the game spans **10 distinct waves** with 42 playable heroes across 9 major campaign boxes and 42 individual hero packs.
+
+Campaign boxes follow a consistent structure, each including 2 heroes and 4-5 connected villain scenarios. **Rise of Red Skull** (2020) introduced Hawkeye and Spider-Woman alongside Hydra-themed villains. **Galaxy's Most Wanted** (2021) brought Guardians content with Groot and Rocket. **Mad Titan's Shadow** (2021) featured Adam Warlock and Spectrum battling Thanos and the Black Order. The Spider-verse arrived with **Sinister Motives** (2022), starring Ghost-Spider and Miles Morales Spider-Man against the Sinister Six.
+
+The X-Men era dominates recent releases. **Mutant Genesis** (2022) started the mutant storyline with Colossus and Shadowcat facing Magneto. **NeXt Evolution** (2023) continued with Cable and Domino versus X-Force villains. **Age of Apocalypse** (2024) brought Bishop and Magik against Apocalypse's forces. The newest releases include **Agents of S.H.I.E.L.D.** (February 2025) with Maria Hill and Nick Fury, and **Civil War** (October 2025) featuring Tigra and Hulkling in a unique PvP-style expansion where heroes battle other heroes.
+
+**The 7 scenario packs provide standalone villain encounters** and critical modular encounter sets. Green Goblin (2019) remains essential for its Mutagen Formula scenario—ranked #3 in community favorite polls—and three excellent Spider-Man themed modular sets. The Hood (2022) delivers exceptional value with 9 modular encounter sets plus Standard II and Expert II difficulty variants. Once and Future Kang (2021) consistently ranks #1 in community surveys for its innovative multiple-Kang-variant mechanics.
+
+Hero packs release steadily, with **42 heroes total** spanning Leadership (blue), Justice (yellow), Aggression (red), and Protection (green) aspects. Wave 7 introduced a unique fifth aspect: **Deadpool's "Pool" aspect** allows any hero to use Pool cards but adds the "Crisis of Infinite Deadpools" card to the encounter deck. Notable recent additions include Magneto (leadership), Black Panther/Shuri (justice), Silk (aggression), Falcon (leadership), and Winter Soldier (protection).
+
+The modular encounter set catalog has expanded dramatically from the Core Set's 5 original sets. **Current count exceeds 79 distinct modular sets**, ranging from simple additions like Bomb Scare (difficulty rating 1) to brutal challenges like Doomsday Chair with M.O.D.O.K. (difficulty rating 5). Each campaign box and scenario pack adds multiple modulars, allowing granular difficulty customization. The Hood alone contributed 9 new modulars, while Sinister Motives added 9 Spider-Man themed sets, and the Kang pack introduced time-travel themed modulars rated 4-8 on the difficulty scale.
+
+## How the community classifies heroes
+
+The Marvel Champions community has developed sophisticated hero classification systems without official Fantasy Flight Games complexity ratings. **Power tier rankings use S/A/B/C scales**, with Cardboard Champions maintaining the most comprehensive 2025 tier list based on 2-player optimization.
+
+**Doctor Strange and Spider-Ham dominate S+ tier** as the game's most powerful heroes. Doctor Strange's Invocation deck—a separate spell deck providing consistent control through stunning and confusing—makes him the most reliable hero despite vulnerability to Stalwart villains. His advanced complexity requires managing multiple decision layers, but experienced players consider him essentially unstoppable. Spider-Ham reaches S+ through his Toon Counter system generating wild resources and Clarity of Purpose enabling self-damage for counter generation, creating exceptional versatility.
+
+S-tier heroes include **Captain Marvel, Gambit, Iceman, Spectrum, Venom, Ghost-Spider, and Miles Morales Spider-Man**. Captain Marvel remains top-tier despite being a Core Set hero, with Energy Absorption generating 3 resources and 12 health providing exceptional survivability. Spectrum's three energy forms allow complete role adaptation—dedicating entire turns to massive thwarting, damage, or defense as needed. Gambit delivers explosive burst damage with the most powerful Alter-Ego abilities seen in the game.
+
+A-tier encompasses 25+ heroes including **Captain America, Spider-Woman, Quicksilver, Ant-Man, Scarlet Witch, and Wolverine**. Captain America ranks as "an absolute god solo" with no weaknesses, able to thwart 4-6 or attack 4 on turn one while maintaining 3 defense. Spider-Woman's two-aspect deckbuilding and stat bonuses per aspect played create exceptional flexibility. Quicksilver's Always Be Running mechanic provides consistent readying with a linear, beginner-friendly strategy.
+
+B-tier includes **Iron Man, Black Panther, Ms. Marvel, Thor, Vision, and Deadpool** (in multiplayer). Iron Man exemplifies "zero to hero" setup heroes—once fully upgraded he becomes a resource engine, but requires extensive early-game support. Thor needs specific cards (Asgard, God of Thunder) and minion engagement to function, creating inconsistency. **Deadpool presents unique player count optimization: S+ solo but C-tier multiplayer**, as his Unkillable mechanic becomes a massive liability to teammates.
+
+C-tier consists of 6 heroes: **Hulk, She-Hulk, Hawkeye, Wasp, Groot, and Drax**. Hulk and She-Hulk suffer from 4-card hand size limitations severely constraining options. The community commonly house-rules Hulk to 5-card hands. Drax's counter-attack design fails against heavy hitters like Thanos dealing 8-10 damage, as he cannot survive to retaliate. Hawkeye requires his bow in play and feels too conditional.
+
+**Complexity classifications organize heroes into beginner-friendly, intermediate, and advanced categories**. Beginner recommendations prioritize Captain Marvel (straightforward damage/thwart with healing), Captain America (resource generation and defensive tools), Spider-Man (control-focused with high defense), Quicksilver (linear Always Be Running strategy), and Wolverine (one key decision: can you afford the health cost?). The community emphasizes letting new players choose favorite Marvel characters over restricting to "easy" heroes, as every hero can complete all content with proper deckbuilding.
+
+Advanced complexity heroes include **Doctor Strange** (invocation deck management), **Spider-Woman** (two-aspect building), **Adam Warlock** (four-aspect building with top-deck viewing), **Psylocke** (high-skill combo sequences with ordering errors possible), **Phoenix** (Unleashed/Restrained power management), and **Scarlet Witch** (Wild Magic encounter deck manipulation).
+
+**Playstyle archetypes provide the most useful classification for randomizer design**. Control heroes excel at stun/confuse mitigation: Doctor Strange, Spider-Man, Iceman (prevents activations even through Stalwart), and Black Widow (encounter card control). Aggro/damage dealers include Gambit (burst damage), Venom (high sustained damage), Ant-Man (infinite damage combos possible), Valkyrie (minion-focused), and Thor (requires minion engagement).
+
+All-rounders excel at multiple roles: **Spectrum dedicates entire turns to any role**, Captain America has no weaknesses, Spider-Woman offers dual-aspect flexibility, and Gamora provides attack/thwart event synergy. Resource engine heroes generate exceptional economy: Iron Man (once setup), Captain Marvel (Energy Absorption = 3 resources), Nova (wild resource generation), SP//dr (despite 3-card hand), and Venom (wild resource for 1 damage).
+
+Build/setup "zero to hero" archetypes need time before becoming powerful: Iron Man, Ironheart, Ms. Marvel, Thor (requires Asgard and God of Thunder), and She-Hulk. Conversely, "good to go" heroes start strong turn one: Nova (helmet in play immediately), Captain America (can thwart 4-6 or attack 4), Captain Marvel (resource generation from start), and Quicksilver (immediate readying).
+
+**Solo versus multiplayer optimization creates different hero rankings**. Solo power rankings differ dramatically—Deadpool ranks S+ solo but B multiplayer as a team liability. Captain America dominates solo play. Gamora and Star-Lord perform better solo. Multiplayer benefits support specialists like Black Widow who doesn't solo carry but provides excellent team support. Leadership aspect generally strengthens in multiplayer through ally synergies, while heroes generating threat slowly perform better with teammates managing schemes.
+
+Resource generation capability, card draw, and thwarting capability represent critical evaluation dimensions. **Excellent resource generators** include Captain Marvel (3 from Energy Absorption), Nova (wild resources), Venom (wild for 1 damage), Spectrum (Energy Duplication x2), and Iron Man/Thor once setup. Limited generators include Rocket ("no inherent resource generation"), Hulk/She-Hulk (constrained by hand size), and Hawkeye (requires bow).
+
+Strong card draw comes from **Captain Marvel** (1 energy to draw, allies draw in alter-ego), Doctor Strange (consistent through invocations), Adam Warlock (effectively 7-card hand viewing top deck), and Spider-Woman (aspect mixing benefits). Weak card draw afflicts Hulk (4-card max), She-Hulk (4-card max), and SP//dr (3-card hand, though 4 in alter-ego).
+
+## Villain and scenario difficulty systems
+
+The community has developed comprehensive villain classification beyond official Fantasy Flight Games difficulty ratings. **Difficulty scales across Standard, Expert, and Heroic modes**, with Standard using Stage I and Stage II villain cards plus a 7-card Standard encounter set. Expert removes Stage I, adds Stage III, and includes a 3-card Expert set (Exhaustion, Masterplan, Under Fire) that significantly increases challenge through higher stats and harder encounters.
+
+**Heroic mode, introduced March 2020, scales infinitely** by having each player draw X additional encounter cards per villain phase, where X equals the Heroic Level. Heroic 1 (recommended starting point) means 3 total encounter cards per player instead of 2. Heroic 2 escalates to 4 cards. The community also uses "Hazard Mode" (Heroic 0.5) where extra cards go to the table rather than per player. However, **Heroic mode is controversial**—many experienced players consider it broken, as it "breaks the game's internal mathematics and action economy" and is disproportionately punishing at lower player counts.
+
+**Primary mechanics categories organize villain strategies**. Acceleration-focused villains use side schemes and acceleration icons, each adding +1 threat to the main scheme during the villain phase. Magneto and Venom Goblin exemplify heavy acceleration. Minion swarm scenarios feature high volumes of minions like Ultron's drone spam or Green Goblin variants, with elite minions using Guard keyword to force targeting priority.
+
+Direct damage villains like **Ronan the Accuser** emphasize high ATK stats with Overkill and Piercing keywords bypassing traditional defenses. Ronan can deal 8-18+ damage per turn with Fanaticism pumping his attack to extreme levels. Attachment-focused scenarios like Rhino modify villain stats through attachments removed via attack actions but slowing tempo. Side scheme mechanics use Crisis keyword forcing thwarting priority and Hazard icons adding extra encounter cards.
+
+**Ronan the Accuser dominates as the hardest villain** based on 30,000+ community-recorded games from Marvel Champions Tracker. Expert Ronan achieves only **26% solo win rate and 38% multiplayer**, making him the only villain requiring an official FFG nerf (side scheme made optional). His massive Overkill and Piercing direct damage counters all traditional defense strategies—allies can't block Overkill, Tough gets negated by Piercing. The surge-heavy deck with additional activations creates extreme randomness where Ronan can one-shot heroes unexpectedly. Community consensus labels him unfair and many players avoid him entirely.
+
+**Venom Goblin with Goblin Gear ranks second hardest**. His activation-based abilities trigger on villain activations, with Advanced Glider attachment causing double activations per turn. Each activation triggers scheme abilities, and Remote Navigation brings the glider back from any zone. The scenario requires specific attack cards to remove Advanced Glider. Without Goblin Gear modular, difficulty drops several tiers. Justice aspect is highly recommended.
+
+**Loki (Mad Titan's Shadow)** requires defeating multiple times with different Loki versions, doubling normal scenario length. Alternating Stalwart stages prevent status control. Reality Stone repeatedly disrupts setup. Enchantress can steal high-cost allies. The long attrition war favors the encounter deck, making this a true endurance test. A notable bug exists where Phoenix hero can make Loki immortal via Consume the World interaction.
+
+**Magneto (Mutant Genesis)** employs a Magnet counter management system with M-Type Sentinels (Guard, grant Tough to Magneto). Mandatory side scheme Orbital Decay prevents all damage until removed. Acolyte minions use Teamwork keyword causing cascading activations. Magnetic Missile forces discarding hands and killing Sentinels, each adding Surge. The inability to damage until Orbital Decay is defeated creates punishing tempo loss, particularly in solo play.
+
+**Nebula (Galaxy's Most Wanted)** ranks bottom 5 in popularity due to extreme Surge density creating highly random/swingy gameplay. Evasion counters remove threat from main scheme, creating runaway threat if not managed. The Milano ship requires first player resource spending every turn. Surge chains can cascade catastrophically. Despite low HP pool, the RNG makes her universally frustrating.
+
+Other notably difficult villains include **Thanos** (uses Infinity Stones for variable powers, high stats, but ranked 8th in favorite scenarios), **Red Skull** (campaign final boss with heavy side scheme focus, ranked 7th favorite), and **Expert Ultron** (good benchmark for deck testing with drone spam and Retaliate mechanics).
+
+**Favorite scenarios don't correlate with difficulty**. Once and Future Kang ranks #1 favorite (2021 and 2022 surveys) with moderate-high Expert difficulty, featuring multiple Kang variants requiring adaptable decks. Hela ranks #2 favorite with unique "questing" gameplay and medium difficulty. Mutagen Formula (Green Goblin) ranks #3 for its transformation mechanics. The Hood ranks #6 despite requiring 7 modular sets and high variance.
+
+**Least popular bottom 5 villains** (2022 survey): Ronan (unfair difficulty), Nebula (too random), Venom Goblin (overtuned with Goblin Gear), Wrecking Crew (no modular support, ages poorly), and Absorbing Man (mechanics don't match theme).
+
+Modular encounter sets provide granular difficulty customization. **Official Core Set ratings (1-5 scale)**: Bomb Scare (1-easiest), Masters of Evil (2), Under Attack (3), Legions of Hydra (4), Doomsday Chair (5-hardest with M.O.D.O.K.). Community rankings place **Kree Fanatic, Legions of Hydra, Anachronauts (8/10), Doomsday Chair, and Master of Time** in hardest tier. Bomb Scare remains the only "easy tier" modular, almost never increasing difficulty.
+
+**Modular pairing recommendations suggest thematic and mechanical synergies**. Venom Goblin + Goblin Gear represents essential by-design synergy. Green Goblin pairs thematically with A Mess of Things, Power Drain, and Running Interference for Spider-Man villains. Villains with minion mechanics synergize with minion-heavy modulars (Masters of Evil, Legions of Hydra, Anachronauts). Problematic pairings include Ronan + any hard modular (considered unfun) and multiple modular sets diluting encounter decks, sometimes making scenarios easier by slowing cycling.
+
+## Recommended progression for Expert and Heroic play
+
+Community consensus strongly recommends **Rise of Red Skull as the universal first expansion** after Core Set. It provides the perfect difficulty bridge from core content, uses modular sets from the core box, and features villains that aren't massive leaps above Klaw/Ultron. Scenarios progress through Crossbones, Absorbing Man, Taskmaster, Zola, and Red Skull, considered "beginner friendly" while providing challenge. Green Goblin scenario pack should immediately follow, offering the essential Mutagen Formula scenario (still contending for best in game) and three excellent Spider-Man themed modular sets.
+
+**The product count confirms: 9 campaign boxes and 7 scenario packs** as of November 2025. The 9 campaigns are Core Set, Rise of Red Skull, Galaxy's Most Wanted, Mad Titan's Shadow, Sinister Motives, Mutant Genesis, NeXt Evolution, Age of Apocalypse, Agents of S.H.I.E.L.D., and Civil War. The 7 scenario packs are Green Goblin, Wrecking Crew, Once and Future Kang, The Hood, MojoMania, Trickster Takeover, and Synthezoid Smackdown (December 2025 release).
+
+Mid-game progression emphasizes challenge escalation with expanded card pools. **Sinister Motives ranks as one of the best expansions**, with all scenarios unique and interesting, culminating in brutal Venom Goblin testing deck-building mastery. NeXt Evolution follows as the easiest X-Men box, introducing X-Force heroes Cable and Domino with interesting scenarios (particularly Juggernaut). Mutant Genesis represents "the best X-Men box" featuring classic mutant storylines with Colossus and Shadowcat, though difficulty is somewhat uneven. Age of Apocalypse brings advanced X-Men content with "excellent scenarios" and Bishop/Magik ranked "two of the best heroes in the game," introducing mission side schemes.
+
+**The Hood scenario pack should integrate mid-game** for its exceptional value—9 modular encounter sets plus Standard II and Expert II difficulty variants make "everything you have more interesting." Once and Future Kang fits mid-game for multiplayer groups as "one of the best experiences in the game" for multiplayer, though solo players can skip (becomes extra long without added value).
+
+End-game content requires mastery. **Mad Titan's Shadow features difficulty "tuned up in comparison to other content"** but contains two of the best scenarios (Thanos and Hela). Expert Thanos ranks among hardest content. The Infinity Gauntlet modular set provides maximum challenge options for replay. Despite being uneven, the box merits play for peak scenarios.
+
+**Galaxy's Most Wanted should be saved for absolute last**. Community consensus labels it "almost the worst content" and "weakest expansion." It's "extremely punishing" requiring a large card pool, with quotes like "for a while I straight up did not think it was possible to complete the campaign on expert difficulty reliably." Ronan and Nebula "can just decide you lose" with limited counterplay. The unfair difficulty relies heavily on Surge keyword and "gimmick" encounters. Multiple sources recommend saving this until the full card pool is developed.
+
+The complete recommended progression order for Expert/Heroic play:
+
+**Phase 1 - Foundation**: Core Set Standard (Rhino → Klaw → Ultron), Core Set Expert for practice, purchase 4 hero packs (one per aspect) to build card pool, Rise of Red Skull Expert, Green Goblin scenario pack.
+
+**Phase 2 - Mid-Tier Challenge**: Purchase 4-6 more hero packs, Sinister Motives Expert, The Hood scenario pack for modular variety, Once and Future Kang (if multiplayer), NeXt Evolution Expert.
+
+**Phase 3 - Advanced Content**: Purchase 4-6 more hero packs, Mutant Genesis Expert, MojoMania scenario pack, Age of Apocalypse Expert, Agents of S.H.I.E.L.D. Expert.
+
+**Phase 4 - End-Game Mastery**: Purchase remaining hero packs, Mad Titan's Shadow Expert, Civil War Expert, Galaxy's Most Wanted Expert (final challenge), Wrecking Crew (completionist only—community says "you do not need this" as it's not modular and always plays the same).
+
+**Phase 5 - Ultimate Challenge**: Replay campaigns on Heroic 1, attempt Heroic 2+ for ultimate difficulty, use Infinity Gauntlet modular with any villain for maximum challenge.
+
+**Building card pool between campaigns is critical for Expert success**. Multiple sources emphasize purchasing hero packs steadily rather than rushing through campaigns. Some campaigns (Galaxy's Most Wanted, Mad Titan's Shadow) are nearly impossible on Expert without extensive card pools. Expert Red Skull is "near-impossible task solo without Justice aspect." Expert difficulty becomes more manageable as the card pool expands with more deckbuilding options.
+
+Wrecking Crew scenario pack ranks lowest priority with community saying "you do not need this." The Hood includes a better Wrecking Crew modular set, and the scenario isn't modular so it always plays identically. Only completionists need this pack.
+
+## Designing an effective randomizer tool
+
+**Three primary randomizer tools dominate community use**: Naouak's Marvel Champions Randomizer, Marvel Shuffle, and Krasstek's Marvel Championer. Each excels in different areas, providing design insights for new tool development.
+
+**Marvel Shuffle (marvelshuffle.com) wins for visual appeal and simplicity**, built in React with bookmark URL syncing. Its one-click randomization, clean interface, and mobile-friendly design make it the quickest setup option. The campaign mode "next scenario" button for playing through campaign boxes with random modules represents a killer feature. However, it lacks difficulty selection options, a noted weakness.
+
+**Naouak's randomizer (naouak.github.io/marvel-lcg-randomizer) balances features and functionality** using Vue.js/React. It includes collection tracking with per-expansion selection, player count settings (1-4), difficulty preferences (Standard/Expert modes), the ability to select specific villain while randomizing modules, and toggles for Standard II/Expert II encounter sets. It generates villain, modular sets, heroes, and aspects for all players. The criticism is UI feedback being unclear when generation happens, requiring scrolling to see results.
+
+**Krasstek's Marvel Championer (krasstek.shinyapps.io/marvelchampioner) provides maximum customization**, built as an R Shiny app. Its unique feature is **full deck randomization generating complete 40-50 card decklists**, not just hero/aspect. It uses MarvelCDB data to create synergistic decks by pulling correlation data between cards. The difficulty-based scenario generation uses predictive models from Matt Crawford's Star Difficulty Levels project. Additional features include thematic scenario options, hero popularity tiers based on MarvelCDB deck-building activity, aspect weight calculations, BGG logging integration, and "Card of the Day." The trade-off is a less clean interface and slower performance due to complexity.
+
+**Marvel Champions Tracker (marvelchampionstracker.com) integrates randomization with game logging**. Its unique replayability tracking can generate brand new games OR variations of previous games. The unplayed content mode generates games with heroes/villains not yet played based on logs. "Chaos mode" removes all parameters for truly random generation. Trophy system rewards for logging randomizer games. The design philosophy emphasizes mobile-first with polished UI/UX.
+
+**Hero randomizer parameters experienced players value** center on aspect selection across four main aspects (Justice/thwarting, Leadership/allies, Aggression/damage, Protection/defense) plus the special Pool aspect. Key considerations include hero-aspect synergy varying by player count—solo play benefits from shoring up weaknesses (Thor/Spider-Man + Justice for low thwarting) while multiplayer allows leaning into strengths (Thor + Aggression, letting others handle threat).
+
+Solo versus multiplayer dramatically changes requirements. **True solo demands heroes covering all roles**: damage, thwarting, defense/survivability, creating more swingy gameplay where some heroes struggle (Hulk auto-loss in many scenarios). Two-handed solo is most popular, requiring avoiding Aggression + Protection combos that struggle with threat. Multiplayer 3-4 players encourages specialization, making "weaker" solo heroes viable when one player focuses entirely on threat removal.
+
+Collection-based filtering is essential—only showing owned heroes with per-expansion toggles and wave-based filtering. Hero popularity tiers based on MarvelCDB deck-building activity help guide recommendations. Complexity filtering separates new player-friendly preconstructed heroes from complex multi-aspect heroes for experienced players.
+
+**Villain randomizer parameters start with difficulty management**. Official modular ratings use 1-5 scale (core set) or 4-8 scale (Kang expansion). Community tiers organize as Hardest (Doomsday Chair, Legions of Hydra, Anachronauts), Hard (Masters of Evil, A Mess of Things, Hydra Patrol), Normal (Experimental Weapons, Under Attack, Power Drain), and Easy (only Bomb Scare). Difficulty filters should allow range selection (easy/medium/hard/expert), Standard vs Expert mode toggle, and Standard I/II/III and Expert I/II options.
+
+**Modular set selection enables the game's greatest strength for replayability**. The community emphasizes modular sets are "woefully underutilized" despite providing "insane amount of customization, variety and replayability." The same villain feels very different with different modular combinations. Parameters should include number of modular sets (typically 1-2), thematic coherence options matching villain themes, synergy with villain mechanics, and specific set avoidance options.
+
+Campaign versus standalone represents a critical distinction. Campaign features need sequential play through connected scenarios with random modules while maintaining story order and campaign progress tracking. Marvel Shuffle's "next campaign scenario" button exemplifies this well. Standalone features allow complete randomization, thematic matching options, and difficulty-based pairing.
+
+**Advanced features that experienced players value include comprehensive collection management** with checkbox interfaces for owned expansions, granular per-pack selection, and persistent storage via cookies, accounts, or bookmark URLs. Mobile-friendly collection tracking is mandatory as many players use randomizers while setting up at the table.
+
+Replayability tracking represents MCT's killer feature—tracking what you've played to generate unplayed content specifically, avoiding repeated combinations. "Variations of previous games" option and statistics (win rates, most-played content, completion percentage) add significant value. Collection completion goals provide motivation.
+
+Pairing recommendations using difficulty-based matching (hero strength vs villain difficulty), thematic pairings (matching heroes to appropriate villains), and synergy awareness avoiding problematic combinations enhance the experience. Hero-villain counter relationships should be considered.
+
+**Deck generation separates basic from advanced randomizers**. Krasstek demonstrates that full decklist creation with card synergy analysis using MarvelCDB correlation data creates playable decks, not random card assortments. This requires handling multiple copies of key cards, deck-building rules and restrictions, and aspect-specific card recommendations.
+
+**Design insights from community feedback emphasize core principles**: collection awareness is mandatory baseline, balance simplicity versus depth by offering quick random option AND detailed parameters, mobile-friendly design for table-side use, clear visual feedback confirming what was generated, and persistent data saving collection/preferences between sessions.
+
+Must-have features include collection tracker with persistent storage, player count selection, difficulty controls, re-roll/generate new button, and clear output display. Nice-to-have features add campaign mode support, thematic pairing options, replayability tracking, unplayed content filtering, hero/villain specific selection with module randomization, and Standard/Expert II/III toggles.
+
+Power user features include full deck generation with synergies, difficulty-based smart matching, statistics and tracking, export/sharing capabilities, and custom constraints/challenge modes.
+
+**Technical stack recommendations favor React or Vue.js for web apps** with local storage for collection data and optional backend for accounts/tracking. MarvelCDB API provides card data. Mobile-first responsive design with fast client-side generation is standard. All top community tools are browser-based rather than mobile apps.
+
+Algorithm choices present pure random versus smart selection trade-offs. Pure random provides simpler, faster, true variety. Smart selection offers better balance, avoiding bad combinations. Ideal implementation provides both options as basic versus advanced modes. Difficulty prediction models add value, as do card synergy correlation analyses for creating playable decks.
+
+The community ecosystem shows players value variety over optimization—they're willing to try "suboptimal" combinations for novelty. Randomizers reduce decision fatigue when too many expansions make choosing overwhelming. They provide exploration tools to discover owned content not yet tried, saving time at game start while providing balanced challenge and optional thematic coherence without forcing it.

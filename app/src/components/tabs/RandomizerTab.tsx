@@ -21,6 +21,10 @@ interface RandomizerTabProps {
   setOnlyUnplayed: (value: boolean) => void;
   thematicPairing: boolean;
   setThematicPairing: (value: boolean) => void;
+  gameMode: 'Standard' | 'Expert';
+  setGameMode: (value: 'Standard' | 'Expert') => void;
+  encounterVariant: 'I' | 'II' | 'III';
+  setEncounterVariant: (value: 'I' | 'II' | 'III') => void;
   showDifficultyHelp: boolean;
   setShowDifficultyHelp: (value: boolean) => void;
   showComplexityHelp: boolean;
@@ -57,6 +61,10 @@ export default function RandomizerTab({
   setOnlyUnplayed,
   thematicPairing,
   setThematicPairing,
+  gameMode,
+  setGameMode,
+  encounterVariant,
+  setEncounterVariant,
   showDifficultyHelp,
   setShowDifficultyHelp,
   showComplexityHelp,
@@ -93,8 +101,8 @@ export default function RandomizerTab({
           <div className="text-xs text-gray-400">Scenarios</div>
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold text-red-400">{stats.collectionPercentage.heroes}%</div>
-          <div className="text-xs text-gray-400">Héroes</div>
+          <div className="text-2xl font-bold text-red-400">{stats.collectionPercentage.heroPacks}%</div>
+          <div className="text-xs text-gray-400">Hero Packs</div>
         </div>
       </div>
 
@@ -236,6 +244,31 @@ export default function RandomizerTab({
               <option value="Both">Ambos</option>
             </select>
           </div>
+
+          <div>
+            <label className="block text-sm font-bold mb-2">Modo de Juego</label>
+            <select
+              value={gameMode}
+              onChange={(e) => setGameMode(e.target.value as 'Standard' | 'Expert')}
+              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
+            >
+              <option value="Standard">Standard</option>
+              <option value="Expert">Expert</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold mb-2">Encounter Set</label>
+            <select
+              value={encounterVariant}
+              onChange={(e) => setEncounterVariant(e.target.value as 'I' | 'II' | 'III')}
+              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
+            >
+              <option value="I">{gameMode} I</option>
+              <option value="II">{gameMode} II</option>
+              <option value="III">{gameMode} III</option>
+            </select>
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-4 mb-4">
@@ -362,6 +395,16 @@ export default function RandomizerTab({
             <div className="bg-black bg-opacity-40 rounded p-3 text-sm">
               <div className="font-bold text-yellow-300 mb-1">Mecánicas: {randomVillain.mechanics}</div>
               <div className="text-gray-300">{randomVillain.description}</div>
+            </div>
+            <div className="mt-3 bg-blue-900 bg-opacity-40 rounded p-3">
+              <div className="text-sm font-bold text-blue-300">
+                🎯 Modo: {gameMode} {encounterVariant}
+              </div>
+              <div className="text-xs text-gray-400 mt-1">
+                {gameMode === 'Standard'
+                  ? 'Stage I + II villain cards + Standard encounter set'
+                  : 'Stage II + III villain cards + Expert encounter set (Exhaustion, Masterplan, Under Fire)'}
+              </div>
             </div>
           </div>
 

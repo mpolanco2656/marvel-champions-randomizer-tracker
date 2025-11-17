@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import type { Hero, Villain, ModularSet, Complexity, Playstyle, Tier, PlayerOptimization } from './types';
-import { campaigns, scenarioPacks, heroes, villains, modularSets, progressionGuide } from './data';
+import { campaigns, scenarioPacks, heroPacks, heroes, villains, modularSets, progressionGuide } from './data';
 import { useCollection } from './hooks/useCollection';
 import { useGameHistory } from './hooks/useGameHistory';
+import { useCampaignRandomizer } from './hooks/useCampaignRandomizer';
 import { getOwnedSources, generateWarningsAndSuggestions, selectThematicModulars } from './utils/gameLogic';
 import Header from './components/layout/Header';
 import TabNavigation from './components/layout/TabNavigation';
 import RandomizerTab from './components/tabs/RandomizerTab';
 import CampaignTab from './components/tabs/CampaignTab';
+import CampaignRandomizerTab from './components/tabs/CampaignRandomizerTab';
 import CollectionTab from './components/tabs/CollectionTab';
 import HistoryTab from './components/tabs/HistoryTab';
 import ProgressionTab from './components/tabs/ProgressionTab';
 
-type TabType = 'randomizer' | 'campaign' | 'collection' | 'history' | 'progression';
+type TabType = 'randomizer' | 'campaign' | 'campaignrandomizer' | 'collection' | 'history' | 'progression';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('randomizer');
@@ -21,9 +23,21 @@ export default function App() {
   const { collection, setCollection } = useCollection();
   const { history, addGame, clearHistory } = useGameHistory();
 
-  // Campaign mode
-  const [activeCampaign, setActiveCampaign] = useState<string | null>(null);
-  const [campaignProgress, setCampaignProgress] = useState<number>(0);
+  // Campaign Randomizer
+  const {
+    activeCampaign,
+    randomMode,
+    campaignScenarios,
+    mixedScenarios,
+    setActiveCampaign,
+    setRandomMode,
+    setCampaignScenarios,
+    setMixedScenarios,
+    markCampaignScenarioComplete,
+    markMixedScenarioComplete,
+    clearCampaignScenarios,
+    clearMixedScenarios
+  } = useCampaignRandomizer();
 
   // Hero filters
   const [playerCount, setPlayerCount] = useState<number>(2);
@@ -38,6 +52,10 @@ export default function App() {
   const [modularCount, setModularCount] = useState<number>(2);
   const [thematicPairing, setThematicPairing] = useState(false);
 
+  // Game mode settings
+  const [gameMode, setGameMode] = useState<'Standard' | 'Expert'>('Standard');
+  const [encounterVariant, setEncounterVariant] = useState<'I' | 'II' | 'III'>('I');
+
   // Help tooltips
   const [showComplexityHelp, setShowComplexityHelp] = useState(false);
   const [showDifficultyHelp, setShowDifficultyHelp] = useState(false);
@@ -51,7 +69,7 @@ export default function App() {
 
   // Get owned content sources
   const getOwnedSourcesList = (): string[] => {
-    return getOwnedSources(collection.campaigns, collection.scenarioPacks);
+    return getOwnedSources(collection.campaigns, collection.scenarioPacks, collection.heroPacks || []);
   };
 
   // Filter functions
@@ -161,34 +179,6 @@ export default function App() {
     alert('¡Juego guardado en historial!');
   };
 
-  const nextCampaignScenario = () => {
-    if (!activeCampaign) return;
-
-    const campaign = campaigns.find(c => c.key === activeCampaign);
-    if (!campaign) return;
-
-    if (campaignProgress >= campaign.villains.length) {
-      alert('¡Campaña completada!');
-      return;
-    }
-
-    const villainKey = campaign.villains[campaignProgress];
-    const villain = villains.find(v => v.key === villainKey);
-    if (villain) {
-      setRandomVillain(villain);
-
-      const availableModulars = filterModulars();
-      const shuffled = availableModulars.sort(() => Math.random() - 0.5);
-      setRandomModulars(shuffled.slice(0, Math.min(modularCount, shuffled.length)));
-
-      setCampaignProgress(campaignProgress + 1);
-
-      const { warnings: newWarnings, suggestions: newSuggestions } = generateWarningsAndSuggestions(randomHeroes, villain, playerCount);
-      setWarnings(newWarnings);
-      setSuggestions(newSuggestions);
-    }
-  };
-
   const exportSetup = () => {
     const setup = {
       heroes: randomHeroes.map(h => h.name),
@@ -221,7 +211,7 @@ export default function App() {
     collectionPercentage: {
       campaigns: campaigns.length > 0 ? (collection.campaigns.length / campaigns.length * 100).toFixed(0) : '0',
       scenarioPacks: scenarioPacks.length > 0 ? (collection.scenarioPacks.length / scenarioPacks.length * 100).toFixed(0) : '0',
-      heroes: heroes.length > 0 ? ((heroes.filter(h => getOwnedSourcesList().includes(h.source)).length / heroes.length) * 100).toFixed(0) : '0'
+      heroPacks: heroPacks.length > 0 ? ((collection.heroPacks || []).length / heroPacks.length * 100).toFixed(0) : '0'
     }
   };
 
@@ -252,6 +242,10 @@ export default function App() {
             setOnlyUnplayed={setOnlyUnplayed}
             thematicPairing={thematicPairing}
             setThematicPairing={setThematicPairing}
+            gameMode={gameMode}
+            setGameMode={setGameMode}
+            encounterVariant={encounterVariant}
+            setEncounterVariant={setEncounterVariant}
             showComplexityHelp={showComplexityHelp}
             setShowComplexityHelp={setShowComplexityHelp}
             showDifficultyHelp={showDifficultyHelp}
@@ -273,11 +267,27 @@ export default function App() {
           <CampaignTab
             campaigns={campaigns}
             collection={collection}
+          />
+        )}
+
+        {activeTab === 'campaignrandomizer' && (
+          <CampaignRandomizerTab
+            campaigns={campaigns}
+            villains={villains}
+            collection={collection}
+            modularSets={modularSets}
             activeCampaign={activeCampaign}
+            randomMode={randomMode}
+            campaignScenarios={campaignScenarios}
+            mixedScenarios={mixedScenarios}
             setActiveCampaign={setActiveCampaign}
-            campaignProgress={campaignProgress}
-            setCampaignProgress={setCampaignProgress}
-            nextCampaignScenario={nextCampaignScenario}
+            setCampaignScenarios={setCampaignScenarios}
+            markScenarioComplete={markCampaignScenarioComplete}
+            setRandomMode={setRandomMode}
+            setMixedScenarios={setMixedScenarios}
+            markMixedScenarioComplete={markMixedScenarioComplete}
+            clearCampaignScenarios={clearCampaignScenarios}
+            clearMixedScenarios={clearMixedScenarios}
           />
         )}
 
@@ -287,6 +297,7 @@ export default function App() {
             setCollection={setCollection}
             campaigns={campaigns}
             scenarioPacks={scenarioPacks}
+            heroPacks={heroPacks}
             heroes={heroes}
             villains={villains}
             modularSets={modularSets}

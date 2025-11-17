@@ -4,6 +4,7 @@ import {
   Archive,
   TrendingUp,
   Target,
+  Dices,
 } from 'lucide-react';
 
 interface TabNavigationProps {
@@ -14,6 +15,7 @@ interface TabNavigationProps {
 const tabs = [
   { id: 'randomizer', label: 'Randomizer', icon: Shuffle },
   { id: 'campaign', label: 'Campaign', icon: BookOpen },
+  { id: 'campaignrandomizer', label: 'Campaign Random', icon: Dices },
   { id: 'collection', label: 'Collection', icon: Archive },
   { id: 'progression', label: 'Progression', icon: Target },
   { id: 'history', label: 'History', icon: TrendingUp },
