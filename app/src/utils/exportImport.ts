@@ -2,8 +2,13 @@
  * Export/Import utilities for Marvel Champions data
  */
 
+import type { GameHistory, Villain, ModularSet } from '../types';
+
 // Version for compatibility tracking
 const EXPORT_VERSION = '1.0.0';
+
+// Estimated hours per game for statistics calculation
+const ESTIMATED_HOURS_PER_GAME = 1;
 
 export interface ExportMetadata {
   version: string;
@@ -18,14 +23,7 @@ export interface CollectionExportData {
 }
 
 export interface HistoryExportData {
-  history: Array<{
-    id: string;
-    date: string;
-    heroes: string[];
-    villain: string;
-    modulars: string[];
-    result?: 'win' | 'loss';
-  }>;
+  history: GameHistory[];
   stats: {
     totalGames: number;
     wins: number;
@@ -42,19 +40,17 @@ export interface CampaignExportData {
   completedScenarios: Record<string, number>;
 }
 
+export interface CampaignScenarioExportData {
+  villain: Villain;
+  modulars: ModularSet[];
+  completed: boolean;
+}
+
 export interface CampaignRandomExportData {
   activeCampaign: string | null;
   randomMode: 'campaign' | 'mixed';
-  campaignScenarios: Array<{
-    villain: any;
-    modulars: any[];
-    completed: boolean;
-  }>;
-  mixedScenarios: Array<{
-    villain: any;
-    modulars: any[];
-    completed: boolean;
-  }>;
+  campaignScenarios: CampaignScenarioExportData[];
+  mixedScenarios: CampaignScenarioExportData[];
 }
 
 export interface FullExportData {
@@ -66,9 +62,49 @@ export interface FullExportData {
 }
 
 /**
+ * Create base export data structure with metadata and empty sections
+ */
+function createBaseExportData(): FullExportData {
+  return {
+    metadata: {
+      version: EXPORT_VERSION,
+      exportDate: new Date().toISOString(),
+      appName: 'Marvel Champions Randomizer & Tracker',
+    },
+    collection: {
+      campaigns: [],
+      scenarioPacks: [],
+      heroPacks: [],
+    },
+    history: {
+      history: [],
+      stats: {
+        totalGames: 0,
+        wins: 0,
+        losses: 0,
+        winRate: 0,
+        uniqueHeroes: 0,
+        uniqueVillains: 0,
+        hoursPlayed: 0,
+      },
+    },
+    campaign: {
+      activeCampaign: null,
+      completedScenarios: {},
+    },
+    campaignRandom: {
+      activeCampaign: null,
+      randomMode: 'campaign',
+      campaignScenarios: [],
+      mixedScenarios: [],
+    },
+  };
+}
+
+/**
  * Calculate statistics from history data
  */
-export function calculateStats(history: any[]): HistoryExportData['stats'] {
+export function calculateStats(history: GameHistory[]): HistoryExportData['stats'] {
   const wins = history.filter((game) => game.result === 'win').length;
   const losses = history.filter((game) => game.result === 'loss').length;
   const totalGames = history.length;
@@ -77,8 +113,7 @@ export function calculateStats(history: any[]): HistoryExportData['stats'] {
   const uniqueHeroes = new Set(history.flatMap((game) => game.heroes)).size;
   const uniqueVillains = new Set(history.map((game) => game.villain)).size;
 
-  // Estimate 1 hour per game (can be adjusted)
-  const hoursPlayed = totalGames * 1;
+  const hoursPlayed = totalGames * ESTIMATED_HOURS_PER_GAME;
 
   return {
     totalGames,
@@ -95,36 +130,8 @@ export function calculateStats(history: any[]): HistoryExportData['stats'] {
  * Export collection data to JSON
  */
 export function exportCollectionData(collection: CollectionExportData): string {
-  const exportData: FullExportData = {
-    metadata: {
-      version: EXPORT_VERSION,
-      exportDate: new Date().toISOString(),
-      appName: 'Marvel Champions Randomizer & Tracker',
-    },
-    collection,
-    history: {
-      history: [],
-      stats: {
-        totalGames: 0,
-        wins: 0,
-        losses: 0,
-        winRate: 0,
-        uniqueHeroes: 0,
-        uniqueVillains: 0,
-        hoursPlayed: 0,
-      },
-    },
-    campaign: {
-      activeCampaign: null,
-      completedScenarios: {},
-    },
-    campaignRandom: {
-      activeCampaign: null,
-      randomMode: 'campaign',
-      campaignScenarios: [],
-      mixedScenarios: [],
-    },
-  };
+  const exportData = createBaseExportData();
+  exportData.collection = collection;
 
   return JSON.stringify(exportData, null, 2);
 }
@@ -132,34 +139,13 @@ export function exportCollectionData(collection: CollectionExportData): string {
 /**
  * Export history data to JSON
  */
-export function exportHistoryData(history: any[]): string {
+export function exportHistoryData(history: GameHistory[]): string {
+  const exportData = createBaseExportData();
   const stats = calculateStats(history);
 
-  const exportData: FullExportData = {
-    metadata: {
-      version: EXPORT_VERSION,
-      exportDate: new Date().toISOString(),
-      appName: 'Marvel Champions Randomizer & Tracker',
-    },
-    collection: {
-      campaigns: [],
-      scenarioPacks: [],
-      heroPacks: [],
-    },
-    history: {
-      history,
-      stats,
-    },
-    campaign: {
-      activeCampaign: null,
-      completedScenarios: {},
-    },
-    campaignRandom: {
-      activeCampaign: null,
-      randomMode: 'campaign',
-      campaignScenarios: [],
-      mixedScenarios: [],
-    },
+  exportData.history = {
+    history,
+    stats,
   };
 
   return JSON.stringify(exportData, null, 2);
@@ -172,39 +158,11 @@ export function exportCampaignData(
   activeCampaign: string | null,
   completedScenarios: Record<string, number>
 ): string {
-  const exportData: FullExportData = {
-    metadata: {
-      version: EXPORT_VERSION,
-      exportDate: new Date().toISOString(),
-      appName: 'Marvel Champions Randomizer & Tracker',
-    },
-    collection: {
-      campaigns: [],
-      scenarioPacks: [],
-      heroPacks: [],
-    },
-    history: {
-      history: [],
-      stats: {
-        totalGames: 0,
-        wins: 0,
-        losses: 0,
-        winRate: 0,
-        uniqueHeroes: 0,
-        uniqueVillains: 0,
-        hoursPlayed: 0,
-      },
-    },
-    campaign: {
-      activeCampaign,
-      completedScenarios,
-    },
-    campaignRandom: {
-      activeCampaign: null,
-      randomMode: 'campaign',
-      campaignScenarios: [],
-      mixedScenarios: [],
-    },
+  const exportData = createBaseExportData();
+
+  exportData.campaign = {
+    activeCampaign,
+    completedScenarios,
   };
 
   return JSON.stringify(exportData, null, 2);
@@ -216,42 +174,16 @@ export function exportCampaignData(
 export function exportCampaignRandomData(
   activeCampaign: string | null,
   randomMode: 'campaign' | 'mixed',
-  campaignScenarios: any[],
-  mixedScenarios: any[]
+  campaignScenarios: CampaignScenarioExportData[],
+  mixedScenarios: CampaignScenarioExportData[]
 ): string {
-  const exportData: FullExportData = {
-    metadata: {
-      version: EXPORT_VERSION,
-      exportDate: new Date().toISOString(),
-      appName: 'Marvel Champions Randomizer & Tracker',
-    },
-    collection: {
-      campaigns: [],
-      scenarioPacks: [],
-      heroPacks: [],
-    },
-    history: {
-      history: [],
-      stats: {
-        totalGames: 0,
-        wins: 0,
-        losses: 0,
-        winRate: 0,
-        uniqueHeroes: 0,
-        uniqueVillains: 0,
-        hoursPlayed: 0,
-      },
-    },
-    campaign: {
-      activeCampaign: null,
-      completedScenarios: {},
-    },
-    campaignRandom: {
-      activeCampaign,
-      randomMode,
-      campaignScenarios,
-      mixedScenarios,
-    },
+  const exportData = createBaseExportData();
+
+  exportData.campaignRandom = {
+    activeCampaign,
+    randomMode,
+    campaignScenarios,
+    mixedScenarios,
   };
 
   return JSON.stringify(exportData, null, 2);
@@ -262,26 +194,20 @@ export function exportCampaignRandomData(
  */
 export function exportAllData(
   collection: CollectionExportData,
-  history: any[],
+  history: GameHistory[],
   campaign: CampaignExportData,
   campaignRandom: CampaignRandomExportData
 ): string {
+  const exportData = createBaseExportData();
   const stats = calculateStats(history);
 
-  const exportData: FullExportData = {
-    metadata: {
-      version: EXPORT_VERSION,
-      exportDate: new Date().toISOString(),
-      appName: 'Marvel Champions Randomizer & Tracker',
-    },
-    collection,
-    history: {
-      history,
-      stats,
-    },
-    campaign,
-    campaignRandom,
+  exportData.collection = collection;
+  exportData.history = {
+    history,
+    stats,
   };
+  exportData.campaign = campaign;
+  exportData.campaignRandom = campaignRandom;
 
   return JSON.stringify(exportData, null, 2);
 }
