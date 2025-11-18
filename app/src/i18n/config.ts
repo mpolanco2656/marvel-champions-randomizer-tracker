@@ -17,6 +17,8 @@ import enCollection from './locales/en/collection.json';
 import esCollection from './locales/es/collection.json';
 import enHistory from './locales/en/history.json';
 import esHistory from './locales/es/history.json';
+import enProgression from './locales/en/progression.json';
+import esProgression from './locales/es/progression.json';
 
 i18n
   // Detect user language
@@ -34,6 +36,7 @@ i18n
         campaignRandomizer: enCampaignRandomizer,
         collection: enCollection,
         history: enHistory,
+        progression: enProgression,
       },
       es: {
         common: esCommon,
@@ -43,6 +46,7 @@ i18n
         campaignRandomizer: esCampaignRandomizer,
         collection: esCollection,
         history: esHistory,
+        progression: esProgression,
       },
     },
     fallbackLng: 'es', // Default to Spanish

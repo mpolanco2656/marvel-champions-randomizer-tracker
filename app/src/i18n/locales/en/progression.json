@@ -1,0 +1,17 @@
+{
+  "title": "Complete Campaign Guide",
+  "description": "Optimized order for Expert/Heroic difficulty with card pool building strategy.",
+  "types": {
+    "campaign": "📦 Campaign",
+    "scenario": "🎯 Scenario",
+    "heroes": "🦸 Heroes"
+  },
+  "criticalNotes": {
+    "title": "⚠️ Critical Notes",
+    "note1": "Building card pool between campaigns is CRITICAL for Expert success",
+    "note2": "Galaxy's Most Wanted is LAST - extremely punishing (Ronan 26% win rate)",
+    "note3": "Rise of Red Skull is the must play #1 expansion recommended by community after Core",
+    "note4": "Expert difficulty scales with card pool size - more options = more manageable",
+    "note5": "Wrecking Crew ONLY for completionists - community says \"you don't need it\""
+  }
+}

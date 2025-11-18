@@ -108,7 +108,7 @@ export default function CampaignTab({
                       <div className={`w-6 h-6 rounded border-2 flex items-center justify-center ${
                         isCompleted ? 'bg-green-600 border-green-400' : 'border-gray-500'
                       }`}>
-                        {isCompleted && <Check size={16} className="text-white" />}
+                        {isCompleted ? <Check size={16} className="text-white" /> : null}
                       </div>
                       <div>
                         <div className="text-sm text-gray-400">{t('scenario')} {idx + 1}</div>

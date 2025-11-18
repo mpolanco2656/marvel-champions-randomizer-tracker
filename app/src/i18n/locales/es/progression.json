@@ -1,0 +1,17 @@
+{
+  "title": "Guía de Campaña",
+  "description": "Orden optimizado para dificultad Experto/Heroica con estrategia de construcción de reserva de cartas.",
+  "types": {
+    "campaign": "📦 Campaña",
+    "scenario": "🎯 Scenario",
+    "heroes": "🦸 Heroes"
+  },
+  "criticalNotes": {
+    "title": "⚠️ Notas Críticas",
+    "note1": "Construir reserva de cartas entre campañas es CRÍTICO para éxito en Experto",
+    "note2": "Galaxy's Most Wanted es ÚLTIMO - extremadamente punitivo (Ronan 26% win rate)",
+    "note3": "Rise of Red Skull es la expansión más recomendada por la comunidad después del Core",
+    "note4": "La dificultad Experto escala con el tamaño de la reserva de cartas - más opciones = más manejable",
+    "note5": "Wrecking Crew SOLO para completistas - la comunidad dice \"no lo necesitas\""
+  }
+}
