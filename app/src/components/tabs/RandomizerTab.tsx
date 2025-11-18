@@ -81,7 +81,7 @@ export default function RandomizerTab({
   exportSetup,
   saveToHistory,
 }: RandomizerTabProps) {
-  const { t } = useTranslation(['randomizer', 'common']);
+  const { t } = useTranslation('randomizer');
 
   return (
     <div className="space-y-6">
@@ -255,8 +255,8 @@ export default function RandomizerTab({
               onChange={(e) => setGameMode(e.target.value as 'Standard' | 'Expert')}
               className="w-full p-2 rounded bg-gray-800 border border-gray-600"
             >
-              <option value="Standard">Standard</option>
-              <option value="Expert">Expert</option>
+              <option value="Standard">{t('randomizer:gameModeOptions.standard')}</option>
+              <option value="Expert">{t('randomizer:gameModeOptions.expert')}</option>
             </select>
           </div>
 
@@ -267,9 +267,9 @@ export default function RandomizerTab({
               onChange={(e) => setEncounterVariant(e.target.value as 'I' | 'II' | 'III')}
               className="w-full p-2 rounded bg-gray-800 border border-gray-600"
             >
-              <option value="I">{gameMode} I</option>
-              <option value="II">{gameMode} II</option>
-              <option value="III">{gameMode} III</option>
+              <option value="I">{t(`randomizer:gameModeOptions.${gameMode.toLowerCase()}`)} I</option>
+              <option value="II">{t(`randomizer:gameModeOptions.${gameMode.toLowerCase()}`)} II</option>
+              <option value="III">{t(`randomizer:gameModeOptions.${gameMode.toLowerCase()}`)} III</option>
             </select>
           </div>
         </div>

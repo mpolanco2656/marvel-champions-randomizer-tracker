@@ -36,21 +36,21 @@ export default function Header({ onExport, onImport }: HeaderProps) {
           <button
             onClick={toggleLanguage}
             className="bg-purple-600 hover:bg-purple-700 font-bold py-2 px-4 rounded flex items-center gap-2 transition-all"
-            title={i18n.language === 'es' ? 'Switch to English' : 'Cambiar a Español'}
+            title={t(i18n.language === 'es' ? 'tooltips.switchToEnglish' : 'tooltips.switchToSpanish')}
           >
             <Languages size={18} />
-            {i18n.language === 'es' ? 'EN' : 'ES'}
+            {i18n.language === 'es' ? 'English' : 'Español'}
           </button>
         </div>
         <div className="text-center flex-1">
-          <h1 className="text-5xl font-bold mb-2 text-yellow-300">{t('app.title').toUpperCase()}</h1>
+          <h1 className="text-5xl font-bold mb-2 text-yellow-300 uppercase">{t('app.title')}</h1>
           <p className="text-xl text-gray-300">{t('app.subtitle')}</p>
         </div>
         <div className="flex-1 flex justify-end gap-3">
           <button
             onClick={onExport}
             className="bg-blue-600 hover:bg-blue-700 font-bold py-2 px-4 rounded flex items-center gap-2 transition-all"
-            title="Export all data to JSON"
+            title={t('tooltips.exportData')}
           >
             <Download size={18} />
             {t('buttons.exportAll')}
@@ -58,7 +58,7 @@ export default function Header({ onExport, onImport }: HeaderProps) {
           <button
             onClick={handleImportClick}
             className="bg-green-600 hover:bg-green-700 font-bold py-2 px-4 rounded flex items-center gap-2 transition-all"
-            title="Import data from JSON"
+            title={t('tooltips.importData')}
           >
             <Upload size={18} />
             {t('buttons.importAll')}

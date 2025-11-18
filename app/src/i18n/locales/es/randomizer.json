@@ -76,6 +76,10 @@
     "any": "Cualquiera",
     "both": "Ambos"
   },
+  "gameModeOptions": {
+    "standard": "Estándar",
+    "expert": "Experto"
+  },
   "checkboxes": {
     "unplayedHeroes": "Solo Héroes No Jugados",
     "thematicPairing": "Emparejamiento Temático"

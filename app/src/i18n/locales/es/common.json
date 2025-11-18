@@ -6,5 +6,11 @@
   "buttons": {
     "exportAll": "Exportar",
     "importAll": "Importar"
+  },
+  "tooltips": {
+    "exportData": "Exportar todos los datos a JSON",
+    "importData": "Importar datos desde JSON",
+    "switchToSpanish": "Cambiar a Español",
+    "switchToEnglish": "Switch to English"
   }
 }
