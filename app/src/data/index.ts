@@ -4,4 +4,5 @@ export { heroPacks } from './heroPacks';
 export { heroes } from './heroes';
 export { villains } from './villains';
 export { modularSets } from './modularSets';
-export { progressionGuide } from './progressionGuide';
+export { progressionGuideEs } from './progressionGuide.es';
+export { progressionGuideEn } from './progressionGuide.en';

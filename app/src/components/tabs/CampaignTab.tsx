@@ -115,11 +115,11 @@ export default function CampaignTab({
                         <div className="font-bold text-white capitalize">{villainKey.replace(/_/g, ' ')}</div>
                       </div>
                     </div>
-                    {isCompleted && (
+                    {isCompleted ? (
                       <span className="bg-green-600 text-white text-xs px-3 py-1 rounded font-bold">
                         {t('completedBadge')}
                       </span>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               );
