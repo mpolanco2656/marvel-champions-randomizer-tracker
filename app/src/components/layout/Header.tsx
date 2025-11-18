@@ -1,5 +1,6 @@
-import { Download, Upload } from 'lucide-react';
+import { Download, Upload, Languages } from 'lucide-react';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface HeaderProps {
   onExport: () => void;
@@ -8,6 +9,7 @@ interface HeaderProps {
 
 export default function Header({ onExport, onImport }: HeaderProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { t, i18n } = useTranslation();
 
   const handleImportClick = () => {
     fileInputRef.current?.click();
@@ -22,13 +24,27 @@ export default function Header({ onExport, onImport }: HeaderProps) {
     event.target.value = '';
   };
 
+  const toggleLanguage = () => {
+    const newLang = i18n.language === 'es' ? 'en' : 'es';
+    i18n.changeLanguage(newLang);
+  };
+
   return (
     <div className="mb-6">
       <div className="flex justify-between items-center mb-4">
-        <div className="flex-1"></div>
+        <div className="flex-1 flex justify-start">
+          <button
+            onClick={toggleLanguage}
+            className="bg-purple-600 hover:bg-purple-700 font-bold py-2 px-4 rounded flex items-center gap-2 transition-all"
+            title={i18n.language === 'es' ? 'Switch to English' : 'Cambiar a Español'}
+          >
+            <Languages size={18} />
+            {i18n.language === 'es' ? 'EN' : 'ES'}
+          </button>
+        </div>
         <div className="text-center flex-1">
-          <h1 className="text-5xl font-bold mb-2 text-yellow-300">MARVEL CHAMPIONS</h1>
-          <p className="text-xl text-gray-300">Ultimate Randomizer con Collection Tracking</p>
+          <h1 className="text-5xl font-bold mb-2 text-yellow-300">{t('app.title').toUpperCase()}</h1>
+          <p className="text-xl text-gray-300">{t('app.subtitle')}</p>
         </div>
         <div className="flex-1 flex justify-end gap-3">
           <button
@@ -37,7 +53,7 @@ export default function Header({ onExport, onImport }: HeaderProps) {
             title="Export all data to JSON"
           >
             <Download size={18} />
-            Export All
+            {t('buttons.exportAll')}
           </button>
           <button
             onClick={handleImportClick}
@@ -45,7 +61,7 @@ export default function Header({ onExport, onImport }: HeaderProps) {
             title="Import data from JSON"
           >
             <Upload size={18} />
-            Import All
+            {t('buttons.importAll')}
           </button>
           <input
             ref={fileInputRef}

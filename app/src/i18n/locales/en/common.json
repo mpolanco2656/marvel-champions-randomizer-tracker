@@ -1,0 +1,10 @@
+{
+  "app": {
+    "title": "Marvel Champions",
+    "subtitle": "Ultimate Randomizer with Collection Tracking"
+  },
+  "buttons": {
+    "exportAll": "Export All",
+    "importAll": "Import All"
+  }
+}

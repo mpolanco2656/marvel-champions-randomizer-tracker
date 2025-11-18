@@ -1,0 +1,10 @@
+{
+  "app": {
+    "title": "Marvel Champions",
+    "subtitle": "Randomizador Definitivo con Seguimiento de Colección"
+  },
+  "buttons": {
+    "exportAll": "Exportar",
+    "importAll": "Importar"
+  }
+}
