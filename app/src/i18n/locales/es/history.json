@@ -1,0 +1,19 @@
+{
+  "title": "Historial & Estadísticas",
+  "stats": {
+    "totalGames": "Total Juegos",
+    "winRate": "% Victorias",
+    "playedHeroes": "Héroes Jugados",
+    "facedVillains": "Villanos Enfrentados",
+    "mostPlayedHero": "Héroe Más Jugado",
+    "games": "juegos"
+  },
+  "results": {
+    "win": "WIN",
+    "loss": "LOSS"
+  },
+  "buttons": {
+    "clearHistory": "Limpiar Historial"
+  },
+  "empty": "No hay juegos en el historial aún. Juega algunas partidas y guarda los resultados para ver estadísticas."
+}

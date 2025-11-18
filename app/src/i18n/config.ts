@@ -13,6 +13,10 @@ import enCampaign from './locales/en/campaign.json';
 import esCampaign from './locales/es/campaign.json';
 import enCampaignRandomizer from './locales/en/campaignRandomizer.json';
 import esCampaignRandomizer from './locales/es/campaignRandomizer.json';
+import enCollection from './locales/en/collection.json';
+import esCollection from './locales/es/collection.json';
+import enHistory from './locales/en/history.json';
+import esHistory from './locales/es/history.json';
 
 i18n
   // Detect user language
@@ -28,6 +32,8 @@ i18n
         tabs: enTabs,
         campaign: enCampaign,
         campaignRandomizer: enCampaignRandomizer,
+        collection: enCollection,
+        history: enHistory,
       },
       es: {
         common: esCommon,
@@ -35,6 +41,8 @@ i18n
         tabs: esTabs,
         campaign: esCampaign,
         campaignRandomizer: esCampaignRandomizer,
+        collection: esCollection,
+        history: esHistory,
       },
     },
     fallbackLng: 'es', // Default to Spanish

@@ -1,4 +1,5 @@
 import { Check, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import type { Collection, Campaign, ScenarioPack, HeroPack, Hero, Villain, ModularSet } from '../../types';
 
 interface CollectionTabProps {
@@ -24,12 +25,14 @@ export default function CollectionTab({
   modularSets,
   getOwnedSources,
 }: CollectionTabProps) {
+  const { t } = useTranslation('collection');
+
   return (
     <div className="space-y-6">
       {/* Campaigns */}
       <div className="bg-black bg-opacity-40 rounded-lg p-6">
         <h3 className="text-2xl font-bold text-yellow-300 mb-4">
-          Campañas ({collection.campaigns.length}/{campaigns.length})
+          {t('campaigns.title')} ({collection.campaigns.length}/{campaigns.length})
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mb-4">
           {campaigns.map(campaign => (
@@ -53,7 +56,7 @@ export default function CollectionTab({
                 {collection.campaigns.includes(campaign.key) ? <Check size={16} /> : <X size={16} />}
                 <div>
                   <div className="text-sm font-bold">{campaign.name}</div>
-                  <div className="text-xs text-gray-300">Wave {campaign.wave === 0 ? 'Core' : campaign.wave}</div>
+                  <div className="text-xs text-gray-300">{t('wave')} {campaign.wave === 0 ? t('core') : campaign.wave}</div>
                 </div>
               </div>
             </div>
@@ -64,13 +67,13 @@ export default function CollectionTab({
             onClick={() => setCollection(prev => ({ ...prev, campaigns: campaigns.map(c => c.key) }))}
             className="bg-green-600 hover:bg-green-700 font-bold py-2 px-4 rounded"
           >
-            Todas
+            {t('buttons.all')}
           </button>
           <button
             onClick={() => setCollection(prev => ({ ...prev, campaigns: ['core'] }))}
             className="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded"
           >
-            Solo Core
+            {t('buttons.coreOnly')}
           </button>
         </div>
       </div>
@@ -78,7 +81,7 @@ export default function CollectionTab({
       {/* Scenario Packs */}
       <div className="bg-black bg-opacity-40 rounded-lg p-6">
         <h3 className="text-2xl font-bold text-purple-400 mb-4">
-          Scenario Packs ({collection.scenarioPacks.length}/{scenarioPacks.length})
+          {t('scenarioPacks.title')} ({collection.scenarioPacks.length}/{scenarioPacks.length})
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mb-4">
           {scenarioPacks.map(pack => (
@@ -100,7 +103,7 @@ export default function CollectionTab({
                 {collection.scenarioPacks.includes(pack.key) ? <Check size={16} /> : <X size={16} />}
                 <div>
                   <div className="text-sm font-bold">{pack.name}</div>
-                  <div className="text-xs text-gray-300">Wave {pack.wave}</div>
+                  <div className="text-xs text-gray-300">{t('wave')} {pack.wave}</div>
                 </div>
               </div>
             </div>
@@ -111,13 +114,13 @@ export default function CollectionTab({
             onClick={() => setCollection(prev => ({ ...prev, scenarioPacks: scenarioPacks.map(p => p.key) }))}
             className="bg-green-600 hover:bg-green-700 font-bold py-2 px-4 rounded"
           >
-            Todos
+            {t('buttons.allMale')}
           </button>
           <button
             onClick={() => setCollection(prev => ({ ...prev, scenarioPacks: [] }))}
             className="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded"
           >
-            Ninguno
+            {t('buttons.none')}
           </button>
         </div>
       </div>
@@ -125,7 +128,7 @@ export default function CollectionTab({
       {/* Hero Packs */}
       <div className="bg-black bg-opacity-40 rounded-lg p-6">
         <h3 className="text-2xl font-bold text-blue-400 mb-4">
-          Hero Packs ({(collection.heroPacks || []).length}/{heroPacks.length})
+          {t('heroPacks.title')} ({(collection.heroPacks || []).length}/{heroPacks.length})
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mb-4">
           {heroPacks.map(pack => (
@@ -147,7 +150,7 @@ export default function CollectionTab({
                 {(collection.heroPacks || []).includes(pack.key) ? <Check size={16} /> : <X size={16} />}
                 <div>
                   <div className="text-sm font-bold">{pack.name}</div>
-                  <div className="text-xs text-gray-300">Wave {pack.wave}</div>
+                  <div className="text-xs text-gray-300">{t('wave')} {pack.wave}</div>
                 </div>
               </div>
             </div>
@@ -158,20 +161,20 @@ export default function CollectionTab({
             onClick={() => setCollection(prev => ({ ...prev, heroPacks: heroPacks.map(p => p.key) }))}
             className="bg-green-600 hover:bg-green-700 font-bold py-2 px-4 rounded"
           >
-            Todos
+            {t('buttons.allMale')}
           </button>
           <button
             onClick={() => setCollection(prev => ({ ...prev, heroPacks: [] }))}
             className="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded"
           >
-            Ninguno
+            {t('buttons.none')}
           </button>
         </div>
       </div>
 
       {/* Summary */}
       <div className="bg-gradient-to-r from-green-900 to-blue-900 bg-opacity-60 rounded-lg p-6">
-        <h3 className="text-xl font-bold text-yellow-300 mb-3">Resumen de Colección</h3>
+        <h3 className="text-xl font-bold text-yellow-300 mb-3">{t('summary.title')}</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div>
             <div className="text-3xl font-bold text-green-400">
@@ -180,7 +183,7 @@ export default function CollectionTab({
                 ({heroes.length > 0 ? ((heroes.filter(h => getOwnedSources().includes(h.source)).length / heroes.length) * 100).toFixed(0) : '0'}%)
               </span>
             </div>
-            <div className="text-sm text-gray-400">Héroes Disponibles</div>
+            <div className="text-sm text-gray-400">{t('summary.availableHeroes')}</div>
           </div>
           <div>
             <div className="text-3xl font-bold text-red-400">
@@ -189,7 +192,7 @@ export default function CollectionTab({
                 ({villains.length > 0 ? ((villains.filter(v => getOwnedSources().includes(v.source)).length / villains.length) * 100).toFixed(0) : '0'}%)
               </span>
             </div>
-            <div className="text-sm text-gray-400">Villanos Disponibles</div>
+            <div className="text-sm text-gray-400">{t('summary.availableVillains')}</div>
           </div>
           <div>
             <div className="text-3xl font-bold text-purple-400">
@@ -198,7 +201,7 @@ export default function CollectionTab({
                 ({modularSets.length > 0 ? ((modularSets.filter(m => getOwnedSources().includes(m.source)).length / modularSets.length) * 100).toFixed(0) : '0'}%)
               </span>
             </div>
-            <div className="text-sm text-gray-400">Sets Modulares</div>
+            <div className="text-sm text-gray-400">{t('summary.modularSets')}</div>
           </div>
           <div>
             <div className="text-3xl font-bold text-yellow-400">
@@ -210,7 +213,7 @@ export default function CollectionTab({
                 return totalPct.toFixed(0);
               })()}%
             </div>
-            <div className="text-sm text-gray-400">Total Colección</div>
+            <div className="text-sm text-gray-400">{t('summary.collectionCompletion')}</div>
           </div>
         </div>
       </div>

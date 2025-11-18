@@ -1,0 +1,29 @@
+{
+  "campaigns": {
+    "title": "Campañas",
+    "count": "{{owned}}/{{total}}"
+  },
+  "scenarioPacks": {
+    "title": "Packs de Escenarios",
+    "count": "{{owned}}/{{total}}"
+  },
+  "heroPacks": {
+    "title": "Packs de Héroes",
+    "count": "{{owned}}/{{total}}"
+  },
+  "buttons": {
+    "all": "Todas",
+    "allMale": "Todos",
+    "coreOnly": "Solo Core",
+    "none": "Ninguno"
+  },
+  "summary": {
+    "title": "Resumen de Colección",
+    "availableHeroes": "Héroes Disponibles",
+    "availableVillains": "Villanos Disponibles",
+    "modularSets": "Sets Modulares",
+    "collectionCompletion": "Total Colección"
+  },
+  "wave": "Wave",
+  "core": "Core"
+}
