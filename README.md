@@ -61,6 +61,45 @@ npm run dev
 
 El navegador se abrirá automáticamente en `http://localhost:5173`
 
+## 🐳 Docker
+
+Para ejecutar la aplicación en producción usando Docker:
+
+```bash
+# 1. Construir y ejecutar con Docker Compose
+docker-compose up -d
+
+# La aplicación estará disponible en http://localhost:3000
+```
+
+### Comandos Docker Útiles
+
+```bash
+# Ver logs del contenedor
+docker-compose logs -f
+
+# Detener los contenedores
+docker-compose down
+
+# Reconstruir después de cambios
+docker-compose up -d --build
+
+# Detener y eliminar volúmenes
+docker-compose down -v
+```
+
+### Diferencias entre Desarrollo y Producción
+
+| Aspecto | Desarrollo (Vite) | Producción (Docker) |
+|---------|-------------------|---------------------|
+| **Comando** | `npm run dev` | `docker-compose up` |
+| **Puerto** | 5173 | 3000 |
+| **Hot Reload** | ✅ Sí | ❌ No |
+| **Optimización** | Desarrollo | Build optimizado con Nginx |
+| **Uso** | Desarrollo local | Deploy/Testing producción |
+
+**Nota**: El contenedor Docker usa un build multi-stage (Node.js + Nginx) para servir la aplicación optimizada.
+
 ## 📦 Scripts Disponibles
 
 ```bash
@@ -115,29 +154,81 @@ Ambas apps son **100% funcionales** y comparten los mismos datos en localStorage
 
 ## 🎮 Uso
 
-### 1. Configurar tu Colección
+### 1. 📦 Collection Tracking
 
-Ve a la pestaña **Colección** y selecciona las campañas y scenario packs que posees. El randomizer solo usará contenido de tu colección.
+**Pestaña: Colección**
 
-### 2. Generar Setup
+Marca las campañas, scenario packs y hero packs que posees:
+- ✅ **Core Set** viene incluido por defecto
+- Haz clic en cada producto para agregarlo/quitarlo de tu colección
+- Botones rápidos: "Todas" (seleccionar todo) / "Solo Core" (reset)
+- **Importante**: El randomizer solo usará contenido de tu colección
 
-En la pestaña **Randomizer**:
-- Selecciona número de jugadores
-- Ajusta dificultad y complejidad
-- Usa filtros avanzados (opcional)
+**Estadísticas mostradas**:
+- Héroes disponibles
+- Villanos disponibles
+- Sets modulares disponibles
+
+### 2. 🎲 Randomizer (Setup Individual)
+
+**Pestaña: Randomizer**
+
+Genera un setup completo para una partida única:
+- Selecciona número de jugadores (1-4)
+- Ajusta dificultad del villano (1-10)
+- Ajusta complejidad de héroes (Beginner/Intermediate/Advanced)
+- **Filtros avanzados** (opcional):
+  - Emparejamiento temático de modulares
+  - Número de sets modulares (1-4)
+  - Optimización para Solo/Multiplayer
+  - Aspectos específicos
 - Haz clic en "Generar Setup Completo"
+- **Warnings inteligentes**: Alertas sobre composiciones problemáticas
 
-### 3. Guardar Resultados
+### 3. 🗺️ Campaign Randomizer
 
-Después de jugar, guarda el resultado (Victoria/Derrota) para tracking de estadísticas.
+**Pestaña: Modo Campaña**
 
-### 4. Modo Campaña
+Dos modos para progresión extendida:
 
-En la pestaña **Modo Campaña**, selecciona una campaña y progresa escenario por escenario.
+**📘 Modo A: Campaña con Modulares Random**
+- Selecciona una campaña completa (ej: Rise of Red Skull)
+- Genera todos los escenarios de la campaña en orden
+- Cada escenario tiene sets modulares aleatorios
+- Progresa escenario por escenario marcándolos como completados
 
-### 5. Guía de Progresión
+**🎲 Modo B: Villanos Mezclados (5 Random)**
+- Genera 5 escenarios aleatorios mezclando villanos de diferentes fuentes
+- Ideal para variedad máxima sin seguir una campaña específica
+- Cada escenario tiene combinaciones únicas de modulares
 
-Consulta la pestaña **Guía Progresión** para ver el orden recomendado de compra de contenido.
+**Opciones en ambos modos**:
+- Cantidad de modulares (1-4 sets)
+- Emparejamiento temático ON/OFF
+- Marca escenarios completados con ✓
+- Botón "Regenerar Modulares" para un escenario específico
+
+### 4. 📊 Historial
+
+**Pestaña: Historial**
+
+Guarda y consulta tus partidas:
+- Al finalizar una partida, marca Victoria ✓ o Derrota ✗
+- Exporta tu historial completo
+- Ve estadísticas:
+  - Total de partidas
+  - Win rate %
+  - Héroes y villanos únicos jugados
+
+### 5. 📈 Guía de Progresión
+
+**Pestaña: Guía Progresión**
+
+Consulta el orden recomendado de compra de contenido:
+- Organizado por fases (Fundación, Expansión, etc.)
+- Incluye campañas, scenario packs y hero packs
+- Modo de juego recomendado (Solo/Multiplayer)
+- Notas y consejos para cada producto
 
 ## 🏗️ Tecnologías
 
@@ -160,15 +251,134 @@ Consulta la carpeta `/docs` para documentación adicional:
 
 ### Añadir Nuevo Contenido
 
-Para añadir nuevos héroes, villanos o campañas:
+Los datos del juego están organizados en archivos TypeScript en `app/src/data/`. Sigue estos ejemplos para agregar nuevo contenido:
 
-1. Edita los archivos en `src/data/`:
-   - `heroes.ts` - Nuevos héroes
-   - `villains.ts` - Nuevos villanos
-   - `campaigns.ts` - Nuevas campañas
-   - `modularSets.ts` - Nuevos sets modulares
+#### 1️⃣ Agregar un Nuevo Héroe
 
-2. Mantén las interfaces en `src/types/index.ts`
+**Archivo**: `app/src/data/heroes.ts`
+
+```typescript
+// Ejemplo de héroe nuevo
+{
+  name: "Nombre del Héroe",           // Nombre completo
+  aspect: "Aggression",                // Leadership | Justice | Aggression | Protection
+  tier: "A",                           // S+ | S | A | B | C
+  complexity: "Intermediate",          // Beginner | Intermediate | Advanced
+  playstyle: ["Aggro", "Control"],     // Array de estilos
+  optimization: "Both",                // Solo | Multiplayer | Both
+  wave: 5,                             // Número de wave (0 = Core Set)
+  source: "Nombre del Pack",           // Fuente del héroe
+  description: "Descripción breve",    // Mecánicas únicas
+  key: "nombreunico"                   // Identificador único (lowercase, sin espacios)
+}
+```
+
+**Campos disponibles para `playstyle`**:
+- `"Control"` - Control del tablero
+- `"Aggro"` - Daño agresivo
+- `"All-rounder"` - Versátil
+- `"Resource Engine"` - Generación de recursos
+- `"Support"` - Soporte al equipo
+- `"Setup"` - Requiere setup inicial
+
+#### 2️⃣ Agregar un Nuevo Villano
+
+**Archivo**: `app/src/data/villains.ts`
+
+```typescript
+// Ejemplo de villano nuevo
+{
+  name: "Nombre del Villano",
+  source: "Nombre de la Campaña",      // Debe coincidir con campaign.name
+  difficulty: 6,                       // 1-10 (escala de dificultad)
+  mechanics: "Minion Swarm",           // Mecánicas principales
+  description: "Descripción táctica",
+  key: "villanokey",                   // Identificador único
+  campaignOrder: 3                     // OPCIONAL: Orden en campaña (1-5)
+}
+```
+
+#### 3️⃣ Agregar una Nueva Campaña
+
+**Archivo**: `app/src/data/campaigns.ts`
+
+```typescript
+// Ejemplo de campaña nueva
+{
+  name: "Nombre de la Campaña",
+  key: "campanakey",                   // Identificador único
+  type: "campaign",                    // campaign | scenario | core
+  villains: [                          // Array de keys de villanos
+    "villano1key",
+    "villano2key",
+    "villano3key",
+    "villano4key",
+    "villanobosskey"
+  ],
+  wave: 5                              // Número de wave
+}
+```
+
+**⚠️ Importante**: Los `villains` deben usar las `key` de villanos existentes en `villains.ts`.
+
+#### 4️⃣ Agregar un Set Modular
+
+**Archivo**: `app/src/data/modularSets.ts`
+
+```typescript
+// Ejemplo de set modular nuevo
+{
+  name: "Nombre del Set",
+  difficulty: 3,                       // 1-5 (dificultad del set)
+  source: "Nombre de la Fuente",       // Campaign o pack de origen
+  key: "setkey"                        // Identificador único
+}
+```
+
+#### 5️⃣ Agregar un Scenario Pack
+
+**Archivo**: `app/src/data/scenarioPacks.ts`
+
+```typescript
+// Ejemplo de scenario pack nuevo
+{
+  name: "Nombre del Scenario Pack",
+  key: "scenariokey",
+  villain: "villanokey",               // Key del villano incluido
+  wave: 5
+}
+```
+
+#### 6️⃣ Agregar un Hero Pack
+
+**Archivo**: `app/src/data/heroPacks.ts`
+
+```typescript
+// Ejemplo de hero pack nuevo
+{
+  name: "Nombre del Hero Pack",
+  key: "heropackkey",
+  hero: "heroekey",                    // Key del héroe incluido
+  wave: 5
+}
+```
+
+### 📋 Checklist para Agregar Contenido Completo
+
+Cuando agregas una nueva campaña/pack, asegúrate de:
+
+- [ ] Agregar héroes en `heroes.ts`
+- [ ] Agregar villanos en `villains.ts`
+- [ ] Agregar sets modulares en `modularSets.ts`
+- [ ] Agregar campaña en `campaigns.ts` (si aplica)
+- [ ] Agregar scenario packs en `scenarioPacks.ts` (si aplica)
+- [ ] Agregar hero packs en `heroPacks.ts` (si aplica)
+- [ ] Verificar que todos los `key` sean únicos
+- [ ] Verificar que las referencias entre archivos coincidan
+
+### 🔍 Interfaces TypeScript
+
+Las interfaces completas están definidas en `app/src/types/index.ts`. Consulta este archivo para ver todos los campos disponibles y sus tipos.
 
 ### Modificar Lógica del Juego
 
