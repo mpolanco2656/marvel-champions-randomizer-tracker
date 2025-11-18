@@ -1,0 +1,17 @@
+{
+  "title": "Progreso de Campaña",
+  "description": "Rastrea tu progreso jugando campañas según el manual oficial. Los modulares están especificados en el rulebook de cada campaña.",
+  "wave": "Wave",
+  "core": "Core",
+  "scenarios": "Escenarios",
+  "progress": "Progreso:",
+  "completed": "✓ ¡Completada!",
+  "noCampaigns": "No tienes campañas en tu colección. Ve a la pestaña Colección para añadirlas.",
+  "checklist": "Checklist",
+  "checklistDescription": "Consulta el manual de la campaña para los modulares oficiales de cada escenario.",
+  "scenario": "Escenario",
+  "completedBadge": "✓ COMPLETADO",
+  "resetButton": "Resetear Progreso de Campaña",
+  "resetConfirm": "¿Resetear todo el progreso de {{name}}?",
+  "campaignCompleted": "🎉 ¡Campaña Completada!"
+}

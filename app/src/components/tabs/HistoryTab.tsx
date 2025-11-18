@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import type { GameHistory, Stats, Hero, Villain } from '../../types';
 
 interface HistoryTabProps {
@@ -15,38 +16,39 @@ export default function HistoryTab({
   villains,
   clearHistory,
 }: HistoryTabProps) {
+  const { t } = useTranslation('history');
 
   return (
     <div className="space-y-6">
       <div className="bg-black bg-opacity-40 rounded-lg p-6">
-        <h2 className="text-3xl font-bold text-yellow-300 mb-4">Historial & Estadísticas</h2>
+        <h2 className="text-3xl font-bold text-yellow-300 mb-4">{t('title')}</h2>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-blue-900 bg-opacity-50 rounded p-4 text-center">
             <div className="text-3xl font-bold">{stats.gamesPlayed}</div>
-            <div className="text-sm text-gray-400">Total Juegos</div>
+            <div className="text-sm text-gray-400">{t('stats.totalGames')}</div>
           </div>
           <div className="bg-green-900 bg-opacity-50 rounded p-4 text-center">
             <div className="text-3xl font-bold">{Number.isFinite(stats.winRate) ? stats.winRate.toFixed(1) : "0.0"}%</div>
-            <div className="text-sm text-gray-400">Win Rate</div>
+            <div className="text-sm text-gray-400">{t('stats.winRate')}</div>
           </div>
           <div className="bg-purple-900 bg-opacity-50 rounded p-4 text-center">
             <div className="text-3xl font-bold">{stats.uniqueHeroes}</div>
-            <div className="text-sm text-gray-400">Héroes Jugados</div>
+            <div className="text-sm text-gray-400">{t('stats.playedHeroes')}</div>
           </div>
           <div className="bg-red-900 bg-opacity-50 rounded p-4 text-center">
             <div className="text-3xl font-bold">{stats.uniqueVillains}</div>
-            <div className="text-sm text-gray-400">Villanos Enfrentados</div>
+            <div className="text-sm text-gray-400">{t('stats.facedVillains')}</div>
           </div>
         </div>
 
         {/* Most Played Hero */}
         {stats.mostPlayed.count > 0 && (
           <div className="bg-yellow-900 bg-opacity-30 rounded p-4 mb-6">
-            <div className="text-sm text-gray-400">Héroe Más Jugado</div>
+            <div className="text-sm text-gray-400">{t('stats.mostPlayedHero')}</div>
             <div className="text-2xl font-bold text-yellow-300">
-              {stats.mostPlayed.hero} ({stats.mostPlayed.count} juegos)
+              {stats.mostPlayed.hero} ({stats.mostPlayed.count} {t('stats.games')})
             </div>
           </div>
         )}
@@ -87,14 +89,14 @@ export default function HistoryTab({
             onClick={clearHistory}
             className="mt-4 w-full bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded"
           >
-            Limpiar Historial
+            {t('buttons.clearHistory')}
           </button>
         )}
 
         {/* Empty State */}
         {history.length === 0 && (
           <div className="text-center text-gray-400 py-8">
-            No hay juegos en el historial aún. Juega algunas partidas y guarda los resultados para ver estadísticas.
+            {t('empty')}
           </div>
         )}
       </div>

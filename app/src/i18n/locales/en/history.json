@@ -1,0 +1,19 @@
+{
+  "title": "History & Statistics",
+  "stats": {
+    "totalGames": "Total Played Games",
+    "winRate": "Win Rate",
+    "playedHeroes": "Played Heroes",
+    "facedVillains": "Faced Villains",
+    "mostPlayedHero": "Most Played Hero",
+    "games": "games"
+  },
+  "results": {
+    "win": "WIN",
+    "loss": "LOSS"
+  },
+  "buttons": {
+    "clearHistory": "Clear History"
+  },
+  "empty": "No games in history yet. Play some games and save the results to see statistics."
+}

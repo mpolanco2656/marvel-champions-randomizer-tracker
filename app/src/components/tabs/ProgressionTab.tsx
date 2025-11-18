@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import type { ProgressionPhase } from '../../types';
 
 interface ProgressionTabProps {
@@ -5,12 +6,11 @@ interface ProgressionTabProps {
 }
 
 export default function ProgressionTab({ progressionGuide }: ProgressionTabProps) {
+  const { t } = useTranslation('progression');
   return (
     <div className="bg-black bg-opacity-40 rounded-lg p-6">
-      <h2 className="text-3xl font-bold text-yellow-300 mb-4">Guía de Progresión Completa</h2>
-      <p className="text-gray-300 mb-6">
-        Orden optimizado para dificultad Expert/Heroic con estrategia de construcción de card pool.
-      </p>
+      <h2 className="text-3xl font-bold text-yellow-300 mb-4">{t('title')}</h2>
+      <p className="text-gray-300 mb-6">{t('description')}</p>
 
       <div className="space-y-6">
         {progressionGuide.map((phase, idx) => (
@@ -31,10 +31,10 @@ export default function ProgressionTab({ progressionGuide }: ProgressionTabProps
                     </div>
                     <div className="bg-purple-700 px-2 py-1 rounded text-xs font-bold whitespace-nowrap">
                       {item.type === 'campaign'
-                        ? '📦 Campaña'
+                        ? t('types.campaign')
                         : item.type === 'scenario'
-                          ? '🎯 Scenario'
-                          : '🦸 Heroes'}
+                          ? t('types.scenario')
+                          : t('types.heroes')}
                     </div>
                   </div>
                   <div className="text-sm text-gray-300">{item.note}</div>
@@ -45,26 +45,13 @@ export default function ProgressionTab({ progressionGuide }: ProgressionTabProps
         ))}
 
         <div className="bg-red-900 bg-opacity-40 border-l-4 border-red-500 rounded p-5">
-          <div className="font-bold text-red-300 text-xl mb-3">⚠️ Notas Críticas</div>
+          <div className="font-bold text-red-300 text-xl mb-3">{t('criticalNotes.title')}</div>
           <ul className="text-sm text-gray-300 space-y-2">
-            <li>
-              •{' '}
-              <span className="text-yellow-300">Construir card pool entre campañas es CRÍTICO</span> para éxito en
-              Expert
-            </li>
-            <li>
-              • <span className="text-red-400">Galaxy's Most Wanted es ÚLTIMO</span> - extremadamente punitivo (Ronan 26%
-              win rate)
-            </li>
-            <li>
-              • <span className="text-green-400">Rise of Red Skull es la expansión universal #1</span> después de
-              Core
-            </li>
-            <li>• Expert difficulty escala con el tamaño del card pool - más opciones = más manejable</li>
-            <li>
-              • <span className="text-purple-400">Wrecking Crew SOLO para completionistas</span> - comunidad dice "no
-              lo necesitas"
-            </li>
+            <li>• {t('criticalNotes.note1')}</li>
+            <li>• {t('criticalNotes.note2')}</li>
+            <li>• {t('criticalNotes.note3')}</li>
+            <li>• {t('criticalNotes.note4')}</li>
+            <li>• {t('criticalNotes.note5')}</li>
           </ul>
         </div>
       </div>

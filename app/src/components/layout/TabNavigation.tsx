@@ -6,6 +6,7 @@ import {
   Target,
   Dices,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface TabNavigationProps {
   activeTab: string;
@@ -13,18 +14,20 @@ interface TabNavigationProps {
 }
 
 const tabs = [
-  { id: 'randomizer', label: 'Randomizer', icon: Shuffle },
-  { id: 'campaign', label: 'Campaign', icon: BookOpen },
-  { id: 'campaignrandomizer', label: 'Campaign Random', icon: Dices },
-  { id: 'collection', label: 'Collection', icon: Archive },
-  { id: 'progression', label: 'Progression', icon: Target },
-  { id: 'history', label: 'History', icon: TrendingUp },
+  { id: 'randomizer', translationKey: 'randomizer', icon: Shuffle },
+  { id: 'campaign', translationKey: 'campaign', icon: BookOpen },
+  { id: 'campaignrandomizer', translationKey: 'campaignRandomizer', icon: Dices },
+  { id: 'collection', translationKey: 'collection', icon: Archive },
+  { id: 'progression', translationKey: 'progression', icon: Target },
+  { id: 'history', translationKey: 'history', icon: TrendingUp },
 ];
 
 export default function TabNavigation({
   activeTab,
   onTabChange,
 }: TabNavigationProps) {
+  const { t } = useTranslation('tabs');
+
   return (
     <div className="flex gap-2 mb-6 flex-wrap justify-center">
       {tabs.map((tab) => {
@@ -42,7 +45,7 @@ export default function TabNavigation({
             }`}
           >
             <Icon size={20} />
-            {tab.label}
+            {t(tab.translationKey)}
           </button>
         );
       })}

@@ -26,6 +26,7 @@ Este repositorio contiene **dos implementaciones** de la misma aplicación:
 
 ## ✨ Características
 
+- 🌍 **Soporte Multiidioma**: Interfaz completa en Español e Inglés con detección automática
 - 🎲 **Randomizer Inteligente**: Genera setups completos con filtros avanzados
 - 📦 **Collection Tracking**: Rastrea tu colección de campañas y scenario packs
 - 📊 **Historial de Juegos**: Guarda partidas con resultados y estadísticas
@@ -124,6 +125,9 @@ app/
 │   │   ├── tabs/         # RandomizerTab, CollectionTab, etc.
 │   │   └── ui/           # StatsBar y componentes UI
 │   ├── data/             # Datos del juego (heroes, villains, etc.)
+│   ├── i18n/             # Internacionalización
+│   │   ├── locales/      # Traducciones ES/EN
+│   │   └── config.ts     # Configuración i18next
 │   ├── hooks/            # Custom hooks (useCollection, useGameHistory)
 │   ├── types/            # TypeScript types e interfaces
 │   ├── utils/            # Funciones de utilidad y lógica del juego
@@ -230,12 +234,17 @@ Consulta el orden recomendado de compra de contenido:
 - Modo de juego recomendado (Solo/Multiplayer)
 - Notas y consejos para cada producto
 
+### 6. Cambiar Idioma
+
+La aplicación detecta automáticamente el idioma de tu navegador (Español o Inglés). Para cambiar manualmente el idioma, haz clic en el botón de idioma 🌐 en la esquina superior derecha del header. Tu preferencia se guardará en localStorage.
+
 ## 🏗️ Tecnologías
 
 - **React 19** - Framework UI
 - **TypeScript** - Type safety
 - **Vite** - Build tool y dev server
 - **Tailwind CSS 4** - Styling
+- **react-i18next** - Internacionalización (ES/EN)
 - **Lucide React** - Iconos
 - **LocalStorage** - Persistencia de datos
 
@@ -385,6 +394,35 @@ Las interfaces completas están definidas en `app/src/types/index.ts`. Consulta 
 La lógica principal está en:
 - `src/utils/gameLogic.ts` - Warnings, suggestions, filtros temáticos
 - `src/hooks/` - Lógica de estado (collection, history)
+
+### Añadir o Modificar Traducciones
+
+Las traducciones están organizadas por namespace en `src/i18n/locales/`:
+
+```
+i18n/locales/
+├── en/               # Inglés
+│   ├── common.json
+│   ├── tabs.json
+│   ├── randomizer.json
+│   ├── campaign.json
+│   ├── collection.json
+│   ├── history.json
+│   └── progression.json
+└── es/               # Español
+    ├── common.json
+    ├── tabs.json
+    ├── randomizer.json
+    ├── campaign.json
+    ├── collection.json
+    ├── history.json
+    └── progression.json
+```
+
+Para modificar o añadir traducciones:
+1. Edita los archivos JSON correspondientes en `src/i18n/locales/`
+2. Los datos del juego con traducciones (como `progressionGuide`) están en `src/data/` con archivos separados `.es.ts` y `.en.ts`
+3. La configuración de i18next está en `src/i18n/config.ts`
 
 ## 🌐 Deploy
 

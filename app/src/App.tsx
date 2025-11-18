@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Hero, Villain, ModularSet, Complexity, Playstyle, Tier, PlayerOptimization } from './types';
-import { campaigns, scenarioPacks, heroPacks, heroes, villains, modularSets, progressionGuide } from './data';
+import { campaigns, scenarioPacks, heroPacks, heroes, villains, modularSets, progressionGuideEs, progressionGuideEn } from './data';
 import { useCollection } from './hooks/useCollection';
 import { useGameHistory } from './hooks/useGameHistory';
 import { useCampaignRandomizer } from './hooks/useCampaignRandomizer';
@@ -15,11 +15,16 @@ import CampaignRandomizerTab from './components/tabs/CampaignRandomizerTab';
 import CollectionTab from './components/tabs/CollectionTab';
 import HistoryTab from './components/tabs/HistoryTab';
 import ProgressionTab from './components/tabs/ProgressionTab';
+import { useTranslation } from 'react-i18next';
 
 type TabType = 'randomizer' | 'campaign' | 'campaignrandomizer' | 'collection' | 'history' | 'progression';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('randomizer');
+  const { i18n } = useTranslation();
+
+  // Select progression guide based on current language
+  const progressionGuide = i18n.language === 'es' ? progressionGuideEs : progressionGuideEn;
 
   // Collection and History
   const { collection, setCollection } = useCollection();
