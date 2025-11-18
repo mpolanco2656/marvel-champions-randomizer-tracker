@@ -1,6 +1,7 @@
 import type { Campaign, Collection, CampaignScenario, Villain, ModularSet } from '../../types';
 import { Check, Shuffle, Trash2, RefreshCw } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { selectThematicModulars } from '../../utils/gameLogic';
 import { getOwnedSources } from '../../utils/gameLogic';
 
@@ -41,6 +42,7 @@ export default function CampaignRandomizerTab({
   clearCampaignScenarios,
   clearMixedScenarios,
 }: CampaignRandomizerTabProps) {
+  const { t } = useTranslation('campaignRandomizer');
   // Independent state for Campaign Randomizer
   const [thematicPairing, setThematicPairing] = useState(false);
   const [modularCount, setModularCount] = useState(2);
@@ -100,7 +102,7 @@ export default function CampaignRandomizerTab({
     });
 
     if (ownedVillains.length === 0) {
-      alert('No tienes villanos disponibles en tu colección');
+      alert(t('noVillains'));
       return;
     }
 
@@ -136,9 +138,9 @@ export default function CampaignRandomizerTab({
     <div className="space-y-6">
       {/* Mode Toggle */}
       <div className="bg-black bg-opacity-40 rounded-lg p-6">
-        <h2 className="text-3xl font-bold text-yellow-300 mb-4">Campaign Randomizer</h2>
+        <h2 className="text-3xl font-bold text-yellow-300 mb-4">{t('title')}</h2>
         <p className="text-gray-300 mb-4">
-          Genera escenarios con sets modulares aleatorios para máxima replayability.
+          {t('description')}
         </p>
 
         <div className="flex gap-4 mb-6">
@@ -150,7 +152,7 @@ export default function CampaignRandomizerTab({
                 : 'bg-gray-700 hover:bg-gray-600 text-white'
             }`}
           >
-            Modo A: Campaña con Modulares Random
+            {t('modeA')}
           </button>
           <button
             onClick={() => setRandomMode('mixed')}
@@ -160,32 +162,32 @@ export default function CampaignRandomizerTab({
                 : 'bg-gray-700 hover:bg-gray-600 text-white'
             }`}
           >
-            Modo B: Villanos Mezclados (5 Random)
+            {t('modeB')}
           </button>
         </div>
 
         {/* Configuration Options */}
         <div className="bg-gray-800 bg-opacity-60 rounded-lg p-4 mb-6 space-y-4">
-          <h3 className="text-sm font-bold text-gray-300 mb-3">⚙️ Configuración de Modulares</h3>
+          <h3 className="text-sm font-bold text-gray-300 mb-3">{t('configuration')}</h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Modular Count */}
             <div>
-              <label className="block text-sm font-bold text-gray-300 mb-2">Cantidad de Modulares</label>
+              <label className="block text-sm font-bold text-gray-300 mb-2">{t('modularCount')}</label>
               <select
                 value={modularCount}
                 onChange={(e) => setModularCount(Number(e.target.value))}
                 className="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white"
               >
-                <option value={1}>1 Set</option>
-                <option value={2}>2 Sets (Recomendado)</option>
-                <option value={3}>3 Sets</option>
+                <option value={1}>{t('oneSet')}</option>
+                <option value={2}>{t('twoSetsRecommended')}</option>
+                <option value={3}>{t('threeSets')}</option>
               </select>
             </div>
 
             {/* Thematic Pairing */}
             <div>
-              <label className="block text-sm font-bold text-gray-300 mb-2">Emparejamiento</label>
+              <label className="block text-sm font-bold text-gray-300 mb-2">{t('pairing')}</label>
               <label className="flex items-center gap-3 cursor-pointer bg-gray-700 p-2 rounded border border-gray-600 hover:border-yellow-400 transition-all">
                 <input
                   type="checkbox"
@@ -193,10 +195,10 @@ export default function CampaignRandomizerTab({
                   onChange={(e) => setThematicPairing(e.target.checked)}
                   className="w-5 h-5"
                 />
-                <span className="text-sm text-white">Emparejamiento Temático</span>
+                <span className="text-sm text-white">{t('thematicPairing')}</span>
               </label>
               <p className="text-xs text-gray-400 mt-1">
-                Prioriza modulares con synergy temática con el villano
+                {t('thematicPairingDesc')}
               </p>
             </div>
           </div>
@@ -205,7 +207,7 @@ export default function CampaignRandomizerTab({
         {/* Mode A: Campaign Selection */}
         {randomMode === 'campaign' && (
           <div>
-            <h3 className="text-xl font-bold text-blue-300 mb-3">Selecciona una Campaña:</h3>
+            <h3 className="text-xl font-bold text-blue-300 mb-3">{t('selectCampaign')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredCampaigns.map(campaign => (
                 <div
@@ -217,10 +219,10 @@ export default function CampaignRandomizerTab({
                 >
                   <h3 className="text-xl font-bold text-yellow-300 mb-2">{campaign.name}</h3>
                   <div className="text-sm text-gray-300 mb-2">
-                    Wave {campaign.wave === 0 ? 'Core' : campaign.wave} • {campaign.villains.length} Escenarios
+                    {t('wave')} {campaign.wave === 0 ? t('core') : campaign.wave} • {campaign.villains.length} {t('scenarios')}
                   </div>
                   {activeCampaign === campaign.key && (
-                    <div className="text-xs text-green-400 mt-2">✓ Campaña activa - Ver escenarios abajo</div>
+                    <div className="text-xs text-green-400 mt-2">{t('activeCampaign')}</div>
                   )}
                 </div>
               ))}
@@ -231,20 +233,20 @@ export default function CampaignRandomizerTab({
         {/* Mode B: Generate Mixed Scenarios */}
         {randomMode === 'mixed' && (
           <div>
-            <h3 className="text-xl font-bold text-blue-300 mb-3">Genera 5 Escenarios Aleatorios:</h3>
+            <h3 className="text-xl font-bold text-blue-300 mb-3">{t('generateRandomTitle')}</h3>
             <button
               onClick={generateMixedScenarios}
               className="w-full bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all transform hover:scale-105 flex items-center justify-center gap-2"
             >
               <Shuffle size={24} />
-              Generar 5 Escenarios Random
+              {t('generateButton')}
             </button>
           </div>
         )}
 
         {filteredCampaigns.length === 0 && randomMode === 'campaign' && (
           <div className="text-center text-gray-400 py-8">
-            No tienes campañas en tu colección. Ve a la pestaña Colección para añadirlas.
+            {t('noCampaigns')}
           </div>
         )}
       </div>
@@ -254,12 +256,12 @@ export default function CampaignRandomizerTab({
         <div className="bg-black bg-opacity-40 rounded-lg p-6">
           <h3 className="text-2xl font-bold text-yellow-300 mb-4">
             {randomMode === 'campaign' && activeCampaignData ? `${activeCampaignData.name} - ` : ''}
-            Escenarios Generados
+            {t('generatedScenarios')}
           </h3>
           <p className="text-sm text-gray-400 mb-4">
             {randomMode === 'campaign'
-              ? 'Villanos en orden de campaña con sets modulares aleatorios.'
-              : 'Villanos completamente mezclados de tu colección.'}
+              ? t('campaignOrder')
+              : t('mixedVillains')}
           </p>
 
           <div className="space-y-4">
@@ -275,10 +277,10 @@ export default function CampaignRandomizerTab({
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-sm font-bold text-gray-400">Escenario {idx + 1}</span>
+                      <span className="text-sm font-bold text-gray-400">{t('scenario')} {idx + 1}</span>
                       {scenario.completed && (
                         <span className="bg-green-600 text-white text-xs px-2 py-1 rounded font-bold">
-                          ✓ COMPLETADO
+                          {t('completedBadge')}
                         </span>
                       )}
                     </div>
@@ -291,13 +293,13 @@ export default function CampaignRandomizerTab({
                 </div>
 
                 <div className="bg-black bg-opacity-40 rounded p-3 mb-3">
-                  <div className="text-sm font-bold text-yellow-300">Mecánicas: {scenario.villain.mechanics}</div>
+                  <div className="text-sm font-bold text-yellow-300">{t('mechanics')} {scenario.villain.mechanics}</div>
                   <div className="text-xs text-gray-300 mt-1">{scenario.villain.description}</div>
                 </div>
 
                 {/* Modulars */}
                 <div className="mb-3">
-                  <div className="text-sm font-bold text-purple-300 mb-2">Sets Modulares:</div>
+                  <div className="text-sm font-bold text-purple-300 mb-2">{t('modularSets')}</div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {scenario.modulars.map((modular, mIdx) => (
                       <div key={mIdx} className="bg-purple-900 bg-opacity-40 rounded p-2">
@@ -326,7 +328,7 @@ export default function CampaignRandomizerTab({
                     className="w-full bg-green-600 hover:bg-green-700 font-bold py-2 px-4 rounded flex items-center justify-center gap-2"
                   >
                     <Check size={16} />
-                    Marcar como Completado
+                    {t('markCompleted')}
                   </button>
                 )}
               </div>
@@ -335,7 +337,7 @@ export default function CampaignRandomizerTab({
 
           {/* Progress Summary */}
           <div className="mt-6 bg-blue-900 bg-opacity-40 rounded p-4">
-            <div className="text-sm font-bold text-blue-300 mb-2">Progreso</div>
+            <div className="text-sm font-bold text-blue-300 mb-2">{t('progress')}</div>
             <div className="flex items-center gap-3">
               <div className="flex-1 bg-gray-700 rounded h-3">
                 <div
@@ -351,7 +353,7 @@ export default function CampaignRandomizerTab({
             </div>
             {currentScenarios.every(s => s.completed) && (
               <div className="mt-3 text-center text-green-400 font-bold text-lg">
-                🎉 ¡Todos los Escenarios Completados!
+                {t('allScenariosCompleted')}
               </div>
             )}
           </div>
@@ -362,14 +364,14 @@ export default function CampaignRandomizerTab({
             {randomMode === 'campaign' && activeCampaign && (
               <button
                 onClick={() => {
-                  if (window.confirm('¿Re-generar modulares para esta campaña? Se mantendrá la misma campaña pero con nuevos sets modulares aleatorios.')) {
+                  if (window.confirm(t('regenerateConfirm'))) {
                     generateCampaignScenarios(activeCampaign);
                   }
                 }}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-all flex items-center justify-center gap-2"
               >
                 <RefreshCw size={18} />
-                Re-generar Modulares (misma campaña)
+                {t('regenerateModulars')}
               </button>
             )}
 
@@ -377,8 +379,8 @@ export default function CampaignRandomizerTab({
             <button
               onClick={() => {
                 const message = randomMode === 'campaign'
-                  ? '¿Borrar completamente esta campaña? Tendrás que seleccionar una nueva campaña.'
-                  : '¿Borrar los 5 escenarios mezclados? Podrás generar 5 nuevos.';
+                  ? t('clearCampaignConfirm')
+                  : t('clearMixedConfirm');
 
                 if (window.confirm(message)) {
                   randomMode === 'campaign' ? clearCampaignScenarios() : clearMixedScenarios();
@@ -387,7 +389,7 @@ export default function CampaignRandomizerTab({
               className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition-all flex items-center justify-center gap-2"
             >
               <Trash2 size={18} />
-              {randomMode === 'campaign' ? 'Borrar Campaña Completa' : 'Borrar Escenarios Mezclados'}
+              {randomMode === 'campaign' ? t('clearCampaign') : t('clearMixed')}
             </button>
           </div>
         </div>

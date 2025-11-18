@@ -1,0 +1,17 @@
+{
+  "title": "Campaign Progress",
+  "description": "Track your progress playing campaigns according to the official manual. Modulars are specified in each campaign's rulebook.",
+  "wave": "Wave",
+  "core": "Core",
+  "scenarios": "Scenarios",
+  "progress": "Progress:",
+  "completed": "✓ Completed!",
+  "noCampaigns": "You do not own campaigns. Go to Collection tab to add them.",
+  "checklist": "Checklist",
+  "checklistDescription": "Consult the campaign manual for official modulars for each scenario.",
+  "scenario": "Scenario",
+  "completedBadge": "✓ COMPLETED",
+  "resetButton": "Reset Campaign Progress",
+  "resetConfirm": "Reset all progress for {{name}}?",
+  "campaignCompleted": "🎉 Campaign Completed!"
+}
