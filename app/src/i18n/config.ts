@@ -5,6 +5,8 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 // Import translations
 import enCommon from './locales/en/common.json';
 import esCommon from './locales/es/common.json';
+import enRandomizer from './locales/en/randomizer.json';
+import esRandomizer from './locales/es/randomizer.json';
 
 i18n
   // Detect user language
@@ -16,9 +18,11 @@ i18n
     resources: {
       en: {
         common: enCommon,
+        randomizer: enRandomizer,
       },
       es: {
         common: esCommon,
+        randomizer: esRandomizer,
       },
     },
     fallbackLng: 'es', // Default to Spanish

@@ -1,0 +1,103 @@
+{
+  "stats": {
+    "games": "Juegos",
+    "winRate": "% Victorias",
+    "campaigns": "Campañas",
+    "scenarios": "Escenarios",
+    "heroPacks": "Packs de Héroe"
+  },
+  "controls": {
+    "players": "Jugadores",
+    "difficulty": "Dificultad",
+    "complexity": "Complejidad",
+    "modulars": "Modulares",
+    "playStyle": "Estilo de Juego",
+    "tier": "Tier",
+    "optimization": "Optimización",
+    "gameMode": "Modo de Juego",
+    "encounterSet": "Encounter Set"
+  },
+  "playerOptions": {
+    "trueSolo": "1 (True Solo)",
+    "recommended": "2 (Recomendado)",
+    "threePlayers": "3 Jugadores",
+    "fourPlayers": "4 Jugadores"
+  },
+  "difficultyOptions": {
+    "any": "Cualquiera",
+    "easy": "Fácil (1-3)",
+    "medium": "Medio (4-6)",
+    "hard": "Difícil (7-8)",
+    "expert": "Experto (9-10)"
+  },
+  "difficultyHelp": {
+    "title": "Dificultad de Villanos:",
+    "easy": "Fácil (1-3):",
+    "easyDesc": "Rhino, Crossbones - para aprender",
+    "medium": "Medio (4-6):",
+    "mediumDesc": "Klaw, Hela - desafío balanceado",
+    "hard": "Difícil (7-8):",
+    "hardDesc": "Red Skull, Loki - estrategia sólida",
+    "expert": "Experto (9-10):",
+    "expertDesc": "Thanos, Ronan - los más duros"
+  },
+  "complexityOptions": {
+    "any": "Cualquiera",
+    "beginner": "Principiante",
+    "intermediate": "Intermedio",
+    "advanced": "Avanzado"
+  },
+  "complexityHelp": {
+    "title": "Complejidad de Héroes:",
+    "beginner": "Principiante:",
+    "beginnerDesc": "Mecánicas simples, pocas decisiones (Cap America, Quicksilver)",
+    "intermediate": "Intermedio:",
+    "intermediateDesc": "Timing y planificación (Black Widow, Spider-Ham)",
+    "advanced": "Avanzado:",
+    "advancedDesc": "Múltiples capas de decisión (Doctor Strange, Adam Warlock)"
+  },
+  "modularOptions": {
+    "oneSet": "1 Set",
+    "twoSets": "2 Sets",
+    "threeSets": "3 Sets"
+  },
+  "playStyleOptions": {
+    "any": "Cualquiera"
+  },
+  "tierOptions": {
+    "any": "Cualquiera",
+    "sPlus": "S+ (Top tier)",
+    "s": "S (Excelente)",
+    "a": "A (Bueno)",
+    "b": "B (Promedio)",
+    "c": "C (Bajo)"
+  },
+  "optimizationOptions": {
+    "any": "Cualquiera",
+    "both": "Ambos"
+  },
+  "checkboxes": {
+    "unplayedHeroes": "Solo Héroes No Jugados",
+    "thematicPairing": "Emparejamiento Temático"
+  },
+  "buttons": {
+    "generateComplete": "Generar Setup Completo",
+    "onlyHeroes": "Solo Héroes",
+    "onlyVillain": "Solo Villano",
+    "export": "Exportar",
+    "victory": "Victoria",
+    "defeat": "Derrota",
+    "save": "Guardar"
+  },
+  "results": {
+    "heroes": "Héroes",
+    "aspect": "Aspecto:",
+    "complexity": "Complejidad:",
+    "playStyle": "Estilo:",
+    "villainAndModulars": "Villano & Modulares",
+    "mechanics": "Mecánicas:",
+    "mode": "Modo:",
+    "standardDesc": "Stage I + II villain cards + Standard encounter set",
+    "expertDesc": "Stage II + III villain cards + Expert encounter set (Exhaustion, Masterplan, Under Fire)"
+  }
+}
