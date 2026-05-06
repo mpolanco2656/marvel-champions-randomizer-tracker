@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Hero, Villain, ModularSet, Complexity, Playstyle, Tier, PlayerOptimization } from './types';
+import type { Hero, Villain, ModularSet, Complexity, Playstyle, Tier, PlayerOptimization, Aspect } from './types';
 import { campaigns, scenarioPacks, heroPacks, heroes, villains, modularSets, progressionGuideEs, progressionGuideEn } from './data';
 import { useCollection } from './hooks/useCollection';
 import { useGameHistory } from './hooks/useGameHistory';
@@ -60,6 +60,7 @@ export default function App() {
   const [playstyle, setPlaystyle] = useState<Playstyle | 'Any'>('Any');
   const [tier, setTier] = useState<Tier | 'Any'>('Any');
   const [optimization, setOptimization] = useState<PlayerOptimization | 'Any'>('Any');
+  const [aspect, setAspect] = useState<Aspect | 'Any'>('Any');
   const [onlyUnplayed, setOnlyUnplayed] = useState(false);
 
   // Villain filters
@@ -103,6 +104,7 @@ export default function App() {
       if (playstyle !== 'Any' && !hero.playstyle.includes(playstyle)) return false;
       if (tier !== 'Any' && hero.tier !== tier) return false;
       if (optimization !== 'Any' && hero.optimization !== optimization && hero.optimization !== 'Both') return false;
+      if (aspect !== 'Any' && hero.aspect !== aspect) return false;
       return true;
     });
   };
@@ -276,9 +278,14 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-900 via-blue-900 to-purple-900 text-white p-4">
-      <div className="max-w-7xl mx-auto">
-        <Header onExport={handleExportAll} onImport={handleImportAll} />
+    <div className="mc-app">
+      <Header onExport={handleExportAll} onImport={handleImportAll} stats={{
+        heroes: filterHeroes().length,
+        villains: filterVillains().length,
+        modulars: filterModulars().length,
+        games: history.length
+      }} />
+      <main className="mc-shell mc-main">
         <TabNavigation activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab as TabType)} />
 
         {activeTab === 'randomizer' && (
@@ -296,6 +303,8 @@ export default function App() {
             setTier={setTier}
             optimization={optimization}
             setOptimization={setOptimization}
+            aspect={aspect}
+            setAspect={setAspect}
             modularCount={modularCount}
             setModularCount={setModularCount}
             onlyUnplayed={onlyUnplayed}
@@ -378,7 +387,8 @@ export default function App() {
         {activeTab === 'progression' && (
           <ProgressionTab progressionGuide={progressionGuide} />
         )}
-      </div>
+      </main>
+      <footer className="mc-footer">Marvel Champions: The Card Game © Fantasy Flight Games. Community randomizer tool.</footer>
     </div>
   );
 }

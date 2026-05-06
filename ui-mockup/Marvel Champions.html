@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Marvel Champions Ultimate Randomizer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="mc-data.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #07090f;
+    color: #e8eaf6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  /* Subtle noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4;
+  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #07090f; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
+  select, button, input { font-family: 'Inter', sans-serif; }
+  select:focus, button:focus { outline: none; }
+  @keyframes cardReveal {
+    from { opacity: 0; transform: translateY(12px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  .generate-btn-shine {
+    background: linear-gradient(105deg, #c0392b 0%, #d4a20a 40%, #fff6 50%, #d4a20a 60%, #c0392b 100%);
+    background-size: 200% auto;
+    animation: shimmer 2.5s linear infinite;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+</style>
+</head>
+<body>
+
+<div id="root" style="position:relative;z-index:1;"></div>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="mc-components.jsx"></script>
+<script type="text/babel" src="mc-randomizer.jsx"></script>
+<script type="text/babel" src="mc-other-tabs.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect, useContext } = React;
+
+// ── Translations ────────────────────────────────────────────────────────────
+const TR = {
+  es: {
+    appTitle: 'Marvel Champions',
+    appSub: 'Ultimate Randomizer',
+    tabRandomizer: 'Randomizer', tabCampaign: 'Campaña', tabCollection: 'Colección',
+    tabHistory: 'Historial', tabProgression: 'Progresión',
+    filters: 'Filtros', players: 'Jugadores', vilDifficulty: 'Dificultad',
+    heroComplexity: 'Complejidad', playstyle: 'Estilo de juego', tier: 'Tier',
+    optimization: 'Optimización', modularSets: 'Sets Modulares',
+    thematicPairing: 'Emparejamiento temático', onlyUnplayed: 'Solo no jugados',
+    generate: 'Generar Setup Completo', generating: 'Generando',
+    heroes: 'Héroes', villain: 'Villano', wave: 'Wave',
+    any: 'Cualquiera', easy: 'Fácil', medium: 'Medio', hard: 'Difícil', expert: 'Experto',
+    win: 'Victoria', loss: 'Derrota', saved: 'Guardado', saveNoResult: 'Guardar sin resultado',
+    recordResult: 'Registrar resultado:', readyToGenerate: 'Listo para generar',
+    configureFilters: 'Configura los filtros y pulsa Generar',
+    noModulars: 'Sin modulares disponibles',
+    emptyCollectionMsg: 'Tu colección está vacía o no tienes suficiente contenido. Ve a Colección para agregar tus expansiones.',
+    warnThreat: 'Aggression + Protection en 2-handed puede tener problemas con threat. Considera añadir Justice.',
+    warnDeadpool: 'Deadpool es S+ solo pero C-tier en multiplayer. ¡Unkillable es un problema para el equipo!',
+    warnSetup: 'Múltiples héroes setup ({heroes}). El early game será lento.',
+    warnRonan: 'RONAN: Villano más difícil (26% win rate). Overkill + Piercing contrarrestan todas las defensas.',
+    warnNebula: 'Nebula: Densidad de Surge extrema = muy random. Uno de los villanos menos populares.',
+    suggestVenomGoblin: 'Venom Goblin: Aspecto Justice altamente recomendado. Remover Advanced Glider ASAP.',
+    suggestMagneto: 'Magneto: No puedes hacer daño hasta remover Orbital Decay. Prepárate para pérdida de tempo.',
+    suggestDifficulty: 'Villano dificultad {diff}/10 con héroes tier promedio bajo. Considera héroes más fuertes.',
+    suggestSolo: '{heroes} optimizado para solo. Puede rendir bajo en {n} jugadores.',
+    aspect: 'Aspecto',
+    campaigns: 'Campañas', scenarioPacks: 'Scenario Packs', heroPacks: 'Hero Packs',
+    selectAll: 'Seleccionar todo', coreOnly: 'Solo Core', owned: 'Poseído',
+    settings: 'Configuración', campaignMode: 'Modo Campaña', mixMode: 'Mezcla Aleatoria',
+    campaign: 'Campaña', selectCampaign: 'Selecciona campaña...',
+    generateCampaign: 'Generar Campaña', generateMix: 'Generar Mezcla (5)',
+    campaignScenarios: 'Escenarios de Campaña', mixScenarios: 'Escenarios Aleatorios',
+    scenario: 'Escenario', rerollModulars: 'Reroll', markComplete: 'Marcar completo',
+    completed: 'Completado', done: 'Hecho',
+    configureAndGenerate: 'Configura y genera', selectCampaignHint: 'Selecciona una campaña y pulsa Generar',
+    mixHint: 'Genera 5 escenarios aleatorios de tu colección',
+    totalGames: 'Partidas', wins: 'Victorias', losses: 'Derrotas', winRate: 'Win Rate',
+    uniqueHeroes: 'Héroes únicos', uniqueVillains: 'Villanos únicos', recentGames: 'Partidas Recientes',
+    export: 'Exportar', clear: 'Limpiar', confirmClear: '¿Eliminar todo el historial?',
+    copied: '¡Copiado al portapapeles!', noHistory: 'Sin historial', noHistory2: '',
+    noHistoryHint: 'Genera un setup y registra el resultado para empezar',
+    noResult: 'Sin resultado',
+    progressionDesc: 'Orden recomendado de compra para maximizar tu experiencia de juego',
+    villains: 'Villanos', modulars: 'Modulares',
+  },
+  en: {
+    appTitle: 'Marvel Champions',
+    appSub: 'Ultimate Randomizer',
+    tabRandomizer: 'Randomizer', tabCampaign: 'Campaign', tabCollection: 'Collection',
+    tabHistory: 'History', tabProgression: 'Progression',
+    filters: 'Filters', players: 'Players', vilDifficulty: 'Difficulty',
+    heroComplexity: 'Complexity', playstyle: 'Playstyle', tier: 'Tier',
+    optimization: 'Optimization', modularSets: 'Modular Sets',
+    thematicPairing: 'Thematic pairing', onlyUnplayed: 'Unplayed only',
+    generate: 'Generate Full Setup', generating: 'Generating',
+    heroes: 'Heroes', villain: 'Villain', wave: 'Wave',
+    any: 'Any', easy: 'Easy', medium: 'Medium', hard: 'Hard', expert: 'Expert',
+    win: 'Victory', loss: 'Defeat', saved: 'Saved', saveNoResult: 'Save without result',
+    recordResult: 'Record result:', readyToGenerate: 'Ready to generate',
+    configureFilters: 'Configure filters and hit Generate',
+    noModulars: 'No modulars available',
+    emptyCollectionMsg: 'Your collection is empty or lacks enough content. Go to Collection to add your expansions.',
+    warnThreat: 'Aggression + Protection in 2-handed can struggle with threat. Consider adding Justice.',
+    warnDeadpool: 'Deadpool is S+ solo but C-tier in multiplayer. Unkillable hurts the team!',
+    warnSetup: 'Multiple setup heroes ({heroes}). Early game will be slow.',
+    warnRonan: 'RONAN: Hardest villain (26% win rate). Overkill + Piercing counters all defenses.',
+    warnNebula: 'Nebula: Extreme Surge density = very random. One of the least popular villains.',
+    suggestVenomGoblin: 'Venom Goblin: Justice aspect highly recommended. Remove Advanced Glider ASAP.',
+    suggestMagneto: 'Magneto: Cannot deal damage until Orbital Decay is removed. Expect tempo loss.',
+    suggestDifficulty: 'Villain difficulty {diff}/10 with average low-tier heroes. Consider stronger heroes.',
+    suggestSolo: '{heroes} optimized for solo. May underperform with {n} players.',
+    aspect: 'Aspect',
+    campaigns: 'Campaigns', scenarioPacks: 'Scenario Packs', heroPacks: 'Hero Packs',
+    selectAll: 'Select all', coreOnly: 'Core only', owned: 'Owned',
+    settings: 'Settings', campaignMode: 'Campaign Mode', mixMode: 'Random Mix',
+    campaign: 'Campaign', selectCampaign: 'Select campaign...',
+    generateCampaign: 'Generate Campaign', generateMix: 'Generate Mix (5)',
+    campaignScenarios: 'Campaign Scenarios', mixScenarios: 'Random Scenarios',
+    scenario: 'Scenario', rerollModulars: 'Reroll', markComplete: 'Mark complete',
+    completed: 'Completed', done: 'Done',
+    configureAndGenerate: 'Configure and generate', selectCampaignHint: 'Select a campaign and hit Generate',
+    mixHint: 'Generates 5 random scenarios from your collection',
+    totalGames: 'Games', wins: 'Wins', losses: 'Losses', winRate: 'Win Rate',
+    uniqueHeroes: 'Unique heroes', uniqueVillains: 'Unique villains', recentGames: 'Recent Games',
+    export: 'Export', clear: 'Clear', confirmClear: 'Delete all history?',
+    copied: 'Copied to clipboard!', noHistory: 'No history yet',
+    noHistoryHint: 'Generate a setup and record the result to get started',
+    noResult: 'No result',
+    progressionDesc: 'Recommended purchase order to maximize your play experience',
+    villains: 'Villains', modulars: 'Modulars',
+  }
+};
+
+// ── Default tweaks ──────────────────────────────────────────────────────────
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accentColor": "#d4a20a",
+  "cardSize": 190,
+  "showDescriptions": true,
+  "animationSpeed": "normal"
+}/*EDITMODE-END*/;
+
+// ── App ─────────────────────────────────────────────────────────────────────
+function App() {
+  const [activeTab, setActiveTab] = useState('randomizer');
+  const [lang, setLang] = useState(() => localStorage.getItem('mc_lang') || 'es');
+  const [collection, setCollection] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('mc_collection')) || { campaigns:['core'], scenarioPacks:[], heroPacks:[] }; }
+    catch { return { campaigns:['core'], scenarioPacks:[], heroPacks:[] }; }
+  });
+  const [history, setHistory] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('mc_history')) || []; }
+    catch { return []; }
+  });
+  const [tweaks, setTweaks] = useTweaks(TWEAK_DEFAULTS);
+  const [showTweaks, setShowTweaks] = useState(false);
+
+  useEffect(() => { localStorage.setItem('mc_collection', JSON.stringify(collection)); }, [collection]);
+  useEffect(() => { localStorage.setItem('mc_history', JSON.stringify(history)); }, [history]);
+  useEffect(() => { localStorage.setItem('mc_lang', lang); }, [lang]);
+
+  const t = (key) => TR[lang][key] || key;
+
+  const TABS = [
+    { id:'randomizer', label: t('tabRandomizer'), icon:'⚡' },
+    { id:'campaign',   label: t('tabCampaign'),   icon:'📖' },
+    { id:'collection', label: t('tabCollection'), icon:'📦' },
+    { id:'history',    label: t('tabHistory'),    icon:'📊' },
+    { id:'progression',label: t('tabProgression'),icon:'📈' },
+  ];
+
+  const ctxValue = { collection, setCollection, history, setHistory, lang, t };
+
+  return (
+    <MCContext.Provider value={ctxValue}>
+      <div style={{ minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+
+        {/* Header */}
+        <header style={{
+          background: 'linear-gradient(180deg, #0d1020 0%, rgba(13,16,32,0.95) 100%)',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          position: 'sticky', top: 0, zIndex: 100,
+          backdropFilter: 'blur(12px)'
+        }}>
+          {/* Top bar */}
+          <div style={{ maxWidth:'1200px', margin:'0 auto', padding:'14px 20px', display:'flex', justifyContent:'space-between', alignItems:'center', gap:'12px' }}>
+            <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
+              <div style={{ fontFamily:'"Bebas Neue",cursive', fontSize:'26px', letterSpacing:'0.08em', lineHeight:'1', color:'#f0f2ff', whiteSpace:'nowrap', display:'block' }}>
+                <span style={{ color:tweaks.accentColor }}>Marvel </span>Champions
+              </div>
+              <div style={{ fontSize:'10px', color:'#424866', letterSpacing:'0.14em', textTransform:'uppercase', whiteSpace:'nowrap', display:'block' }}>{t('appSub')}</div>
+            </div>
+            <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
+              <StatsBar />
+              <button onClick={() => setLang(l => l==='es'?'en':'es')} style={{
+                background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.12)',
+                color:'#c0c8e8', borderRadius:'7px', padding:'7px 12px', fontSize:'13px',
+                fontWeight:700, cursor:'pointer', letterSpacing:'0.04em'
+              }}>{lang === 'es' ? 'EN' : 'ES'}</button>
+            </div>
+          </div>
+
+          {/* Tab navigation */}
+          <div style={{ maxWidth:'1200px', margin:'0 auto', padding:'0 20px', display:'flex', gap:'0', overflowX:'auto' }}>
+            {TABS.map(tab => (
+              <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{
+                background:'none', border:'none',
+                borderBottom: activeTab===tab.id ? `2px solid ${tweaks.accentColor}` : '2px solid transparent',
+                color: activeTab===tab.id ? tweaks.accentColor : '#5a6080',
+                padding:'11px 16px', fontSize:'13px', fontWeight: activeTab===tab.id ? 700 : 400,
+                cursor:'pointer', transition:'all 0.15s ease', whiteSpace:'nowrap',
+                marginBottom:'-1px', display:'flex', alignItems:'center', gap:'6px',
+                letterSpacing: activeTab===tab.id ? '0.01em' : '0'
+              }}>
+                <span>{tab.icon}</span>
+                <span>{tab.label}</span>
+              </button>
+            ))}
+          </div>
+        </header>
+
+        {/* Main content */}
+        <main style={{ flex:1, maxWidth:'1200px', width:'100%', margin:'0 auto', padding:'24px 20px' }}>
+          {activeTab === 'randomizer'  && <RandomizerTab />}
+          {activeTab === 'campaign'    && <CampaignTab />}
+          {activeTab === 'collection'  && <CollectionTab />}
+          {activeTab === 'history'     && <HistoryTab />}
+          {activeTab === 'progression' && <ProgressionTab />}
+        </main>
+
+        {/* Footer */}
+        <footer style={{ borderTop:'1px solid rgba(255,255,255,0.04)', padding:'14px 20px', textAlign:'center' }}>
+          <div style={{ fontSize:'11px', color:'#2a2e48' }}>Marvel Champions: The Card Game © Fantasy Flight Games · Tool by community</div>
+        </footer>
+      </div>
+
+      {/* Tweaks panel */}
+      <TweaksPanel show={showTweaks} onClose={() => setShowTweaks(false)}>
+        <TweakSection title="Visual">
+          <TweakColor label="Accent color" tweakKey="accentColor" value={tweaks.accentColor} onChange={v => setTweaks({accentColor:v})} />
+          <TweakSlider label="Card width" tweakKey="cardSize" min={150} max={240} step={10} value={tweaks.cardSize} onChange={v => setTweaks({cardSize:v})} />
+          <TweakToggle label="Show descriptions" tweakKey="showDescriptions" value={tweaks.showDescriptions} onChange={v => setTweaks({showDescriptions:v})} />
+        </TweakSection>
+        <TweakSection title="Animations">
+          <TweakRadio label="Speed" tweakKey="animationSpeed" value={tweaks.animationSpeed}
+            options={[{label:'Fast',value:'fast'},{label:'Normal',value:'normal'},{label:'Slow',value:'slow'}]}
+            onChange={v => setTweaks({animationSpeed:v})} />
+        </TweakSection>
+      </TweaksPanel>
+    </MCContext.Provider>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

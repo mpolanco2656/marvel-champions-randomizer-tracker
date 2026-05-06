@@ -1,6 +1,18 @@
-import { Shuffle, Users, Target, Share2, AlertTriangle, Zap, Info, Check, X } from 'lucide-react';
+import { Check, Copy, Shuffle, X, Zap } from 'lucide-react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Hero, Villain, ModularSet, Stats } from '../../types';
+import type { Aspect, Complexity, Hero, ModularSet, PlayerOptimization, Playstyle, Stats, Tier, Villain } from '../../types';
+import {
+  ASPECT_COLORS,
+  EmptyState,
+  FilterSelect,
+  HeroCard,
+  ModularCard,
+  NumberPicker,
+  SectionHeading,
+  Toggle,
+  VillainCard,
+} from '../ui/MarvelUI';
 
 interface RandomizerTabProps {
   stats: Stats;
@@ -8,14 +20,16 @@ interface RandomizerTabProps {
   setPlayerCount: (count: number) => void;
   difficulty: 'Any' | 'Easy' | 'Medium' | 'Hard' | 'Expert';
   setDifficulty: (difficulty: 'Any' | 'Easy' | 'Medium' | 'Hard' | 'Expert') => void;
-  complexity: 'Any' | 'Beginner' | 'Intermediate' | 'Advanced';
-  setComplexity: (complexity: 'Any' | 'Beginner' | 'Intermediate' | 'Advanced') => void;
-  playstyle: 'Any' | 'Control' | 'Aggro' | 'All-rounder' | 'Resource Engine' | 'Support' | 'Setup';
-  setPlaystyle: (playstyle: 'Any' | 'Control' | 'Aggro' | 'All-rounder' | 'Resource Engine' | 'Support' | 'Setup') => void;
-  tier: 'Any' | 'S+' | 'S' | 'A' | 'B' | 'C';
-  setTier: (tier: 'Any' | 'S+' | 'S' | 'A' | 'B' | 'C') => void;
-  optimization: 'Any' | 'Solo' | 'Multiplayer' | 'Both';
-  setOptimization: (optimization: 'Any' | 'Solo' | 'Multiplayer' | 'Both') => void;
+  complexity: Complexity | 'Any';
+  setComplexity: (complexity: Complexity | 'Any') => void;
+  playstyle: Playstyle | 'Any';
+  setPlaystyle: (playstyle: Playstyle | 'Any') => void;
+  tier: Tier | 'Any';
+  setTier: (tier: Tier | 'Any') => void;
+  optimization: PlayerOptimization | 'Any';
+  setOptimization: (optimization: PlayerOptimization | 'Any') => void;
+  aspect: Aspect | 'Any';
+  setAspect: (aspect: Aspect | 'Any') => void;
   modularCount: number;
   setModularCount: (count: number) => void;
   onlyUnplayed: boolean;
@@ -42,6 +56,49 @@ interface RandomizerTabProps {
   saveToHistory: (result?: 'win' | 'loss') => void;
 }
 
+const difficultyOptions = [
+  { value: 'Any', label: 'Any' },
+  { value: 'Easy', label: 'Easy (1-3)' },
+  { value: 'Medium', label: 'Medium (4-6)' },
+  { value: 'Hard', label: 'Hard (7-8)' },
+  { value: 'Expert', label: 'Expert (9-10)' },
+] as const;
+
+const complexityOptions = [
+  { value: 'Any', label: 'Any' },
+  { value: 'Beginner', label: 'Beginner' },
+  { value: 'Intermediate', label: 'Intermediate' },
+  { value: 'Advanced', label: 'Advanced' },
+] as const;
+
+const playstyleOptions = [
+  { value: 'Any', label: 'Any' },
+  { value: 'Aggro', label: 'Aggro' },
+  { value: 'Control', label: 'Control' },
+  { value: 'All-rounder', label: 'All-rounder' },
+  { value: 'Support', label: 'Support' },
+  { value: 'Resource Engine', label: 'Resource Engine' },
+  { value: 'Setup', label: 'Setup' },
+] as const;
+
+const tierOptions = [
+  { value: 'Any', label: 'Any' },
+  { value: 'S+', label: 'S+' },
+  { value: 'S', label: 'S' },
+  { value: 'A', label: 'A' },
+  { value: 'B', label: 'B' },
+  { value: 'C', label: 'C' },
+] as const;
+
+const optimizationOptions = [
+  { value: 'Any', label: 'Any' },
+  { value: 'Solo', label: 'Solo' },
+  { value: 'Multiplayer', label: 'Multiplayer' },
+  { value: 'Both', label: 'Both' },
+] as const;
+
+const aspects: (Aspect | 'Any')[] = ['Any', 'Leadership', 'Justice', 'Aggression', 'Protection', 'Pool'];
+
 export default function RandomizerTab({
   stats,
   playerCount,
@@ -56,6 +113,8 @@ export default function RandomizerTab({
   setTier,
   optimization,
   setOptimization,
+  aspect,
+  setAspect,
   modularCount,
   setModularCount,
   onlyUnplayed,
@@ -66,10 +125,6 @@ export default function RandomizerTab({
   setGameMode,
   encounterVariant,
   setEncounterVariant,
-  showDifficultyHelp,
-  setShowDifficultyHelp,
-  showComplexityHelp,
-  setShowComplexityHelp,
   warnings,
   suggestions,
   randomHeroes,
@@ -82,380 +137,166 @@ export default function RandomizerTab({
   saveToHistory,
 }: RandomizerTabProps) {
   const { t } = useTranslation('randomizer');
+  const [revealed, setRevealed] = useState(true);
+  const [saved, setSaved] = useState(false);
+  const hasResult = randomHeroes.length > 0 || randomVillain;
+
+  function generateAnimated(action: () => void) {
+    setSaved(false);
+    setRevealed(false);
+    action();
+    window.setTimeout(() => setRevealed(true), 80);
+  }
+
+  function save(result?: 'win' | 'loss') {
+    saveToHistory(result);
+    setSaved(true);
+  }
 
   return (
-    <div className="space-y-6">
-      {/* Quick Stats Bar */}
-      <div className="bg-black bg-opacity-40 rounded-lg p-4 flex flex-wrap justify-around gap-4">
-        <div className="text-center">
-          <div className="text-2xl font-bold text-yellow-300">{stats.gamesPlayed}</div>
-          <div className="text-xs text-gray-400">{t('randomizer:stats.games')}</div>
+    <div className="mc-stack">
+      <div className="mc-panel">
+        <SectionHeading>{t('filters', { defaultValue: 'Filters' })}</SectionHeading>
+        <div className="mc-filter-grid">
+          <NumberPicker label="Players" value={playerCount} values={[1, 2, 3, 4]} onChange={setPlayerCount} />
+          <FilterSelect label="Difficulty" value={difficulty} onChange={setDifficulty} options={[...difficultyOptions]} />
+          <FilterSelect label="Complexity" value={complexity} onChange={setComplexity} options={[...complexityOptions]} />
+          <FilterSelect label="Playstyle" value={playstyle} onChange={setPlaystyle} options={[...playstyleOptions]} />
+          <FilterSelect label="Tier" value={tier} onChange={setTier} options={[...tierOptions]} />
+          <FilterSelect label="Optimization" value={optimization} onChange={setOptimization} options={[...optimizationOptions]} />
+
+          <div className="mc-filter">
+            <span>Aspect</span>
+            <div className="mc-aspect-picker">
+              {aspects.map((item) => {
+                const color = item === 'Any' ? null : ASPECT_COLORS[item];
+                return (
+                  <button
+                    key={item}
+                    type="button"
+                    data-active={aspect === item ? '1' : '0'}
+                    style={{
+                      ['--aspect-border' as string]: color?.border || '#d4a20a',
+                      ['--aspect-bg' as string]: color?.bg || 'rgba(212,162,10,0.18)',
+                      ['--aspect-text' as string]: color?.text || '#d4a20a',
+                    }}
+                    onClick={() => setAspect(item)}
+                  >
+                    {item}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <NumberPicker label="Modular Sets" value={modularCount} values={[1, 2, 3, 4]} onChange={setModularCount} />
+          <FilterSelect label="Mode" value={gameMode} onChange={setGameMode} options={[{ value: 'Standard', label: 'Standard' }, { value: 'Expert', label: 'Expert' }]} />
+          <FilterSelect label="Encounter" value={encounterVariant} onChange={setEncounterVariant} options={[{ value: 'I', label: `${gameMode} I` }, { value: 'II', label: `${gameMode} II` }, { value: 'III', label: `${gameMode} III` }]} />
         </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-green-400">{Number.isFinite(stats.winRate) ? stats.winRate.toFixed(1) : "0.0"}%</div>
-          <div className="text-xs text-gray-400">{t('randomizer:stats.winRate')}</div>
-        </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-blue-400">{stats.collectionPercentage.campaigns}%</div>
-          <div className="text-xs text-gray-400">{t('randomizer:stats.campaigns')}</div>
-        </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-purple-400">{stats.collectionPercentage.scenarioPacks}%</div>
-          <div className="text-xs text-gray-400">{t('randomizer:stats.scenarios')}</div>
-        </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-red-400">{stats.collectionPercentage.heroPacks}%</div>
-          <div className="text-xs text-gray-400">{t('randomizer:stats.heroPacks')}</div>
+
+        <div className="mc-toggle-row" style={{ marginTop: 14 }}>
+          <Toggle checked={thematicPairing} onChange={setThematicPairing} label="Thematic pairing" />
+          <Toggle checked={onlyUnplayed} onChange={setOnlyUnplayed} label="Unplayed only" />
         </div>
       </div>
 
-      {/* Main Controls */}
-      <div className="bg-black bg-opacity-40 rounded-lg p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-          <div>
-            <label className="block text-sm font-bold mb-2">{t('randomizer:controls.players')}</label>
-            <select
-              value={playerCount}
-              onChange={(e) => setPlayerCount(Number(e.target.value))}
-              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
-            >
-              <option value={1}>{t('randomizer:playerOptions.trueSolo')}</option>
-              <option value={2}>{t('randomizer:playerOptions.recommended')}</option>
-              <option value={3}>{t('randomizer:playerOptions.threePlayers')}</option>
-              <option value={4}>{t('randomizer:playerOptions.fourPlayers')}</option>
-            </select>
-          </div>
-
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <label className="block text-sm font-bold">{t('randomizer:controls.difficulty')}</label>
-              <button
-                onClick={() => setShowDifficultyHelp(!showDifficultyHelp)}
-                className="text-yellow-400 hover:text-yellow-300"
-              >
-                <Info size={16} />
-              </button>
-            </div>
-            <select
-              value={difficulty}
-              onChange={(e) => setDifficulty(e.target.value as any)}
-              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
-            >
-              <option value="Any">{t('randomizer:difficultyOptions.any')}</option>
-              <option value="Easy">{t('randomizer:difficultyOptions.easy')}</option>
-              <option value="Medium">{t('randomizer:difficultyOptions.medium')}</option>
-              <option value="Hard">{t('randomizer:difficultyOptions.hard')}</option>
-              <option value="Expert">{t('randomizer:difficultyOptions.expert')}</option>
-            </select>
-            {showDifficultyHelp && (
-              <div className="mt-2 p-3 bg-blue-900 bg-opacity-60 rounded text-xs">
-                <div className="font-bold mb-1">{t('randomizer:difficultyHelp.title')}</div>
-                <div><span className="text-green-400">{t('randomizer:difficultyHelp.easy')}</span> {t('randomizer:difficultyHelp.easyDesc')}</div>
-                <div><span className="text-yellow-400">{t('randomizer:difficultyHelp.medium')}</span> {t('randomizer:difficultyHelp.mediumDesc')}</div>
-                <div><span className="text-orange-400">{t('randomizer:difficultyHelp.hard')}</span> {t('randomizer:difficultyHelp.hardDesc')}</div>
-                <div><span className="text-red-400">{t('randomizer:difficultyHelp.expert')}</span> {t('randomizer:difficultyHelp.expertDesc')}</div>
-              </div>
-            )}
-          </div>
-
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <label className="block text-sm font-bold">{t('randomizer:controls.complexity')}</label>
-              <button
-                onClick={() => setShowComplexityHelp(!showComplexityHelp)}
-                className="text-yellow-400 hover:text-yellow-300"
-              >
-                <Info size={16} />
-              </button>
-            </div>
-            <select
-              value={complexity}
-              onChange={(e) => setComplexity(e.target.value as any)}
-              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
-            >
-              <option value="Any">{t('randomizer:complexityOptions.any')}</option>
-              <option value="Beginner">{t('randomizer:complexityOptions.beginner')}</option>
-              <option value="Intermediate">{t('randomizer:complexityOptions.intermediate')}</option>
-              <option value="Advanced">{t('randomizer:complexityOptions.advanced')}</option>
-            </select>
-            {showComplexityHelp && (
-              <div className="mt-2 p-3 bg-purple-900 bg-opacity-60 rounded text-xs">
-                <div className="font-bold mb-1">{t('randomizer:complexityHelp.title')}</div>
-                <div><span className="text-green-400">{t('randomizer:complexityHelp.beginner')}</span> {t('randomizer:complexityHelp.beginnerDesc')}</div>
-                <div><span className="text-yellow-400">{t('randomizer:complexityHelp.intermediate')}</span> {t('randomizer:complexityHelp.intermediateDesc')}</div>
-                <div><span className="text-red-400">{t('randomizer:complexityHelp.advanced')}</span> {t('randomizer:complexityHelp.advancedDesc')}</div>
-              </div>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-sm font-bold mb-2">{t('randomizer:controls.modulars')}</label>
-            <select
-              value={modularCount}
-              onChange={(e) => setModularCount(Number(e.target.value))}
-              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
-            >
-              <option value={1}>{t('randomizer:modularOptions.oneSet')}</option>
-              <option value={2}>{t('randomizer:modularOptions.twoSets')}</option>
-              <option value={3}>{t('randomizer:modularOptions.threeSets')}</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-bold mb-2">{t('randomizer:controls.playStyle')}</label>
-            <select
-              value={playstyle}
-              onChange={(e) => setPlaystyle(e.target.value as any)}
-              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
-            >
-              <option value="Any">{t('randomizer:playStyleOptions.any')}</option>
-              <option value="Control">Control</option>
-              <option value="Aggro">Aggro</option>
-              <option value="All-rounder">All-rounder</option>
-              <option value="Resource Engine">Resource Engine</option>
-              <option value="Support">Support</option>
-              <option value="Setup">Setup</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-bold mb-2">{t('randomizer:controls.tier')}</label>
-            <select
-              value={tier}
-              onChange={(e) => setTier(e.target.value as any)}
-              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
-            >
-              <option value="Any">{t('randomizer:tierOptions.any')}</option>
-              <option value="S+">{t('randomizer:tierOptions.sPlus')}</option>
-              <option value="S">{t('randomizer:tierOptions.s')}</option>
-              <option value="A">{t('randomizer:tierOptions.a')}</option>
-              <option value="B">{t('randomizer:tierOptions.b')}</option>
-              <option value="C">{t('randomizer:tierOptions.c')}</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-bold mb-2">{t('randomizer:controls.optimization')}</label>
-            <select
-              value={optimization}
-              onChange={(e) => setOptimization(e.target.value as any)}
-              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
-            >
-              <option value="Any">{t('randomizer:optimizationOptions.any')}</option>
-              <option value="Solo">Solo</option>
-              <option value="Multiplayer">Multiplayer</option>
-              <option value="Both">{t('randomizer:optimizationOptions.both')}</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-bold mb-2">{t('randomizer:controls.gameMode')}</label>
-            <select
-              value={gameMode}
-              onChange={(e) => setGameMode(e.target.value as 'Standard' | 'Expert')}
-              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
-            >
-              <option value="Standard">{t('randomizer:gameModeOptions.standard')}</option>
-              <option value="Expert">{t('randomizer:gameModeOptions.expert')}</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-bold mb-2">{t('randomizer:controls.encounterSet')}</label>
-            <select
-              value={encounterVariant}
-              onChange={(e) => setEncounterVariant(e.target.value as 'I' | 'II' | 'III')}
-              className="w-full p-2 rounded bg-gray-800 border border-gray-600"
-            >
-              <option value="I">{t(`randomizer:gameModeOptions.${gameMode.toLowerCase()}`)} I</option>
-              <option value="II">{t(`randomizer:gameModeOptions.${gameMode.toLowerCase()}`)} II</option>
-              <option value="III">{t(`randomizer:gameModeOptions.${gameMode.toLowerCase()}`)} III</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap gap-4 mb-4">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={onlyUnplayed}
-              onChange={(e) => setOnlyUnplayed(e.target.checked)}
-              className="w-5 h-5"
-            />
-            <span className="text-sm">{t('randomizer:checkboxes.unplayedHeroes')}</span>
-          </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={thematicPairing}
-              onChange={(e) => setThematicPairing(e.target.checked)}
-              className="w-5 h-5"
-            />
-            <span className="text-sm">{t('randomizer:checkboxes.thematicPairing')}</span>
-          </label>
-        </div>
-
-        <button
-          onClick={generateComplete}
-          className="w-full bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all transform hover:scale-105 mb-4"
-        >
-          <Shuffle className="inline mr-2" size={24} />
-          {t('randomizer:buttons.generateComplete')}
+      <div className="mc-generate-row">
+        <button type="button" className="mc-primary-button" onClick={() => generateAnimated(generateComplete)}>
+          <Shuffle size={23} />
+          Generate Full Setup
         </button>
-
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            onClick={generateHeroes}
-            className="bg-blue-600 hover:bg-blue-700 font-bold py-2 px-4 rounded"
-          >
-            <Users className="inline mr-2" size={16} />
-            {t('randomizer:buttons.onlyHeroes')}
-          </button>
-          <button
-            onClick={generateVillainSetup}
-            className="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded"
-          >
-            <Target className="inline mr-2" size={16} />
-            {t('randomizer:buttons.onlyVillain')}
-          </button>
-        </div>
       </div>
 
-      {/* Warnings & Suggestions */}
-      {(warnings.length > 0 || suggestions.length > 0) && (
-        <div className="space-y-2">
-          {warnings.map((warning, idx) => (
-            <div
-              key={idx}
-              className="bg-red-900 bg-opacity-40 border-l-4 border-red-500 rounded p-3 flex items-start gap-2"
-            >
-              <AlertTriangle size={20} className="text-red-400 flex-shrink-0 mt-0.5" />
-              <span className="text-sm">{warning}</span>
+      <div className="mc-actions-row" style={{ justifyContent: 'center' }}>
+        <button type="button" className="mc-secondary-button" onClick={() => generateAnimated(generateHeroes)}>
+          Only Heroes
+        </button>
+        <button type="button" className="mc-secondary-button" onClick={() => generateAnimated(generateVillainSetup)}>
+          Only Villain
+        </button>
+        {hasResult ? (
+          <button type="button" className="mc-secondary-button" onClick={exportSetup}>
+            <Copy size={15} style={{ display: 'inline', marginRight: 6 }} />
+            Export
+          </button>
+        ) : null}
+      </div>
+
+      {hasResult ? (
+        <div className="mc-stack">
+          {randomVillain ? (
+            <div className="mc-result-row">
+              <div style={{ minWidth: 220, flex: '0 0 260px' }}>
+                <SectionHeading accent="#e74c3c">Villain</SectionHeading>
+                <VillainCard villain={randomVillain} revealed={revealed} />
+              </div>
+              <div style={{ flex: 1, minWidth: 220 }}>
+                <SectionHeading accent="#d4a20a">Modular Sets ({randomModulars.length})</SectionHeading>
+                <div className="mc-modular-grid">
+                  {randomModulars.map((modular, index) => (
+                    <ModularCard key={modular.key} modular={modular} index={index} revealed={revealed} />
+                  ))}
+                </div>
+              </div>
             </div>
-          ))}
-          {suggestions.map((suggestion, idx) => (
-            <div
-              key={idx}
-              className="bg-blue-900 bg-opacity-40 border-l-4 border-blue-500 rounded p-3 flex items-start gap-2"
-            >
-              <Zap size={20} className="text-blue-400 flex-shrink-0 mt-0.5" />
-              <span className="text-sm">{suggestion}</span>
+          ) : null}
+
+          {randomHeroes.length > 0 ? (
+            <section>
+              <SectionHeading accent="#5dade2">Heroes ({randomHeroes.length})</SectionHeading>
+              <div className="mc-hero-grid">
+                {randomHeroes.map((hero, index) => (
+                  <HeroCard key={hero.key} hero={hero} index={index} revealed={revealed} />
+                ))}
+              </div>
+            </section>
+          ) : null}
+
+          {(warnings.length > 0 || suggestions.length > 0) ? (
+            <div className="mc-stack" style={{ gap: 10 }}>
+              {warnings.length > 0 ? (
+                <div className="mc-alert">
+                  {warnings.map((warning) => <p key={warning}>{warning}</p>)}
+                </div>
+              ) : null}
+              {suggestions.length > 0 ? (
+                <div className="mc-alert" data-type="suggestion">
+                  {suggestions.map((suggestion) => <p key={suggestion}>{suggestion}</p>)}
+                </div>
+              ) : null}
             </div>
-          ))}
+          ) : null}
+
+          {randomHeroes.length > 0 && randomVillain ? (
+            <div className="mc-actions-row" style={{ alignItems: 'center' }}>
+              {saved ? (
+                <span style={{ color: '#2ecc71', fontSize: 13, fontWeight: 700 }}>Saved</span>
+              ) : (
+                <>
+                  <span style={{ color: '#5a6080', fontSize: 12 }}>Record result:</span>
+                  <button type="button" className="mc-secondary-button" data-tone="success" onClick={() => save('win')}>
+                    <Check size={15} style={{ display: 'inline', marginRight: 5 }} />
+                    Win
+                  </button>
+                  <button type="button" className="mc-secondary-button" data-tone="danger" onClick={() => save('loss')}>
+                    <X size={15} style={{ display: 'inline', marginRight: 5 }} />
+                    Loss
+                  </button>
+                  <button type="button" className="mc-secondary-button" onClick={() => save()}>
+                    Save without result
+                  </button>
+                </>
+              )}
+            </div>
+          ) : null}
         </div>
+      ) : (
+        <EmptyState title="Ready to generate" subtitle={`Collection: ${stats.collectionPercentage.campaigns}% campaigns, ${stats.collectionPercentage.heroPacks}% hero packs`} />
       )}
 
-      {/* Results - Heroes */}
-      {randomHeroes.length > 0 && (
-        <div className="bg-black bg-opacity-40 rounded-lg p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold text-blue-400">{t('randomizer:results.heroes')}</h2>
-            <button
-              onClick={exportSetup}
-              className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded flex items-center gap-2 text-sm"
-            >
-              <Share2 size={16} />
-              {t('randomizer:buttons.export')}
-            </button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {randomHeroes.map((hero, idx) => (
-              <div
-                key={idx}
-                className="bg-gradient-to-br from-blue-800 to-purple-800 rounded-lg p-4 border-2 border-yellow-400"
-              >
-                <div className="flex justify-between mb-2">
-                  <div>
-                    <h3 className="text-xl font-bold text-yellow-300">{hero.name}</h3>
-                    <div className="text-xs text-gray-300">{hero.source}</div>
-                  </div>
-                  <div className="bg-yellow-500 text-black px-3 py-1 rounded font-bold h-fit">{hero.tier}</div>
-                </div>
-                <div className="text-sm space-y-1 mb-2">
-                  <div><span className="text-yellow-300">{t('randomizer:results.aspect')}</span> {hero.aspect}</div>
-                  <div><span className="text-yellow-300">{t('randomizer:results.complexity')}</span> {hero.complexity}</div>
-                  <div><span className="text-yellow-300">{t('randomizer:results.playStyle')}</span> {hero.playstyle.join(', ')}</div>
-                </div>
-                <div className="bg-black bg-opacity-40 rounded p-2 text-xs text-gray-300">{hero.description}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Results - Villain & Modulars */}
-      {randomVillain && (
-        <div className="bg-black bg-opacity-40 rounded-lg p-6">
-          <h2 className="text-2xl font-bold text-red-400 mb-4">{t('randomizer:results.villainAndModulars')}</h2>
-          <div className="bg-gradient-to-br from-red-800 to-orange-800 rounded-lg p-5 border-2 border-yellow-400 mb-4">
-            <div className="flex justify-between mb-3">
-              <div>
-                <h3 className="text-2xl font-bold text-yellow-300">{randomVillain.name}</h3>
-                <div className="text-sm text-gray-300">{randomVillain.source}</div>
-              </div>
-              <div className="bg-yellow-500 text-black px-4 py-2 rounded font-bold text-xl">{randomVillain.difficulty}/10</div>
-            </div>
-            <div className="bg-black bg-opacity-40 rounded p-3 text-sm">
-              <div className="font-bold text-yellow-300 mb-1">{t('randomizer:results.mechanics')} {randomVillain.mechanics}</div>
-              <div className="text-gray-300">{randomVillain.description}</div>
-            </div>
-            <div className="mt-3 bg-blue-900 bg-opacity-40 rounded p-3">
-              <div className="text-sm font-bold text-blue-300">
-                🎯 {t('randomizer:results.mode')} {gameMode} {encounterVariant}
-              </div>
-              <div className="text-xs text-gray-400 mt-1">
-                {gameMode === 'Standard'
-                  ? t('randomizer:results.standardDesc')
-                  : t('randomizer:results.expertDesc')}
-              </div>
-            </div>
-          </div>
-
-          {randomModulars.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-              {randomModulars.map((modular, idx) => (
-                <div key={idx} className="bg-purple-900 bg-opacity-40 rounded p-4">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-bold">{modular.name}</span>
-                    <div className="flex gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <div
-                          key={i}
-                          className={`w-3 h-3 rounded-full ${i < modular.difficulty ? 'bg-red-500' : 'bg-gray-600'}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="text-xs text-gray-400">{modular.source}</div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <div className="mt-4 flex gap-2">
-            <button
-              onClick={() => saveToHistory('win')}
-              className="flex-1 bg-green-600 hover:bg-green-700 font-bold py-2 px-4 rounded"
-            >
-              <Check size={16} className="inline mr-1" />
-              {t('randomizer:buttons.victory')}
-            </button>
-            <button
-              onClick={() => saveToHistory('loss')}
-              className="flex-1 bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded"
-            >
-              <X size={16} className="inline mr-1" />
-              {t('randomizer:buttons.defeat')}
-            </button>
-            <button
-              onClick={() => saveToHistory()}
-              className="flex-1 bg-gray-600 hover:bg-gray-700 font-bold py-2 px-4 rounded"
-            >
-              {t('randomizer:buttons.save')}
-            </button>
-          </div>
-        </div>
-      )}
+      <div style={{ display: 'none' }}>
+        <Zap aria-hidden="true" />
+      </div>
     </div>
   );
 }

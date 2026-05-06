@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "content:refresh": "node scripts/refresh-marvelcdb-data.mjs",
+    "content:hero-images": "node scripts/download-hero-images.mjs",
+    "content:audit-aspects": "node scripts/audit-hero-aspects.mjs"
   },
   "dependencies": {
     "i18next": "^25.6.2",
