@@ -10,6 +10,8 @@
     "preview": "vite preview",
     "content:refresh": "node scripts/refresh-marvelcdb-data.mjs",
     "content:hero-images": "node scripts/download-hero-images.mjs",
+    "content:pack-images": "node scripts/download-pack-images.mjs",
+    "content:encounter-images": "node scripts/download-encounter-images.mjs",
     "content:audit-aspects": "node scripts/audit-hero-aspects.mjs"
   },
   "dependencies": {

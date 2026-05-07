@@ -679,6 +679,28 @@ input:focus-visible {
   background: color-mix(in srgb, var(--danger) 8%, transparent);
 }
 
+.mc-villain-image {
+  position: relative;
+  height: 128px;
+  overflow: hidden;
+  background: #090c18;
+}
+
+.mc-villain-image img,
+.mc-modular-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.mc-villain-image i,
+.mc-modular-image i {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 45%, #0a0d1a 100%);
+}
+
 .mc-villain-card h3 {
   font-size: 24px;
 }
@@ -703,6 +725,13 @@ input:focus-visible {
   min-width: 150px;
   flex: 1;
   background: linear-gradient(160deg, #0d1020 0%, #090c18 100%);
+}
+
+.mc-modular-image {
+  position: relative;
+  height: 96px;
+  overflow: hidden;
+  background: #090c18;
 }
 
 .mc-modular-card h3 {
@@ -765,6 +794,268 @@ input:focus-visible {
   font-size: 13px;
 }
 
+.mc-campaign-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.mc-campaign-hero h2,
+.mc-campaign-checklist-head h3 {
+  margin: 0;
+  color: #d4a20a;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 26px;
+  letter-spacing: 0.06em;
+}
+
+.mc-campaign-hero p,
+.mc-campaign-checklist-head p {
+  margin: 6px 0 0;
+  color: #5a6080;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.mc-subtabs {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.mc-subtabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: #5a6080;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 16px;
+  transition: 0.15s ease;
+}
+
+.mc-subtabs button[data-active='1'] {
+  border-color: rgba(212, 162, 10, 0.4);
+  background: rgba(212, 162, 10, 0.18);
+  color: #d4a20a;
+}
+
+.mc-campaign-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 10px;
+}
+
+.mc-campaign-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  min-height: 136px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  color: inherit;
+  padding: 14px 16px;
+  text-align: left;
+  transition: 0.2s ease;
+}
+
+.mc-campaign-card > img {
+  width: 100%;
+  height: 96px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 7px;
+  margin-bottom: 2px;
+  opacity: 0.92;
+}
+
+.mc-campaign-card:hover,
+.mc-campaign-card[data-active='1'] {
+  border-color: rgba(212, 162, 10, 0.45);
+  background: rgba(212, 162, 10, 0.08);
+}
+
+.mc-campaign-card > span {
+  color: #e8eaf6;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+.mc-campaign-card small,
+.mc-campaign-scenario small {
+  color: #5a6080;
+  font-size: 11px;
+}
+
+.mc-campaign-card strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #c0c8e8;
+  font-size: 12px;
+}
+
+.mc-campaign-card i {
+  display: block;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mc-campaign-card b {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #d4a20a;
+}
+
+.mc-campaign-card em,
+.mc-campaign-scenario em,
+.mc-complete-message {
+  color: #2ecc71;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.mc-campaign-checklist-head {
+  margin-bottom: 14px;
+}
+
+.mc-campaign-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mc-campaign-scenario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  color: inherit;
+  padding: 12px 14px;
+  text-align: left;
+  transition: 0.2s ease;
+}
+
+.mc-campaign-scenario:hover {
+  border-color: rgba(212, 162, 10, 0.35);
+}
+
+.mc-campaign-scenario[data-completed='1'] {
+  border-color: rgba(39, 174, 96, 0.35);
+  background: rgba(39, 174, 96, 0.06);
+}
+
+.mc-campaign-scenario > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  color: #fff;
+}
+
+.mc-campaign-scenario > img,
+.mc-scenario-thumb {
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 7px;
+  object-fit: cover;
+  object-position: top center;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.mc-scenario-thumb {
+  width: 68px;
+  height: 68px;
+}
+
+.mc-modular-thumb,
+.mc-collection-thumb {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  object-fit: cover;
+  object-position: top center;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.mc-modular-thumb {
+  width: 34px;
+  height: 34px;
+}
+
+.mc-campaign-scenario[data-completed='1'] > span {
+  border-color: #27ae60;
+  background: #27ae60;
+}
+
+.mc-campaign-scenario div {
+  flex: 1;
+  min-width: 0;
+}
+
+.mc-campaign-scenario strong {
+  display: block;
+  color: #f0f2ff;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.mc-danger-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 18px;
+  border: 1px solid rgba(192, 57, 43, 0.35);
+  border-radius: 8px;
+  background: rgba(192, 57, 43, 0.14);
+  color: #e74c3c;
+  font-weight: 800;
+  padding: 11px 16px;
+}
+
+.mc-complete-message {
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid rgba(39, 174, 96, 0.25);
+  border-radius: 8px;
+  background: rgba(39, 174, 96, 0.08);
+  text-align: center;
+}
+
 @media (max-width: 760px) {
   .mc-shell {
     width: min(100% - 24px, 1200px);
@@ -793,6 +1084,20 @@ input:focus-visible {
     width: 100%;
     padding: 14px 20px;
     font-size: 19px;
+  }
+
+  .mc-campaign-hero {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .mc-subtabs {
+    width: 100%;
+  }
+
+  .mc-subtabs button {
+    flex: 1;
+    padding-inline: 10px;
   }
 }
 

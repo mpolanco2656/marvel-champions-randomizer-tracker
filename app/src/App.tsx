@@ -11,13 +11,12 @@ import Header from './components/layout/Header';
 import TabNavigation from './components/layout/TabNavigation';
 import RandomizerTab from './components/tabs/RandomizerTab';
 import CampaignTab from './components/tabs/CampaignTab';
-import CampaignRandomizerTab from './components/tabs/CampaignRandomizerTab';
 import CollectionTab from './components/tabs/CollectionTab';
 import HistoryTab from './components/tabs/HistoryTab';
 import ProgressionTab from './components/tabs/ProgressionTab';
 import { useTranslation } from 'react-i18next';
 
-type TabType = 'randomizer' | 'campaign' | 'campaignrandomizer' | 'collection' | 'history' | 'progression';
+type TabType = 'randomizer' | 'campaign' | 'collection' | 'history' | 'progression';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('randomizer');
@@ -34,6 +33,10 @@ export default function App() {
   const {
     activeCampaign: campaignTrackerActive,
     completedScenarios,
+    setActiveCampaign: setCampaignTrackerActive,
+    toggleScenario,
+    getCompletedCount,
+    clearCampaign,
     importCampaignData
   } = useCampaignTracker();
 
@@ -335,23 +338,22 @@ export default function App() {
         {activeTab === 'campaign' && (
           <CampaignTab
             campaigns={campaigns}
-            collection={collection}
-          />
-        )}
-
-        {activeTab === 'campaignrandomizer' && (
-          <CampaignRandomizerTab
-            campaigns={campaigns}
             villains={villains}
             collection={collection}
             modularSets={modularSets}
-            activeCampaign={activeCampaign}
+            trackerActiveCampaign={campaignTrackerActive}
+            completedScenarios={completedScenarios}
+            setTrackerActiveCampaign={setCampaignTrackerActive}
+            toggleScenario={toggleScenario}
+            getCompletedCount={getCompletedCount}
+            clearCampaign={clearCampaign}
+            randomizerActiveCampaign={activeCampaign}
             randomMode={randomMode}
             campaignScenarios={campaignScenarios}
             mixedScenarios={mixedScenarios}
-            setActiveCampaign={setActiveCampaign}
+            setRandomizerActiveCampaign={setActiveCampaign}
             setCampaignScenarios={setCampaignScenarios}
-            markScenarioComplete={markCampaignScenarioComplete}
+            markCampaignScenarioComplete={markCampaignScenarioComplete}
             setRandomMode={setRandomMode}
             setMixedScenarios={setMixedScenarios}
             markMixedScenarioComplete={markMixedScenarioComplete}

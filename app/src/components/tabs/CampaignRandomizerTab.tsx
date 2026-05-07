@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { selectThematicModulars } from '../../utils/gameLogic';
 import { getOwnedSources } from '../../utils/gameLogic';
+import { modularImagePath, villainImagePath } from '../../utils/assetPaths';
 
 interface CampaignRandomizerTabProps {
   campaigns: Campaign[];
@@ -275,6 +276,12 @@ export default function CampaignRandomizerTab({
                 }`}
               >
                 <div className="flex justify-between items-start mb-3">
+                  <img
+                    src={villainImagePath(scenario.villain)}
+                    alt=""
+                    className="mc-scenario-thumb"
+                    onError={(event) => { event.currentTarget.hidden = true; }}
+                  />
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-sm font-bold text-gray-400">{t('scenario')} {idx + 1}</span>
@@ -304,7 +311,15 @@ export default function CampaignRandomizerTab({
                     {scenario.modulars.map((modular, mIdx) => (
                       <div key={mIdx} className="bg-purple-900 bg-opacity-40 rounded p-2">
                         <div className="flex justify-between items-center">
-                          <span className="text-sm font-bold">{modular.name}</span>
+                          <div className="flex items-center gap-2 min-w-0">
+                            <img
+                              src={modularImagePath(modular)}
+                              alt=""
+                              className="mc-modular-thumb"
+                              onError={(event) => { event.currentTarget.hidden = true; }}
+                            />
+                            <span className="text-sm font-bold truncate">{modular.name}</span>
+                          </div>
                           <div className="flex gap-1">
                             {[...Array(5)].map((_, i) => (
                               <div

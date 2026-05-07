@@ -2,6 +2,7 @@ import { ImageOff, X } from 'lucide-react';
 import type React from 'react';
 import { useMemo, useRef, useState } from 'react';
 import type { Aspect, Complexity, Hero, ModularSet, Tier, Villain } from '../../types';
+import { modularImagePath, villainImagePath } from '../../utils/assetPaths';
 
 export const ASPECT_COLORS: Record<Aspect, { bg: string; border: string; glow: string; text: string }> = {
   Leadership: { bg: 'rgba(41,128,185,0.18)', border: '#2980b9', glow: '#2980b9', text: '#5dade2' },
@@ -315,9 +316,16 @@ export function HeroCard({ hero, index = 0, revealed = true }: { hero: Hero; ind
 
 export function VillainCard({ villain, revealed = true }: { villain: Villain; revealed?: boolean }) {
   const color = villain.difficulty <= 3 ? '#27ae60' : villain.difficulty <= 6 ? '#d4a20a' : villain.difficulty <= 8 ? '#e67e22' : '#c0392b';
+  const [imageFailed, setImageFailed] = useState(false);
   return (
     <article className="mc-villain-card" data-revealed={revealed ? '1' : '0'} style={{ ['--danger' as string]: color }}>
       <div className="mc-card-top-band" />
+      {!imageFailed ? (
+        <div className="mc-villain-image">
+          <img src={villainImagePath(villain)} alt={villain.name} onError={() => setImageFailed(true)} />
+          <i />
+        </div>
+      ) : null}
       <header>
         <div>
           <h3>{villain.name}</h3>
@@ -337,9 +345,16 @@ export function VillainCard({ villain, revealed = true }: { villain: Villain; re
 
 export function ModularCard({ modular, index = 0, revealed = true }: { modular: ModularSet; index?: number; revealed?: boolean }) {
   const color = modular.difficulty <= 2 ? '#27ae60' : modular.difficulty <= 3 ? '#d4a20a' : modular.difficulty <= 4 ? '#e67e22' : '#c0392b';
+  const [imageFailed, setImageFailed] = useState(false);
   return (
     <article className="mc-modular-card" data-revealed={revealed ? '1' : '0'} style={{ ['--danger' as string]: color, animationDelay: `${index * 60}ms` }}>
       <div className="mc-card-top-band" />
+      {!imageFailed ? (
+        <div className="mc-modular-image">
+          <img src={modularImagePath(modular)} alt={modular.name} onError={() => setImageFailed(true)} />
+          <i />
+        </div>
+      ) : null}
       <h3>{modular.name}</h3>
       <div className="mc-card-label">Difficulty</div>
       <DifficultyBar value={modular.difficulty} max={5} color={color} />

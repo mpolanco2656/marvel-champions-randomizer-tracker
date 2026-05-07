@@ -1,4 +1,4 @@
-import { Archive, BookOpen, Dices, Shuffle, Target, TrendingUp } from 'lucide-react';
+import { Archive, BookOpen, Shuffle, Target, TrendingUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface TabNavigationProps {
@@ -9,7 +9,6 @@ interface TabNavigationProps {
 const tabs = [
   { id: 'randomizer', translationKey: 'randomizer', icon: Shuffle },
   { id: 'campaign', translationKey: 'campaign', icon: BookOpen },
-  { id: 'campaignrandomizer', translationKey: 'campaignRandomizer', icon: Dices },
   { id: 'collection', translationKey: 'collection', icon: Archive },
   { id: 'progression', translationKey: 'progression', icon: Target },
   { id: 'history', translationKey: 'history', icon: TrendingUp },

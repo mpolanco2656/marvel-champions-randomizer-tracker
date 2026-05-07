@@ -1,6 +1,7 @@
 import { Check, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { Collection, Campaign, ScenarioPack, HeroPack, Hero, Villain, ModularSet } from '../../types';
+import { campaignImagePath, heroPackImagePath, scenarioPackImagePath } from '../../utils/assetPaths';
 
 interface CollectionTabProps {
   collection: Collection;
@@ -53,6 +54,12 @@ export default function CollectionTab({
               }`}
             >
               <div className="flex items-center gap-2">
+                <img
+                  src={campaignImagePath(campaign)}
+                  alt=""
+                  className="mc-collection-thumb"
+                  onError={(event) => { event.currentTarget.hidden = true; }}
+                />
                 {collection.campaigns.includes(campaign.key) ? <Check size={16} /> : <X size={16} />}
                 <div>
                   <div className="text-sm font-bold">{campaign.name}</div>
@@ -100,6 +107,12 @@ export default function CollectionTab({
               }`}
             >
               <div className="flex items-center gap-2">
+                <img
+                  src={scenarioPackImagePath(pack)}
+                  alt=""
+                  className="mc-collection-thumb"
+                  onError={(event) => { event.currentTarget.hidden = true; }}
+                />
                 {collection.scenarioPacks.includes(pack.key) ? <Check size={16} /> : <X size={16} />}
                 <div>
                   <div className="text-sm font-bold">{pack.name}</div>
@@ -147,6 +160,12 @@ export default function CollectionTab({
               }`}
             >
               <div className="flex items-center gap-2">
+                <img
+                  src={heroPackImagePath(pack)}
+                  alt=""
+                  className="mc-collection-thumb"
+                  onError={(event) => { event.currentTarget.hidden = true; }}
+                />
                 {(collection.heroPacks || []).includes(pack.key) ? <Check size={16} /> : <X size={16} />}
                 <div>
                   <div className="text-sm font-bold">{pack.name}</div>
