@@ -387,7 +387,12 @@ export default function App() {
         )}
 
         {activeTab === 'progression' && (
-          <ProgressionTab progressionGuide={progressionGuide} />
+          <ProgressionTab
+            progressionGuide={progressionGuide}
+            collection={collection}
+            campaigns={campaigns}
+            scenarioPacks={scenarioPacks}
+          />
         )}
       </main>
       <footer className="mc-footer">Marvel Champions: The Card Game © Fantasy Flight Games. Community randomizer tool.</footer>

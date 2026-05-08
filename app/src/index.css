@@ -452,6 +452,282 @@ input:focus-visible {
   background: var(--aspect-border);
 }
 
+.mc-guide-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.mc-guide-hero .mc-section-heading {
+  margin-bottom: 8px;
+}
+
+.mc-guide-hero h2 {
+  margin: 0;
+  color: #f0f2ff;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 30px;
+  letter-spacing: 0.06em;
+}
+
+.mc-guide-hero p {
+  max-width: 720px;
+  margin: 6px 0 0;
+  color: #5a6080;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.mc-guide-meter {
+  min-width: 90px;
+  padding: 12px 14px;
+  border: 1px solid rgba(212, 162, 10, 0.25);
+  border-radius: 10px;
+  background: rgba(212, 162, 10, 0.08);
+  text-align: center;
+}
+
+.mc-guide-meter strong {
+  display: block;
+  color: #d4a20a;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.mc-guide-meter span {
+  color: #5a6080;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mc-guide-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mc-guide-phase {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color 0.18s ease;
+}
+
+.mc-guide-phase[data-open='1'] {
+  border-color: color-mix(in srgb, var(--phase-color) 44%, transparent);
+}
+
+.mc-guide-phase-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 16px 20px;
+  text-align: left;
+}
+
+.mc-guide-phase[data-open='1'] .mc-guide-phase-head {
+  background: color-mix(in srgb, var(--phase-color) 7%, transparent);
+}
+
+.mc-guide-phase-head strong {
+  display: block;
+  color: var(--phase-color);
+  font-family: 'Bebas Neue', cursive;
+  font-size: 18px;
+  letter-spacing: 0.07em;
+  line-height: 1.15;
+}
+
+.mc-guide-phase-head small {
+  display: block;
+  margin-top: 4px;
+  color: #5a6080;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.mc-guide-phase-head em {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 54px;
+  border: 1px solid color-mix(in srgb, var(--phase-color) 32%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--phase-color) 10%, transparent);
+  color: var(--phase-color);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 800;
+  padding: 4px 8px;
+}
+
+.mc-guide-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 20px 16px;
+}
+
+.mc-guide-items::before {
+  content: '';
+  display: block;
+  height: 1px;
+  margin-bottom: 2px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mc-guide-item {
+  display: grid;
+  grid-template-columns: 24px 50px minmax(0, 1fr);
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 12px 14px;
+}
+
+.mc-guide-item[data-owned='1'] {
+  border-color: rgba(39, 174, 96, 0.25);
+  background: rgba(39, 174, 96, 0.07);
+}
+
+.mc-guide-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  color: #5a6080;
+}
+
+.mc-guide-item[data-owned='1'] .mc-guide-status {
+  border-color: #27ae60;
+  background: #27ae60;
+  color: #fff;
+}
+
+.mc-guide-item img,
+.mc-guide-image-placeholder {
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.mc-guide-item img {
+  object-fit: cover;
+  object-position: top center;
+}
+
+.mc-guide-image-placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #a569bd;
+}
+
+.mc-guide-item div {
+  min-width: 0;
+}
+
+.mc-guide-type {
+  display: inline-flex;
+  margin-bottom: 6px;
+  border: 1px solid rgba(212, 162, 10, 0.28);
+  border-radius: 4px;
+  background: rgba(212, 162, 10, 0.12);
+  color: #d4a20a;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  text-transform: uppercase;
+}
+
+.mc-guide-type[data-type='scenario'] {
+  border-color: rgba(41, 128, 185, 0.28);
+  background: rgba(41, 128, 185, 0.12);
+  color: #5dade2;
+}
+
+.mc-guide-type[data-type='heroes'] {
+  border-color: rgba(142, 68, 173, 0.28);
+  background: rgba(142, 68, 173, 0.12);
+  color: #a569bd;
+}
+
+.mc-guide-item strong {
+  display: block;
+  color: #f0f2ff;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 16px;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+
+.mc-guide-item p,
+.mc-guide-item small {
+  display: block;
+  margin: 4px 0 0;
+  color: #7b82a8;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.mc-guide-item small {
+  color: #5a6080;
+  font-size: 11px;
+}
+
+.mc-guide-notes {
+  border: 1px solid rgba(192, 57, 43, 0.25);
+  border-radius: 12px;
+  background: rgba(192, 57, 43, 0.08);
+  padding: 16px 18px;
+}
+
+.mc-guide-notes > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e74c3c;
+  font-weight: 800;
+}
+
+.mc-guide-notes ul {
+  display: grid;
+  gap: 7px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mc-guide-notes li {
+  color: #c0c8e8;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
 .mc-filter-grid {
   display: flex;
   align-items: flex-end;
@@ -1305,6 +1581,25 @@ input:focus-visible {
   .mc-collection-grid,
   .mc-collection-grid--heroes {
     grid-template-columns: 1fr;
+  }
+
+  .mc-guide-hero,
+  .mc-guide-phase-head {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .mc-guide-meter {
+    width: 100%;
+  }
+
+  .mc-guide-item {
+    grid-template-columns: 24px minmax(0, 1fr);
+  }
+
+  .mc-guide-item img,
+  .mc-guide-image-placeholder {
+    display: none;
   }
 
   .mc-stat {
