@@ -265,18 +265,20 @@ function App() {
       </div>
 
       {/* Tweaks panel */}
-      <TweaksPanel show={showTweaks} onClose={() => setShowTweaks(false)}>
-        <TweakSection title="Visual">
-          <TweakColor label="Accent color" tweakKey="accentColor" value={tweaks.accentColor} onChange={v => setTweaks({accentColor:v})} />
-          <TweakSlider label="Card width" tweakKey="cardSize" min={150} max={240} step={10} value={tweaks.cardSize} onChange={v => setTweaks({cardSize:v})} />
-          <TweakToggle label="Show descriptions" tweakKey="showDescriptions" value={tweaks.showDescriptions} onChange={v => setTweaks({showDescriptions:v})} />
-        </TweakSection>
-        <TweakSection title="Animations">
-          <TweakRadio label="Speed" tweakKey="animationSpeed" value={tweaks.animationSpeed}
-            options={[{label:'Fast',value:'fast'},{label:'Normal',value:'normal'},{label:'Slow',value:'slow'}]}
-            onChange={v => setTweaks({animationSpeed:v})} />
-        </TweakSection>
-      </TweaksPanel>
+      {showTweaks && (
+        <TweaksPanel>
+          <TweakSection label="Visual">
+            <TweakColor label="Accent color" tweakKey="accentColor" value={tweaks.accentColor} onChange={v => setTweaks('accentColor', v)} />
+            <TweakSlider label="Card width" tweakKey="cardSize" min={150} max={240} step={10} value={tweaks.cardSize} onChange={v => setTweaks('cardSize', v)} />
+            <TweakToggle label="Show descriptions" tweakKey="showDescriptions" value={tweaks.showDescriptions} onChange={v => setTweaks('showDescriptions', v)} />
+          </TweakSection>
+          <TweakSection label="Animations">
+            <TweakRadio label="Speed" tweakKey="animationSpeed" value={tweaks.animationSpeed}
+              options={[{label:'Fast',value:'fast'},{label:'Normal',value:'normal'},{label:'Slow',value:'slow'}]}
+              onChange={v => setTweaks('animationSpeed', v)} />
+          </TweakSection>
+        </TweaksPanel>
+      )}
     </MCContext.Provider>
   );
 }

@@ -75,10 +75,6 @@ export default function App() {
   const [gameMode, setGameMode] = useState<'Standard' | 'Expert'>('Standard');
   const [encounterVariant, setEncounterVariant] = useState<'I' | 'II' | 'III'>('I');
 
-  // Help tooltips
-  const [showComplexityHelp, setShowComplexityHelp] = useState(false);
-  const [showDifficultyHelp, setShowDifficultyHelp] = useState(false);
-
   // Results
   const [randomHeroes, setRandomHeroes] = useState<Hero[]>([]);
   const [randomVillain, setRandomVillain] = useState<Villain | null>(null);
@@ -200,22 +196,21 @@ export default function App() {
   };
 
   const exportSetup = () => {
-    const setup = {
-      heroes: randomHeroes.map(h => h.name),
-      villain: randomVillain?.name,
-      modulars: randomModulars.map(m => m.name),
-      difficulty: randomVillain?.difficulty,
-      date: new Date().toLocaleDateString()
-    };
+    const lines = ['MARVEL CHAMPIONS SETUP', ''];
 
-    const text = `MARVEL CHAMPIONS SETUP\n\n` +
-      `Héroes: ${setup.heroes.join(', ')}\n` +
-      `Villano: ${setup.villain} (${setup.difficulty}/10)\n` +
-      `Modulares: ${setup.modulars.join(', ')}\n` +
-      `Fecha: ${setup.date}`;
+    lines.push(randomHeroes.length > 0
+      ? `Heroes: ${randomHeroes.map(h => h.name).join(', ')}`
+      : 'Heroes: Not generated');
+    lines.push(randomVillain
+      ? `Villain: ${randomVillain.name} (${randomVillain.difficulty}/10)`
+      : 'Villain: Not generated');
+    lines.push(randomModulars.length > 0
+      ? `Modulars: ${randomModulars.map(m => m.name).join(', ')}`
+      : 'Modulars: Not generated');
+    lines.push(`Date: ${new Date().toLocaleDateString()}`);
 
-    navigator.clipboard.writeText(text);
-    alert('¡Setup copiado al clipboard!');
+    navigator.clipboard.writeText(lines.join('\n'));
+    alert('Setup copied to clipboard!');
   };
 
   // Global Export/Import handlers
@@ -280,14 +275,17 @@ export default function App() {
     }
   };
 
+  const ownedSources = getOwnedSourcesList();
+  const ownedStats = {
+    heroes: heroes.filter(hero => ownedSources.includes(hero.source)).length,
+    villains: villains.filter(villain => ownedSources.includes(villain.source)).length,
+    modulars: modularSets.filter(modular => ownedSources.includes(modular.source)).length,
+    games: history.length
+  };
+
   return (
     <div className="mc-app">
-      <Header onExport={handleExportAll} onImport={handleImportAll} stats={{
-        heroes: filterHeroes().length,
-        villains: filterVillains().length,
-        modulars: filterModulars().length,
-        games: history.length
-      }} />
+      <Header onExport={handleExportAll} onImport={handleImportAll} stats={ownedStats} />
       <main className="mc-shell mc-main">
         <TabNavigation activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab as TabType)} />
 
@@ -318,10 +316,6 @@ export default function App() {
             setGameMode={setGameMode}
             encounterVariant={encounterVariant}
             setEncounterVariant={setEncounterVariant}
-            showComplexityHelp={showComplexityHelp}
-            setShowComplexityHelp={setShowComplexityHelp}
-            showDifficultyHelp={showDifficultyHelp}
-            setShowDifficultyHelp={setShowDifficultyHelp}
             generateComplete={generateComplete}
             generateHeroes={generateHeroes}
             generateVillainSetup={generateVillainSetup}

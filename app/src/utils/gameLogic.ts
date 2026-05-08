@@ -33,7 +33,7 @@ export function generateWarningsAndSuggestions(
   if (playerCount === 2 && heroes.length === 2) {
     const aspects = heroes.map(h => h.aspect);
     if (aspects.includes('Aggression') && aspects.includes('Protection') && !aspects.includes('Justice')) {
-      warnings.push('Aggression + Protection en 2-handed puede tener problemas con threat. Considera anadir Justice.');
+      warnings.push('Aggression + Protection en 2-handed puede tener problemas con threat. Considera añadir Justice.');
     }
   }
 
@@ -43,16 +43,16 @@ export function generateWarningsAndSuggestions(
 
   const setupHeroes = heroes.filter(h => h.playstyle.includes('Setup'));
   if (setupHeroes.length > 1) {
-    warnings.push(`Multiples heroes setup (${setupHeroes.map(h => h.name).join(', ')}). El early game sera lento.`);
+    warnings.push(`Múltiples héroes setup (${setupHeroes.map(h => h.name).join(', ')}). El early game será lento.`);
   }
 
   if (villain) {
     if (villain.key === 'ronan') {
-      warnings.push('RONAN: Villano mas dificil (26% win). Overkill + Piercing contrarrestan todas las defensas. Muchos saltan este.');
+      warnings.push('RONAN: Villano más difícil (26% win). Overkill + Piercing contrarrestan todas las defensas. Muchos saltan este.');
     } else if (villain.key === 'venomgoblin') {
       suggestions.push('Venom Goblin: Aspecto Justice altamente recomendado. Remover Advanced Glider ASAP.');
     } else if (villain.key === 'magneto_villain') {
-      suggestions.push('Magneto: No puedes hacer dano hasta remover Orbital Decay. Preparate para perdida de tempo.');
+      suggestions.push('Magneto: No puedes hacer daño hasta remover Orbital Decay. Prepárate para pérdida de tempo.');
     } else if (villain.key === 'nebula_gmw') {
       warnings.push('Nebula: Densidad de Surge extrema = muy random. Uno de los villanos menos populares.');
     }
@@ -62,7 +62,7 @@ export function generateWarningsAndSuggestions(
       const avgTier = heroes.reduce((sum, h) => sum + tierValues[h.tier], 0) / heroes.length;
 
       if (avgTier < 3) {
-        suggestions.push(`Villano dificultad ${villain.difficulty}/10 con heroes tier promedio ${avgTier < 2 ? 'B-C' : 'B'}. Considera heroes mas fuertes o bajar dificultad.`);
+        suggestions.push(`Villano dificultad ${villain.difficulty}/10 con héroes tier promedio ${avgTier < 2 ? 'B-C' : 'B'}. Considera héroes más fuertes o bajar dificultad.`);
       }
     }
   }

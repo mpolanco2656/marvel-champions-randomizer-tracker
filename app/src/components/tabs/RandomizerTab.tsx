@@ -40,10 +40,6 @@ interface RandomizerTabProps {
   setGameMode: (value: 'Standard' | 'Expert') => void;
   encounterVariant: 'I' | 'II' | 'III';
   setEncounterVariant: (value: 'I' | 'II' | 'III') => void;
-  showDifficultyHelp: boolean;
-  setShowDifficultyHelp: (value: boolean) => void;
-  showComplexityHelp: boolean;
-  setShowComplexityHelp: (value: boolean) => void;
   warnings: string[];
   suggestions: string[];
   randomHeroes: Hero[];
