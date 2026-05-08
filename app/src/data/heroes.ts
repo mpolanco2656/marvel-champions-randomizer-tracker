@@ -69,7 +69,7 @@ export const heroes: Hero[] = [
   // Wave 8 - Age of Apocalypse
   { name: "Bishop", aspect: "Justice", tier: "A", complexity: "Intermediate", playstyle: ["Resource Engine"], optimization: "Both", wave: 8, source: "Age of Apocalypse", description: "Absorción de energía", key: "bishop" },
   { name: "Magik", aspect: "Protection", tier: "A", complexity: "Advanced", playstyle: ["Control"], optimization: "Both", wave: 8, source: "Age of Apocalypse", description: "Manipulación de Limbo", key: "magik" },
-  { name: "Iceman", aspect: "Justice", tier: "S", complexity: "Intermediate", playstyle: ["Control"], optimization: "Both", wave: 8, source: "Iceman Hero Pack", description: "Previene activaciones", key: "iceman" },
+  { name: "Iceman", aspect: "Aggression", tier: "S", complexity: "Intermediate", playstyle: ["Control"], optimization: "Both", wave: 8, source: "Iceman Hero Pack", description: "Previene activaciones", key: "iceman" },
   { name: "Jubilee", aspect: "Justice", tier: "B", complexity: "Intermediate", playstyle: ["Support"], optimization: "Multiplayer", wave: 8, source: "Jubilee Hero Pack", description: "Soporte con fuegos artificiales", key: "jubilee" },
   { name: "Nightcrawler", aspect: "Protection", tier: "A", complexity: "Advanced", playstyle: ["Control"], optimization: "Both", wave: 8, source: "Nightcrawler Hero Pack", description: "Teletransportación", key: "nightcrawler" },
   { name: "Magneto", aspect: "Leadership", tier: "A", complexity: "Advanced", playstyle: ["Control"], optimization: "Both", wave: 8, source: "Magneto Hero Pack", description: "Maestría magnética", key: "magneto" },
@@ -78,9 +78,9 @@ export const heroes: Hero[] = [
   { name: "Maria Hill", aspect: "Leadership", tier: "A", complexity: "Intermediate", playstyle: ["Support"], optimization: "Multiplayer", wave: 9, source: "Agents of S.H.I.E.L.D.", description: "Comando táctico SHIELD", key: "mariahill" },
   { name: "Nick Fury", aspect: "Justice", tier: "A", complexity: "Advanced", playstyle: ["All-rounder"], optimization: "Both", wave: 9, source: "Agents of S.H.I.E.L.D.", description: "Director de SHIELD", key: "nickfury" },
   { name: "Black Panther/Shuri", aspect: "Justice", tier: "B", complexity: "Intermediate", playstyle: ["All-rounder"], optimization: "Both", wave: 9, source: "Black Panther/Shuri Hero Pack", description: "Héroe dual Wakanda", key: "panthershuri" },
-  { name: "Silk", aspect: "Aggression", tier: "A", complexity: "Intermediate", playstyle: ["Control"], optimization: "Both", wave: 9, source: "Silk Hero Pack", description: "Mecánicas de telaraña", key: "silk" },
+  { name: "Silk", aspect: "Protection", tier: "A", complexity: "Intermediate", playstyle: ["Control"], optimization: "Both", wave: 9, source: "Silk Hero Pack", description: "Mecánicas de telaraña", key: "silk" },
   { name: "Falcon", aspect: "Leadership", tier: "A", complexity: "Intermediate", playstyle: ["Support"], optimization: "Multiplayer", wave: 9, source: "Falcon Hero Pack", description: "Tácticas aéreas", key: "falcon" },
-  { name: "Winter Soldier", aspect: "Protection", tier: "A", complexity: "Intermediate", playstyle: ["Aggro"], optimization: "Both", wave: 9, source: "Winter Soldier Hero Pack", description: "Maestría en armas", key: "wintersoldier" },
+  { name: "Winter Soldier", aspect: "Aggression", tier: "A", complexity: "Intermediate", playstyle: ["Aggro"], optimization: "Both", wave: 9, source: "Winter Soldier Hero Pack", description: "Maestría en armas", key: "wintersoldier" },
 
   // Civil War (Bonus Wave)
   { name: "Hulkling", aspect: "Protection", tier: "A", complexity: "Intermediate", playstyle: ["All-rounder"], optimization: "Multiplayer", wave: 9, source: "Civil War", description: "Cambio de forma", key: "hulkling" },

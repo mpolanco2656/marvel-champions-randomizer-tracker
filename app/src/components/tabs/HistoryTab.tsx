@@ -1,5 +1,9 @@
+import { Check, ChevronLeft, ChevronRight, Trash2, X } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { GameHistory, Stats, Hero, Villain } from '../../types';
+import type { GameHistory, Hero, Stats, Villain } from '../../types';
+import { heroImagePath, villainImagePath } from '../../utils/assetPaths';
+import { EmptyState, SectionHeading } from '../ui/MarvelUI';
 
 interface HistoryTabProps {
   history: GameHistory[];
@@ -9,6 +13,12 @@ interface HistoryTabProps {
   clearHistory: () => void;
 }
 
+function formatDate(date: string) {
+  return new Date(date).toLocaleDateString();
+}
+
+const PAGE_SIZE_OPTIONS = [5, 10, 50, 100];
+
 export default function HistoryTab({
   history,
   stats,
@@ -17,87 +27,169 @@ export default function HistoryTab({
   clearHistory,
 }: HistoryTabProps) {
   const { t } = useTranslation('history');
+  const wins = history.filter(game => game.result === 'win').length;
+  const losses = history.filter(game => game.result === 'loss').length;
+  const mostPlayedHero = heroes.find(hero => hero.name === stats.mostPlayed.hero);
+  const [pageSize, setPageSize] = useState(10);
+  const [page, setPage] = useState(1);
+  const totalPages = Math.max(1, Math.ceil(history.length / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const pageStart = (currentPage - 1) * pageSize;
+  const pageEnd = Math.min(pageStart + pageSize, history.length);
+  const visibleHistory = useMemo(() => history.slice(pageStart, pageEnd), [history, pageEnd, pageStart]);
+
+  useEffect(() => {
+    setPage(previous => Math.min(previous, totalPages));
+  }, [totalPages]);
 
   return (
-    <div className="space-y-6">
-      <div className="bg-black bg-opacity-40 rounded-lg p-6">
-        <h2 className="text-3xl font-bold text-yellow-300 mb-4">{t('title')}</h2>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-blue-900 bg-opacity-50 rounded p-4 text-center">
-            <div className="text-3xl font-bold">{stats.gamesPlayed}</div>
-            <div className="text-sm text-gray-400">{t('stats.totalGames')}</div>
-          </div>
-          <div className="bg-green-900 bg-opacity-50 rounded p-4 text-center">
-            <div className="text-3xl font-bold">{Number.isFinite(stats.winRate) ? stats.winRate.toFixed(1) : "0.0"}%</div>
-            <div className="text-sm text-gray-400">{t('stats.winRate')}</div>
-          </div>
-          <div className="bg-purple-900 bg-opacity-50 rounded p-4 text-center">
-            <div className="text-3xl font-bold">{stats.uniqueHeroes}</div>
-            <div className="text-sm text-gray-400">{t('stats.playedHeroes')}</div>
-          </div>
-          <div className="bg-red-900 bg-opacity-50 rounded p-4 text-center">
-            <div className="text-3xl font-bold">{stats.uniqueVillains}</div>
-            <div className="text-sm text-gray-400">{t('stats.facedVillains')}</div>
-          </div>
-        </div>
-
-        {/* Most Played Hero */}
-        {stats.mostPlayed.count > 0 && (
-          <div className="bg-yellow-900 bg-opacity-30 rounded p-4 mb-6">
-            <div className="text-sm text-gray-400">{t('stats.mostPlayedHero')}</div>
-            <div className="text-2xl font-bold text-yellow-300">
-              {stats.mostPlayed.hero} ({stats.mostPlayed.count} {t('stats.games')})
+    <div className="mc-stack">
+      {history.length > 0 ? (
+        <div className="mc-history-stats">
+          {[
+            { label: t('stats.totalGames'), value: stats.gamesPlayed, color: '#c0c8e8' },
+            { label: t('results.win'), value: wins, color: '#2ecc71' },
+            { label: t('results.loss'), value: losses, color: '#e74c3c' },
+            {
+              label: t('stats.winRate'),
+              value: `${Number.isFinite(stats.winRate) ? stats.winRate.toFixed(1) : '0.0'}%`,
+              color: stats.winRate >= 50 ? '#2ecc71' : '#e74c3c',
+            },
+            { label: t('stats.playedHeroes'), value: stats.uniqueHeroes, color: '#5dade2' },
+            { label: t('stats.facedVillains'), value: stats.uniqueVillains, color: '#d4a20a' },
+          ].map(stat => (
+            <div key={stat.label} className="mc-history-stat">
+              <strong style={{ color: stat.color }}>{stat.value}</strong>
+              <span>{stat.label}</span>
             </div>
-          </div>
-        )}
-
-        {/* History List */}
-        <div className="space-y-3 max-h-96 overflow-y-auto">
-          {history.map(game => {
-            const gameHeroes = heroes.filter(h => game.heroes.includes(h.key));
-            const gameVillain = villains.find(v => v.key === game.villain);
-
-            return (
-              <div key={game.id} className="bg-gray-800 bg-opacity-50 rounded p-4">
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <div className="font-bold">{gameHeroes.map(h => h.name).join(', ')}</div>
-                    <div className="text-sm text-gray-400">vs {gameVillain?.name}</div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {game.result === 'win' && (
-                      <div className="bg-green-600 px-3 py-1 rounded font-bold text-sm">WIN</div>
-                    )}
-                    {game.result === 'loss' && (
-                      <div className="bg-red-600 px-3 py-1 rounded font-bold text-sm">LOSS</div>
-                    )}
-                    <div className="text-xs text-gray-400">
-                      {new Date(game.date).toLocaleDateString()}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          ))}
         </div>
+      ) : null}
 
-        {/* Clear History Button */}
-        {history.length > 0 && (
-          <button
-            onClick={clearHistory}
-            className="mt-4 w-full bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded"
-          >
+      {stats.mostPlayed.count > 0 ? (
+        <div className="mc-history-feature">
+          {mostPlayedHero ? (
+            <img src={heroImagePath(mostPlayedHero)} alt="" onError={event => { event.currentTarget.hidden = true; }} />
+          ) : null}
+          <div>
+            <span>{t('stats.mostPlayedHero')}</span>
+            <strong>
+              {stats.mostPlayed.hero} ({stats.mostPlayed.count} {t('stats.games')})
+            </strong>
+          </div>
+        </div>
+      ) : null}
+
+      {history.length > 0 ? (
+        <div className="mc-history-actions">
+          <button type="button" className="mc-secondary-button" data-tone="danger" onClick={clearHistory}>
+            <Trash2 size={15} />
             {t('buttons.clearHistory')}
           </button>
-        )}
+        </div>
+      ) : null}
 
-        {/* Empty State */}
-        {history.length === 0 && (
-          <div className="text-center text-gray-400 py-8">
-            {t('empty')}
-          </div>
+      <div className="mc-panel">
+        <div className="mc-history-panel-head">
+          <SectionHeading>{t('recentGames')}</SectionHeading>
+
+          {history.length > 0 ? (
+            <div className="mc-history-pagination">
+              <label>
+                <span>{t('pagination.perPage')}</span>
+                <select
+                  value={pageSize}
+                  onChange={event => {
+                    setPageSize(Number(event.target.value));
+                    setPage(1);
+                  }}
+                >
+                  {PAGE_SIZE_OPTIONS.map(option => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <button
+                type="button"
+                className="mc-icon-button"
+                onClick={() => setPage(value => Math.max(1, value - 1))}
+                disabled={currentPage === 1}
+                aria-label={t('pagination.previous')}
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <strong>
+                {currentPage}/{totalPages}
+              </strong>
+              <button
+                type="button"
+                className="mc-icon-button"
+                onClick={() => setPage(value => Math.min(totalPages, value + 1))}
+                disabled={currentPage === totalPages}
+                aria-label={t('pagination.next')}
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
+          ) : null}
+        </div>
+
+        {history.length > 0 ? (
+          <>
+            <div className="mc-history-page-note">
+              {t('pagination.showing', { start: pageStart + 1, end: pageEnd, total: history.length })}
+            </div>
+            <div className="mc-history-list">
+              {visibleHistory.map(game => {
+                const gameHeroes = heroes.filter(hero => game.heroes.includes(hero.key));
+                const gameVillain = villains.find(villain => villain.key === game.villain);
+
+                return (
+                  <article key={game.id} className="mc-history-card" data-result={game.result || 'none'}>
+                    <div className="mc-history-media">
+                      {gameHeroes.slice(0, 2).map(hero => (
+                        <img key={hero.key} src={heroImagePath(hero)} alt="" onError={event => { event.currentTarget.hidden = true; }} />
+                      ))}
+                      {gameVillain ? (
+                        <img src={villainImagePath(gameVillain)} alt="" onError={event => { event.currentTarget.hidden = true; }} />
+                      ) : null}
+                    </div>
+
+                    <div className="mc-history-body">
+                      <div className="mc-history-card-head">
+                        <div>
+                          <strong>{gameHeroes.map(hero => hero.name).join(', ') || '-'}</strong>
+                          <span>vs {gameVillain?.name || game.villain}</span>
+                        </div>
+                        <time>{formatDate(game.date)}</time>
+                      </div>
+
+                      <div className="mc-history-tags">
+                        {gameHeroes.map(hero => (
+                          <span key={hero.key} data-tone="hero">{hero.name}</span>
+                        ))}
+                        <span data-tone="villain">vs {gameVillain?.name || game.villain}</span>
+                        {game.modulars.length > 0 ? (
+                          <span data-tone="modular">
+                            {t('modularSets')}: {game.modulars.length}
+                          </span>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    <span className="mc-result-badge" data-result={game.result || 'none'}>
+                      {game.result === 'win' ? <Check size={13} /> : game.result === 'loss' ? <X size={13} /> : null}
+                      {game.result === 'win' ? t('results.win') : game.result === 'loss' ? t('results.loss') : t('noResult')}
+                    </span>
+                  </article>
+                );
+              })}
+            </div>
+          </>
+        ) : (
+          <EmptyState title={t('empty')} />
         )}
       </div>
     </div>

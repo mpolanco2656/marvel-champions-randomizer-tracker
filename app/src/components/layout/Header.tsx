@@ -1,77 +1,74 @@
-import { Download, Upload, Languages } from 'lucide-react';
+import { Download, Languages, Upload } from 'lucide-react';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface HeaderProps {
   onExport: () => void;
   onImport: (file: File) => void;
+  stats: {
+    heroes: number;
+    villains: number;
+    modulars: number;
+    games: number;
+  };
 }
 
-export default function Header({ onExport, onImport }: HeaderProps) {
+export default function Header({ onExport, onImport, stats }: HeaderProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { t, i18n } = useTranslation();
 
-  const handleImportClick = () => {
+  function handleImportClick() {
     fileInputRef.current?.click();
-  };
+  }
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
-    if (file) {
-      onImport(file);
-    }
-    // Reset input
+    if (file) onImport(file);
     event.target.value = '';
-  };
+  }
 
-  const toggleLanguage = () => {
-    const newLang = i18n.language === 'es' ? 'en' : 'es';
-    i18n.changeLanguage(newLang);
-  };
+  function toggleLanguage() {
+    i18n.changeLanguage(i18n.language === 'es' ? 'en' : 'es');
+  }
 
   return (
-    <div className="mb-6">
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex-1 flex justify-start">
-          <button
-            onClick={toggleLanguage}
-            className="bg-purple-600 hover:bg-purple-700 font-bold py-2 px-4 rounded flex items-center gap-2 transition-all"
-            title={t(i18n.language === 'es' ? 'tooltips.switchToEnglish' : 'tooltips.switchToSpanish')}
-          >
-            <Languages size={18} />
-            {i18n.language === 'es' ? 'English' : 'Español'}
-          </button>
-        </div>
-        <div className="text-center flex-1">
-          <h1 className="text-5xl font-bold mb-2 text-yellow-300 uppercase">{t('app.title')}</h1>
-          <p className="text-xl text-gray-300">{t('app.subtitle')}</p>
-        </div>
-        <div className="flex-1 flex justify-end gap-3">
-          <button
-            onClick={onExport}
-            className="bg-blue-600 hover:bg-blue-700 font-bold py-2 px-4 rounded flex items-center gap-2 transition-all"
-            title={t('tooltips.exportData')}
-          >
-            <Download size={18} />
-            {t('buttons.exportAll')}
-          </button>
-          <button
-            onClick={handleImportClick}
-            className="bg-green-600 hover:bg-green-700 font-bold py-2 px-4 rounded flex items-center gap-2 transition-all"
-            title={t('tooltips.importData')}
-          >
-            <Upload size={18} />
-            {t('buttons.importAll')}
-          </button>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".json"
-            onChange={handleFileChange}
-            className="hidden"
-          />
+    <header className="mc-header">
+      <div className="mc-shell">
+        <div className="mc-header-top">
+          <div className="mc-brand">
+            <h1><span>Marvel</span> Champions</h1>
+            <p>{t('app.subtitle')}</p>
+          </div>
+
+          <div className="mc-header-actions">
+            <div className="mc-stats-bar" aria-label="Collection stats">
+              <div className="mc-stat"><strong style={{ color: '#5dade2' }}>{stats.heroes}</strong><span>{t('stats.heroes')}</span></div>
+              <div className="mc-stat"><strong style={{ color: '#e74c3c' }}>{stats.villains}</strong><span>{t('stats.villains')}</span></div>
+              <div className="mc-stat"><strong style={{ color: '#d4a20a' }}>{stats.modulars}</strong><span>{t('stats.modulars')}</span></div>
+              <div className="mc-stat"><strong style={{ color: '#2ecc71' }}>{stats.games}</strong><span>{t('stats.games')}</span></div>
+            </div>
+
+            <button
+              type="button"
+              onClick={toggleLanguage}
+              className="mc-header-button"
+              title={t(i18n.language === 'es' ? 'tooltips.switchToEnglish' : 'tooltips.switchToSpanish')}
+            >
+              <Languages size={17} />
+              {i18n.language === 'es' ? 'EN' : 'ES'}
+            </button>
+            <button type="button" onClick={onExport} className="mc-header-button" title={t('tooltips.exportData')}>
+              <Download size={17} />
+              {t('buttons.exportAll')}
+            </button>
+            <button type="button" onClick={handleImportClick} className="mc-header-button" title={t('tooltips.importData')}>
+              <Upload size={17} />
+              {t('buttons.importAll')}
+            </button>
+            <input ref={fileInputRef} type="file" accept=".json" onChange={handleFileChange} className="hidden" />
+          </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 }

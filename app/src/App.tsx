@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Hero, Villain, ModularSet, Complexity, Playstyle, Tier, PlayerOptimization } from './types';
+import type { Hero, Villain, ModularSet, Complexity, Playstyle, Tier, PlayerOptimization, Aspect } from './types';
 import { campaigns, scenarioPacks, heroPacks, heroes, villains, modularSets, progressionGuideEs, progressionGuideEn } from './data';
 import { useCollection } from './hooks/useCollection';
 import { useGameHistory } from './hooks/useGameHistory';
@@ -11,13 +11,12 @@ import Header from './components/layout/Header';
 import TabNavigation from './components/layout/TabNavigation';
 import RandomizerTab from './components/tabs/RandomizerTab';
 import CampaignTab from './components/tabs/CampaignTab';
-import CampaignRandomizerTab from './components/tabs/CampaignRandomizerTab';
 import CollectionTab from './components/tabs/CollectionTab';
 import HistoryTab from './components/tabs/HistoryTab';
 import ProgressionTab from './components/tabs/ProgressionTab';
 import { useTranslation } from 'react-i18next';
 
-type TabType = 'randomizer' | 'campaign' | 'campaignrandomizer' | 'collection' | 'history' | 'progression';
+type TabType = 'randomizer' | 'campaign' | 'collection' | 'history' | 'progression';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('randomizer');
@@ -34,6 +33,10 @@ export default function App() {
   const {
     activeCampaign: campaignTrackerActive,
     completedScenarios,
+    setActiveCampaign: setCampaignTrackerActive,
+    toggleScenario,
+    getCompletedCount,
+    clearCampaign,
     importCampaignData
   } = useCampaignTracker();
 
@@ -60,6 +63,7 @@ export default function App() {
   const [playstyle, setPlaystyle] = useState<Playstyle | 'Any'>('Any');
   const [tier, setTier] = useState<Tier | 'Any'>('Any');
   const [optimization, setOptimization] = useState<PlayerOptimization | 'Any'>('Any');
+  const [aspect, setAspect] = useState<Aspect | 'Any'>('Any');
   const [onlyUnplayed, setOnlyUnplayed] = useState(false);
 
   // Villain filters
@@ -70,10 +74,6 @@ export default function App() {
   // Game mode settings
   const [gameMode, setGameMode] = useState<'Standard' | 'Expert'>('Standard');
   const [encounterVariant, setEncounterVariant] = useState<'I' | 'II' | 'III'>('I');
-
-  // Help tooltips
-  const [showComplexityHelp, setShowComplexityHelp] = useState(false);
-  const [showDifficultyHelp, setShowDifficultyHelp] = useState(false);
 
   // Results
   const [randomHeroes, setRandomHeroes] = useState<Hero[]>([]);
@@ -103,6 +103,7 @@ export default function App() {
       if (playstyle !== 'Any' && !hero.playstyle.includes(playstyle)) return false;
       if (tier !== 'Any' && hero.tier !== tier) return false;
       if (optimization !== 'Any' && hero.optimization !== optimization && hero.optimization !== 'Both') return false;
+      if (aspect !== 'Any' && hero.aspect !== aspect) return false;
       return true;
     });
   };
@@ -195,22 +196,21 @@ export default function App() {
   };
 
   const exportSetup = () => {
-    const setup = {
-      heroes: randomHeroes.map(h => h.name),
-      villain: randomVillain?.name,
-      modulars: randomModulars.map(m => m.name),
-      difficulty: randomVillain?.difficulty,
-      date: new Date().toLocaleDateString()
-    };
+    const lines = ['MARVEL CHAMPIONS SETUP', ''];
 
-    const text = `MARVEL CHAMPIONS SETUP\n\n` +
-      `Héroes: ${setup.heroes.join(', ')}\n` +
-      `Villano: ${setup.villain} (${setup.difficulty}/10)\n` +
-      `Modulares: ${setup.modulars.join(', ')}\n` +
-      `Fecha: ${setup.date}`;
+    lines.push(randomHeroes.length > 0
+      ? `Heroes: ${randomHeroes.map(h => h.name).join(', ')}`
+      : 'Heroes: Not generated');
+    lines.push(randomVillain
+      ? `Villain: ${randomVillain.name} (${randomVillain.difficulty}/10)`
+      : 'Villain: Not generated');
+    lines.push(randomModulars.length > 0
+      ? `Modulars: ${randomModulars.map(m => m.name).join(', ')}`
+      : 'Modulars: Not generated');
+    lines.push(`Date: ${new Date().toLocaleDateString()}`);
 
-    navigator.clipboard.writeText(text);
-    alert('¡Setup copiado al clipboard!');
+    navigator.clipboard.writeText(lines.join('\n'));
+    alert('Setup copied to clipboard!');
   };
 
   // Global Export/Import handlers
@@ -275,10 +275,18 @@ export default function App() {
     }
   };
 
+  const ownedSources = getOwnedSourcesList();
+  const ownedStats = {
+    heroes: heroes.filter(hero => ownedSources.includes(hero.source)).length,
+    villains: villains.filter(villain => ownedSources.includes(villain.source)).length,
+    modulars: modularSets.filter(modular => ownedSources.includes(modular.source)).length,
+    games: history.length
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-900 via-blue-900 to-purple-900 text-white p-4">
-      <div className="max-w-7xl mx-auto">
-        <Header onExport={handleExportAll} onImport={handleImportAll} />
+    <div className="mc-app">
+      <Header onExport={handleExportAll} onImport={handleImportAll} stats={ownedStats} />
+      <main className="mc-shell mc-main">
         <TabNavigation activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab as TabType)} />
 
         {activeTab === 'randomizer' && (
@@ -296,6 +304,8 @@ export default function App() {
             setTier={setTier}
             optimization={optimization}
             setOptimization={setOptimization}
+            aspect={aspect}
+            setAspect={setAspect}
             modularCount={modularCount}
             setModularCount={setModularCount}
             onlyUnplayed={onlyUnplayed}
@@ -306,10 +316,6 @@ export default function App() {
             setGameMode={setGameMode}
             encounterVariant={encounterVariant}
             setEncounterVariant={setEncounterVariant}
-            showComplexityHelp={showComplexityHelp}
-            setShowComplexityHelp={setShowComplexityHelp}
-            showDifficultyHelp={showDifficultyHelp}
-            setShowDifficultyHelp={setShowDifficultyHelp}
             generateComplete={generateComplete}
             generateHeroes={generateHeroes}
             generateVillainSetup={generateVillainSetup}
@@ -326,23 +332,22 @@ export default function App() {
         {activeTab === 'campaign' && (
           <CampaignTab
             campaigns={campaigns}
-            collection={collection}
-          />
-        )}
-
-        {activeTab === 'campaignrandomizer' && (
-          <CampaignRandomizerTab
-            campaigns={campaigns}
             villains={villains}
             collection={collection}
             modularSets={modularSets}
-            activeCampaign={activeCampaign}
+            trackerActiveCampaign={campaignTrackerActive}
+            completedScenarios={completedScenarios}
+            setTrackerActiveCampaign={setCampaignTrackerActive}
+            toggleScenario={toggleScenario}
+            getCompletedCount={getCompletedCount}
+            clearCampaign={clearCampaign}
+            randomizerActiveCampaign={activeCampaign}
             randomMode={randomMode}
             campaignScenarios={campaignScenarios}
             mixedScenarios={mixedScenarios}
-            setActiveCampaign={setActiveCampaign}
+            setRandomizerActiveCampaign={setActiveCampaign}
             setCampaignScenarios={setCampaignScenarios}
-            markScenarioComplete={markCampaignScenarioComplete}
+            markCampaignScenarioComplete={markCampaignScenarioComplete}
             setRandomMode={setRandomMode}
             setMixedScenarios={setMixedScenarios}
             markMixedScenarioComplete={markMixedScenarioComplete}
@@ -376,9 +381,15 @@ export default function App() {
         )}
 
         {activeTab === 'progression' && (
-          <ProgressionTab progressionGuide={progressionGuide} />
+          <ProgressionTab
+            progressionGuide={progressionGuide}
+            collection={collection}
+            campaigns={campaigns}
+            scenarioPacks={scenarioPacks}
+          />
         )}
-      </div>
+      </main>
+      <footer className="mc-footer">Marvel Champions: The Card Game © Fantasy Flight Games. Community randomizer tool.</footer>
     </div>
   );
 }

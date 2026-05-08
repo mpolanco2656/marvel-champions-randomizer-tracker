@@ -1,0 +1,1596 @@
+{
+  "generatedAt": "2026-05-06T03:09:59.708Z",
+  "source": "https://marvelcdb.com/api/public/cards/",
+  "packs": [
+    {
+      "code": "core",
+      "name": "Core Set",
+      "position": 1
+    },
+    {
+      "code": "gob",
+      "name": "The Green Goblin",
+      "position": 2
+    },
+    {
+      "code": "cap",
+      "name": "Captain America",
+      "position": 4
+    },
+    {
+      "code": "msm",
+      "name": "Ms. Marvel",
+      "position": 5
+    },
+    {
+      "code": "twc",
+      "name": "The Wrecking Crew",
+      "position": 3
+    },
+    {
+      "code": "thor",
+      "name": "Thor",
+      "position": 6
+    },
+    {
+      "code": "bkw",
+      "name": "Black Widow",
+      "position": 7
+    },
+    {
+      "code": "drs",
+      "name": "Doctor Strange",
+      "position": 8
+    },
+    {
+      "code": "ron",
+      "name": "Ronan Modular Set",
+      "position": 900
+    },
+    {
+      "code": "hlk",
+      "name": "Hulk",
+      "position": 9
+    },
+    {
+      "code": "trors",
+      "name": "The Rise of Red Skull",
+      "position": 10
+    },
+    {
+      "code": "toafk",
+      "name": "The Once and Future Kang",
+      "position": 11
+    },
+    {
+      "code": "ant",
+      "name": "Ant-Man",
+      "position": 12
+    },
+    {
+      "code": "wsp",
+      "name": "Wasp",
+      "position": 13
+    },
+    {
+      "code": "qsv",
+      "name": "Quicksilver",
+      "position": 14
+    },
+    {
+      "code": "scw",
+      "name": "Scarlet Witch",
+      "position": 15
+    },
+    {
+      "code": "gmw",
+      "name": "The Galaxy's Most Wanted",
+      "position": 16
+    },
+    {
+      "code": "stld",
+      "name": "Star-Lord",
+      "position": 17
+    },
+    {
+      "code": "gam",
+      "name": "Gamora",
+      "position": 18
+    },
+    {
+      "code": "drax",
+      "name": "Drax",
+      "position": 19
+    },
+    {
+      "code": "vnm",
+      "name": "Venom",
+      "position": 20
+    },
+    {
+      "code": "mts",
+      "name": "The Mad Titan's Shadow",
+      "position": 21
+    },
+    {
+      "code": "nebu",
+      "name": "Nebula",
+      "position": 22
+    },
+    {
+      "code": "warm",
+      "name": "War Machine",
+      "position": 23
+    },
+    {
+      "code": "hood",
+      "name": "The Hood",
+      "position": 24
+    },
+    {
+      "code": "valk",
+      "name": "Valkyrie",
+      "position": 25
+    },
+    {
+      "code": "vision",
+      "name": "Vision",
+      "position": 26
+    },
+    {
+      "code": "sm",
+      "name": "Sinister Motives",
+      "position": 27
+    },
+    {
+      "code": "nova",
+      "name": "Nova",
+      "position": 28
+    },
+    {
+      "code": "ironheart",
+      "name": "Ironheart",
+      "position": 29
+    },
+    {
+      "code": "spiderham",
+      "name": "Spider-Ham",
+      "position": 30
+    },
+    {
+      "code": "spdr",
+      "name": "SP//dr",
+      "position": 31
+    },
+    {
+      "code": "mut_gen",
+      "name": "Mutant Genesis",
+      "position": 32
+    },
+    {
+      "code": "cyclops",
+      "name": "Cyclops",
+      "position": 33
+    },
+    {
+      "code": "phoenix",
+      "name": "Phoenix",
+      "position": 34
+    },
+    {
+      "code": "wolv",
+      "name": "Wolverine",
+      "position": 35
+    },
+    {
+      "code": "storm",
+      "name": "Storm",
+      "position": 36
+    },
+    {
+      "code": "mojo",
+      "name": "Mojo Mania",
+      "position": 39
+    },
+    {
+      "code": "gambit",
+      "name": "Gambit",
+      "position": 37
+    },
+    {
+      "code": "rogue",
+      "name": "Rogue",
+      "position": 38
+    },
+    {
+      "code": "next_evol",
+      "name": "NeXt Evolution",
+      "position": 40
+    },
+    {
+      "code": "psylocke",
+      "name": "Psylocke",
+      "position": 41
+    },
+    {
+      "code": "angel",
+      "name": "Angel",
+      "position": 42
+    },
+    {
+      "code": "x23",
+      "name": "X-23",
+      "position": 43
+    },
+    {
+      "code": "deadpool",
+      "name": "Deadpool",
+      "position": 44
+    },
+    {
+      "code": "aoa",
+      "name": "Age of Apocalypse",
+      "position": 45
+    },
+    {
+      "code": "iceman",
+      "name": "Iceman",
+      "position": 46
+    },
+    {
+      "code": "jubilee",
+      "name": "Jubilee",
+      "position": 47
+    },
+    {
+      "code": "ncrawler",
+      "name": "Nightcrawler",
+      "position": 48
+    },
+    {
+      "code": "magneto",
+      "name": "Magneto",
+      "position": 49
+    },
+    {
+      "code": "aos",
+      "name": "Agents of S.H.I.E.L.D.",
+      "position": 50
+    },
+    {
+      "code": "bp",
+      "name": "Black Panther",
+      "position": 51
+    },
+    {
+      "code": "silk",
+      "name": "Silk",
+      "position": 52
+    },
+    {
+      "code": "falcon",
+      "name": "Falcon",
+      "position": 53
+    },
+    {
+      "code": "winter",
+      "name": "Winter Soldier",
+      "position": 54
+    },
+    {
+      "code": "tt",
+      "name": "Trickster Takeover",
+      "position": 55
+    },
+    {
+      "code": "cw",
+      "name": "Civil War",
+      "position": 56
+    },
+    {
+      "code": "synthezoid",
+      "name": "Synthezoid Smackdown",
+      "position": 57
+    },
+    {
+      "code": "wonder_man",
+      "name": "Wonder Man",
+      "position": 58
+    },
+    {
+      "code": "hercules",
+      "name": "Hercules",
+      "position": 59
+    }
+  ],
+  "heroes": [
+    {
+      "name": "Spider-Man",
+      "code": "01001a",
+      "cardSetCode": "spider_man",
+      "packCode": "core",
+      "packName": "Core Set",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/01001a.png",
+      "preconAspect": null,
+      "url": "https://marvelcdb.com/card/01001a"
+    },
+    {
+      "name": "Captain Marvel",
+      "code": "01010a",
+      "cardSetCode": "captain_marvel",
+      "packCode": "core",
+      "packName": "Core Set",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/01010a.png",
+      "preconAspect": null,
+      "url": "https://marvelcdb.com/card/01010a"
+    },
+    {
+      "name": "She-Hulk",
+      "code": "01019a",
+      "cardSetCode": "she_hulk",
+      "packCode": "core",
+      "packName": "Core Set",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/01019a.png",
+      "preconAspect": null,
+      "url": "https://marvelcdb.com/card/01019a"
+    },
+    {
+      "name": "Iron Man",
+      "code": "01029a",
+      "cardSetCode": "iron_man",
+      "packCode": "core",
+      "packName": "Core Set",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/01029a.png",
+      "preconAspect": null,
+      "url": "https://marvelcdb.com/card/01029a"
+    },
+    {
+      "name": "Black Panther",
+      "code": "01040a",
+      "cardSetCode": "black_panther",
+      "packCode": "core",
+      "packName": "Core Set",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/01040a.png",
+      "preconAspect": null,
+      "url": "https://marvelcdb.com/card/01040a"
+    },
+    {
+      "name": "Captain America",
+      "code": "03001a",
+      "cardSetCode": "captain_america",
+      "packCode": "cap",
+      "packName": "Captain America",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/03001a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/03001a"
+    },
+    {
+      "name": "Ms. Marvel",
+      "code": "05001a",
+      "cardSetCode": "ms_marvel",
+      "packCode": "msm",
+      "packName": "Ms. Marvel",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/05001a.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/05001a"
+    },
+    {
+      "name": "Thor",
+      "code": "06001a",
+      "cardSetCode": "thor",
+      "packCode": "thor",
+      "packName": "Thor",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/06001a.png",
+      "preconAspect": "Aggression",
+      "url": "https://marvelcdb.com/card/06001a"
+    },
+    {
+      "name": "Black Widow",
+      "code": "08001a",
+      "cardSetCode": "black_widow",
+      "packCode": "bkw",
+      "packName": "Black Widow",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/08001a.png",
+      "preconAspect": "Justice",
+      "url": "https://marvelcdb.com/card/08001a"
+    },
+    {
+      "name": "Doctor Strange",
+      "code": "09001a",
+      "cardSetCode": "doctor_strange",
+      "packCode": "drs",
+      "packName": "Doctor Strange",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/09001a.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/09001a"
+    },
+    {
+      "name": "Hulk",
+      "code": "10001a",
+      "cardSetCode": "hulk",
+      "packCode": "hlk",
+      "packName": "Hulk",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/10001a.png",
+      "preconAspect": "Aggression",
+      "url": "https://marvelcdb.com/card/10001a"
+    },
+    {
+      "name": "Hawkeye",
+      "code": "04001a",
+      "cardSetCode": "hawkeye",
+      "packCode": "trors",
+      "packName": "The Rise of Red Skull",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/04001a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/04001a"
+    },
+    {
+      "name": "Spider-Woman",
+      "code": "04031a",
+      "cardSetCode": "spider_woman",
+      "packCode": "trors",
+      "packName": "The Rise of Red Skull",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/04031a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/04031a"
+    },
+    {
+      "name": "Ant-Man",
+      "code": "12001a",
+      "cardSetCode": "ant",
+      "packCode": "ant",
+      "packName": "Ant-Man",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/12001a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/12001a"
+    },
+    {
+      "name": "Ant-Man",
+      "code": "12001c",
+      "cardSetCode": "ant",
+      "packCode": "ant",
+      "packName": "Ant-Man",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/12001c.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/12001c"
+    },
+    {
+      "name": "Quicksilver",
+      "code": "14001a",
+      "cardSetCode": "qsv",
+      "packCode": "qsv",
+      "packName": "Quicksilver",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/14001a.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/14001a"
+    },
+    {
+      "name": "Wasp",
+      "code": "13001a",
+      "cardSetCode": "wsp",
+      "packCode": "wsp",
+      "packName": "Wasp",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/13001a.png",
+      "preconAspect": "Aggression",
+      "url": "https://marvelcdb.com/card/13001a"
+    },
+    {
+      "name": "Wasp",
+      "code": "13001c",
+      "cardSetCode": "wsp",
+      "packCode": "wsp",
+      "packName": "Wasp",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/13001c.png",
+      "preconAspect": "Aggression",
+      "url": "https://marvelcdb.com/card/13001c"
+    },
+    {
+      "name": "Scarlet Witch",
+      "code": "15001a",
+      "cardSetCode": "scw",
+      "packCode": "scw",
+      "packName": "Scarlet Witch",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/15001a.png",
+      "preconAspect": "Justice",
+      "url": "https://marvelcdb.com/card/15001a"
+    },
+    {
+      "name": "Groot",
+      "code": "16001a",
+      "cardSetCode": "groot",
+      "packCode": "gmw",
+      "packName": "The Galaxy's Most Wanted",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/16001a.png",
+      "preconAspect": null,
+      "url": "https://marvelcdb.com/card/16001a"
+    },
+    {
+      "name": "Rocket Raccoon",
+      "code": "16029a",
+      "cardSetCode": "rocket",
+      "packCode": "gmw",
+      "packName": "The Galaxy's Most Wanted",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/16029a.png",
+      "preconAspect": null,
+      "url": "https://marvelcdb.com/card/16029a"
+    },
+    {
+      "name": "Gamora",
+      "code": "18001a",
+      "cardSetCode": "gam",
+      "packCode": "gam",
+      "packName": "Gamora",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/18001a.png",
+      "preconAspect": "Aggression",
+      "url": "https://marvelcdb.com/card/18001a"
+    },
+    {
+      "name": "Star-Lord",
+      "code": "17001a",
+      "cardSetCode": "stld",
+      "packCode": "stld",
+      "packName": "Star-Lord",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/17001a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/17001a"
+    },
+    {
+      "name": "Drax",
+      "code": "19001a",
+      "cardSetCode": "drax",
+      "packCode": "drax",
+      "packName": "Drax",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/19001a.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/19001a"
+    },
+    {
+      "name": "Venom",
+      "code": "20001a",
+      "cardSetCode": "vnm",
+      "packCode": "vnm",
+      "packName": "Venom",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/20001a.png",
+      "preconAspect": "Justice",
+      "url": "https://marvelcdb.com/card/20001a"
+    },
+    {
+      "name": "Spectrum",
+      "code": "21001a",
+      "cardSetCode": "spectrum",
+      "packCode": "mts",
+      "packName": "The Mad Titan's Shadow",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/21001a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/21001a"
+    },
+    {
+      "name": "Adam Warlock",
+      "code": "21031a",
+      "cardSetCode": "warlock",
+      "packCode": "mts",
+      "packName": "The Mad Titan's Shadow",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/21031a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/21031a"
+    },
+    {
+      "name": "Nebula",
+      "code": "22001a",
+      "cardSetCode": "nebu",
+      "packCode": "nebu",
+      "packName": "Nebula",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/22001a.png",
+      "preconAspect": "Justice",
+      "url": "https://marvelcdb.com/card/22001a"
+    },
+    {
+      "name": "War Machine",
+      "code": "23001a",
+      "cardSetCode": "warm",
+      "packCode": "warm",
+      "packName": "War Machine",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/23001a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/23001a"
+    },
+    {
+      "name": "Valkyrie",
+      "code": "25001a",
+      "cardSetCode": "valk",
+      "packCode": "valk",
+      "packName": "Valkyrie",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/25001a.png",
+      "preconAspect": "Aggression",
+      "url": "https://marvelcdb.com/card/25001a"
+    },
+    {
+      "name": "Vision",
+      "code": "26001a",
+      "cardSetCode": "vision",
+      "packCode": "vision",
+      "packName": "Vision",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/26001a.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/26001a"
+    },
+    {
+      "name": "Ghost-Spider",
+      "code": "27001a",
+      "cardSetCode": "ghost_spider",
+      "packCode": "sm",
+      "packName": "Sinister Motives",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/27001a.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/27001a"
+    },
+    {
+      "name": "Spider-Man - Miles Morales",
+      "code": "27030a",
+      "cardSetCode": "spider_man_morales",
+      "packCode": "sm",
+      "packName": "Sinister Motives",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/27030a.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/27030a"
+    },
+    {
+      "name": "Ironheart",
+      "code": "29001a",
+      "cardSetCode": "ironheart",
+      "packCode": "ironheart",
+      "packName": "Ironheart",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/29001a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/29001a"
+    },
+    {
+      "name": "Ironheart",
+      "code": "29002a",
+      "cardSetCode": "ironheart",
+      "packCode": "ironheart",
+      "packName": "Ironheart",
+      "imageUrl": null,
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/29002a"
+    },
+    {
+      "name": "Ironheart",
+      "code": "29003a",
+      "cardSetCode": "ironheart",
+      "packCode": "ironheart",
+      "packName": "Ironheart",
+      "imageUrl": null,
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/29003a"
+    },
+    {
+      "name": "Nova",
+      "code": "28001a",
+      "cardSetCode": "nova",
+      "packCode": "nova",
+      "packName": "Nova",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/28001a.png",
+      "preconAspect": "Aggression",
+      "url": "https://marvelcdb.com/card/28001a"
+    },
+    {
+      "name": "SP//dr",
+      "code": "31001a",
+      "cardSetCode": "spdr",
+      "packCode": "spdr",
+      "packName": "SP//dr",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/31001a.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/31001a"
+    },
+    {
+      "name": "Spider-Ham",
+      "code": "30001a",
+      "cardSetCode": "spiderham",
+      "packCode": "spiderham",
+      "packName": "Spider-Ham",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/30001a.png",
+      "preconAspect": "Justice",
+      "url": "https://marvelcdb.com/card/30001a"
+    },
+    {
+      "name": "Cyclops",
+      "code": "33001a",
+      "cardSetCode": "cyclops",
+      "packCode": "cyclops",
+      "packName": "Cyclops",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/33001a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/33001a"
+    },
+    {
+      "name": "Colossus",
+      "code": "32001a",
+      "cardSetCode": "colossus",
+      "packCode": "mut_gen",
+      "packName": "Mutant Genesis",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/32001a.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/32001a"
+    },
+    {
+      "name": "Shadowcat",
+      "code": "32030a",
+      "cardSetCode": "shadowcat",
+      "packCode": "mut_gen",
+      "packName": "Mutant Genesis",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/32030a.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/32030a"
+    },
+    {
+      "name": "Phoenix",
+      "code": "34001a",
+      "cardSetCode": "phoenix",
+      "packCode": "phoenix",
+      "packName": "Phoenix",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/34001a.png",
+      "preconAspect": "Justice",
+      "url": "https://marvelcdb.com/card/34001a"
+    },
+    {
+      "name": "Storm",
+      "code": "36001a",
+      "cardSetCode": "storm",
+      "packCode": "storm",
+      "packName": "Storm",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/36001a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/36001a"
+    },
+    {
+      "name": "Wolverine",
+      "code": "35001a",
+      "cardSetCode": "wolverine",
+      "packCode": "wolv",
+      "packName": "Wolverine",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/35001a.png",
+      "preconAspect": "Aggression",
+      "url": "https://marvelcdb.com/card/35001a"
+    },
+    {
+      "name": "Gambit",
+      "code": "37001a",
+      "cardSetCode": "gambit",
+      "packCode": "gambit",
+      "packName": "Gambit",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/37001a.png",
+      "preconAspect": "Justice",
+      "url": "https://marvelcdb.com/card/37001a"
+    },
+    {
+      "name": "Rogue",
+      "code": "38001a",
+      "cardSetCode": "rogue",
+      "packCode": "rogue",
+      "packName": "Rogue",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/38001a.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/38001a"
+    },
+    {
+      "name": "Cable",
+      "code": "40001a",
+      "cardSetCode": "cable",
+      "packCode": "next_evol",
+      "packName": "NeXt Evolution",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/40001a.png",
+      "preconAspect": null,
+      "url": "https://marvelcdb.com/card/40001a"
+    },
+    {
+      "name": "Domino",
+      "code": "40037a",
+      "cardSetCode": "domino",
+      "packCode": "next_evol",
+      "packName": "NeXt Evolution",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/40037a.png",
+      "preconAspect": null,
+      "url": "https://marvelcdb.com/card/40037a"
+    },
+    {
+      "name": "Angel",
+      "code": "42001a",
+      "cardSetCode": "angel",
+      "packCode": "angel",
+      "packName": "Angel",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/42001a.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/42001a"
+    },
+    {
+      "name": "Angel",
+      "code": "42001c",
+      "cardSetCode": "angel",
+      "packCode": "angel",
+      "packName": "Angel",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/42001c.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/42001c"
+    },
+    {
+      "name": "Psylocke",
+      "code": "41001a",
+      "cardSetCode": "psylocke",
+      "packCode": "psylocke",
+      "packName": "Psylocke",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/41001a.png",
+      "preconAspect": "Justice",
+      "url": "https://marvelcdb.com/card/41001a"
+    },
+    {
+      "name": "Deadpool",
+      "code": "44001a",
+      "cardSetCode": "deadpool",
+      "packCode": "deadpool",
+      "packName": "Deadpool",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/44001a.png",
+      "preconAspect": "Pool",
+      "url": "https://marvelcdb.com/card/44001a"
+    },
+    {
+      "name": "X-23",
+      "code": "43001a",
+      "cardSetCode": "x23",
+      "packCode": "x23",
+      "packName": "X-23",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/43001a.png",
+      "preconAspect": "Aggression",
+      "url": "https://marvelcdb.com/card/43001a"
+    },
+    {
+      "name": "Bishop",
+      "code": "45001a",
+      "cardSetCode": "bishop",
+      "packCode": "aoa",
+      "packName": "Age of Apocalypse",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/45001a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/45001a"
+    },
+    {
+      "name": "Magik",
+      "code": "45030a",
+      "cardSetCode": "magik",
+      "packCode": "aoa",
+      "packName": "Age of Apocalypse",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/45030a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/45030a"
+    },
+    {
+      "name": "Iceman",
+      "code": "46001a",
+      "cardSetCode": "iceman",
+      "packCode": "iceman",
+      "packName": "Iceman",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/46001a.png",
+      "preconAspect": "Aggression",
+      "url": "https://marvelcdb.com/card/46001a"
+    },
+    {
+      "name": "Jubilee",
+      "code": "47001a",
+      "cardSetCode": "jubilee",
+      "packCode": "jubilee",
+      "packName": "Jubilee",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/47001a.png",
+      "preconAspect": "Justice",
+      "url": "https://marvelcdb.com/card/47001a"
+    },
+    {
+      "name": "Nightcrawler",
+      "code": "48001a",
+      "cardSetCode": "nightcrawler",
+      "packCode": "ncrawler",
+      "packName": "Nightcrawler",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/48001a.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/48001a"
+    },
+    {
+      "name": "Magneto",
+      "code": "49001a",
+      "cardSetCode": "magneto",
+      "packCode": "magneto",
+      "packName": "Magneto",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/49001a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/49001a"
+    },
+    {
+      "name": "Maria Hill",
+      "code": "50001a",
+      "cardSetCode": "maria_hill",
+      "packCode": "aos",
+      "packName": "Agents of S.H.I.E.L.D.",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/50001a.png",
+      "preconAspect": "Justice",
+      "url": "https://marvelcdb.com/card/50001a"
+    },
+    {
+      "name": "Nick Fury",
+      "code": "50034a",
+      "cardSetCode": "nick_fury",
+      "packCode": "aos",
+      "packName": "Agents of S.H.I.E.L.D.",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/50034a.png",
+      "preconAspect": "Justice",
+      "url": "https://marvelcdb.com/card/50034a"
+    },
+    {
+      "name": "Black Panther (Shuri)",
+      "code": "51001a",
+      "cardSetCode": "black_panther_shuri",
+      "packCode": "bp",
+      "packName": "Black Panther",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/51001a.png",
+      "preconAspect": "Justice",
+      "url": "https://marvelcdb.com/card/51001a"
+    },
+    {
+      "name": "Silk",
+      "code": "52001a",
+      "cardSetCode": "silk",
+      "packCode": "silk",
+      "packName": "Silk",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/52001a.png",
+      "preconAspect": "Protection",
+      "url": "https://marvelcdb.com/card/52001a"
+    },
+    {
+      "name": "Falcon",
+      "code": "53001a",
+      "cardSetCode": "falcon",
+      "packCode": "falcon",
+      "packName": "Falcon",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/53001a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/53001a"
+    },
+    {
+      "name": "Winter Soldier",
+      "code": "54001a",
+      "cardSetCode": "winter_soldier",
+      "packCode": "winter",
+      "packName": "Winter Soldier",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/54001a.png",
+      "preconAspect": "Aggression",
+      "url": "https://marvelcdb.com/card/54001a"
+    },
+    {
+      "name": "Tigra",
+      "code": "56001a",
+      "cardSetCode": "tigra",
+      "packCode": "cw",
+      "packName": "Civil War",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/56001a.png",
+      "preconAspect": null,
+      "url": "https://marvelcdb.com/card/56001a"
+    },
+    {
+      "name": "Hulkling",
+      "code": "56029a",
+      "cardSetCode": "hulkling",
+      "packCode": "cw",
+      "packName": "Civil War",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/56029a.png",
+      "preconAspect": null,
+      "url": "https://marvelcdb.com/card/56029a"
+    },
+    {
+      "name": "Hercules",
+      "code": "59001a",
+      "cardSetCode": "hercules",
+      "packCode": "hercules",
+      "packName": "Hercules",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/59001a.png",
+      "preconAspect": "Leadership",
+      "url": "https://marvelcdb.com/card/59001a"
+    },
+    {
+      "name": "Wonder Man",
+      "code": "58001a",
+      "cardSetCode": "wonder_man",
+      "packCode": "wonder_man",
+      "packName": "Wonder Man",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/58001a.png",
+      "preconAspect": "Justice",
+      "url": "https://marvelcdb.com/card/58001a"
+    }
+  ],
+  "appHeroMatches": [
+    {
+      "key": "ironman",
+      "name": "Iron Man",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Iron Man",
+      "packName": "Core Set",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/01029a.png",
+      "preconAspect": null
+    },
+    {
+      "key": "marvel",
+      "name": "Captain Marvel",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Captain Marvel",
+      "packName": "Core Set",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/01010a.png",
+      "preconAspect": null
+    },
+    {
+      "key": "spidey",
+      "name": "Spider-Man",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Spider-Man",
+      "packName": "Core Set",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/01001a.png",
+      "preconAspect": null
+    },
+    {
+      "key": "panther",
+      "name": "Black Panther",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Black Panther",
+      "packName": "Core Set",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/01040a.png",
+      "preconAspect": null
+    },
+    {
+      "key": "shehulk",
+      "name": "She-Hulk",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "She-Hulk",
+      "packName": "Core Set",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/01019a.png",
+      "preconAspect": null
+    },
+    {
+      "key": "spiderwoman",
+      "name": "Spider-Woman",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Spider-Woman",
+      "packName": "The Rise of Red Skull",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/04031a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "hawkeye",
+      "name": "Hawkeye",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Hawkeye",
+      "packName": "The Rise of Red Skull",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/04001a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "cap_hero",
+      "name": "Captain America",
+      "currentAspect": "Leadership",
+      "marvelCdbName": "Captain America",
+      "packName": "Captain America",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/03001a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "msmarvel",
+      "name": "Ms. Marvel",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Ms. Marvel",
+      "packName": "Ms. Marvel",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/05001a.png",
+      "preconAspect": "Protection"
+    },
+    {
+      "key": "thor",
+      "name": "Thor",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Thor",
+      "packName": "Thor",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/06001a.png",
+      "preconAspect": "Aggression"
+    },
+    {
+      "key": "widow",
+      "name": "Black Widow",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Black Widow",
+      "packName": "Black Widow",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/08001a.png",
+      "preconAspect": "Justice"
+    },
+    {
+      "key": "strange",
+      "name": "Doctor Strange",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Doctor Strange",
+      "packName": "Doctor Strange",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/09001a.png",
+      "preconAspect": "Protection"
+    },
+    {
+      "key": "hulk",
+      "name": "Hulk",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Hulk",
+      "packName": "Hulk",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/10001a.png",
+      "preconAspect": "Aggression"
+    },
+    {
+      "key": "groot",
+      "name": "Groot",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Groot",
+      "packName": "The Galaxy's Most Wanted",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/16001a.png",
+      "preconAspect": null
+    },
+    {
+      "key": "rocket",
+      "name": "Rocket Raccoon",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Rocket Raccoon",
+      "packName": "The Galaxy's Most Wanted",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/16029a.png",
+      "preconAspect": null
+    },
+    {
+      "key": "antman",
+      "name": "Ant-Man",
+      "currentAspect": "Leadership",
+      "marvelCdbName": "Ant-Man",
+      "packName": "Ant-Man",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/12001a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "wasp",
+      "name": "Wasp",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Wasp",
+      "packName": "Wasp",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/13001a.png",
+      "preconAspect": "Aggression"
+    },
+    {
+      "key": "quicksilver",
+      "name": "Quicksilver",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Quicksilver",
+      "packName": "Quicksilver",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/14001a.png",
+      "preconAspect": "Protection"
+    },
+    {
+      "key": "witch",
+      "name": "Scarlet Witch",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Scarlet Witch",
+      "packName": "Scarlet Witch",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/15001a.png",
+      "preconAspect": "Justice"
+    },
+    {
+      "key": "warlock",
+      "name": "Adam Warlock",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Adam Warlock",
+      "packName": "The Mad Titan's Shadow",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/21031a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "spectrum",
+      "name": "Spectrum",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Spectrum",
+      "packName": "The Mad Titan's Shadow",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/21001a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "starlord",
+      "name": "Star-Lord",
+      "currentAspect": "Leadership",
+      "marvelCdbName": "Star-Lord",
+      "packName": "Star-Lord",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/17001a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "gamora",
+      "name": "Gamora",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Gamora",
+      "packName": "Gamora",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/18001a.png",
+      "preconAspect": "Aggression"
+    },
+    {
+      "key": "drax",
+      "name": "Drax",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Drax",
+      "packName": "Drax",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/19001a.png",
+      "preconAspect": "Protection"
+    },
+    {
+      "key": "venom",
+      "name": "Venom",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Venom",
+      "packName": "Venom",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/20001a.png",
+      "preconAspect": "Justice"
+    },
+    {
+      "key": "nebula",
+      "name": "Nebula",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Nebula",
+      "packName": "Nebula",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/22001a.png",
+      "preconAspect": "Justice"
+    },
+    {
+      "key": "warmachine",
+      "name": "War Machine",
+      "currentAspect": "Leadership",
+      "marvelCdbName": "War Machine",
+      "packName": "War Machine",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/23001a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "valkyrie",
+      "name": "Valkyrie",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Valkyrie",
+      "packName": "Valkyrie",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/25001a.png",
+      "preconAspect": "Aggression"
+    },
+    {
+      "key": "vision",
+      "name": "Vision",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Vision",
+      "packName": "Vision",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/26001a.png",
+      "preconAspect": "Protection"
+    },
+    {
+      "key": "ghostspider",
+      "name": "Ghost-Spider",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Ghost-Spider",
+      "packName": "Sinister Motives",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/27001a.png",
+      "preconAspect": "Protection"
+    },
+    {
+      "key": "miles",
+      "name": "Spider-Man (Miles)",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Spider-Man - Miles Morales",
+      "packName": "Sinister Motives",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/27030a.png",
+      "preconAspect": "Protection"
+    },
+    {
+      "key": "nova",
+      "name": "Nova",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Nova",
+      "packName": "Nova",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/28001a.png",
+      "preconAspect": "Aggression"
+    },
+    {
+      "key": "ironheart",
+      "name": "Ironheart",
+      "currentAspect": "Leadership",
+      "marvelCdbName": "Ironheart",
+      "packName": "Ironheart",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/29001a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "spiderham",
+      "name": "Spider-Ham",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Spider-Ham",
+      "packName": "Spider-Ham",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/30001a.png",
+      "preconAspect": "Justice"
+    },
+    {
+      "key": "spdr",
+      "name": "SP//dr",
+      "currentAspect": "Protection",
+      "marvelCdbName": "SP//dr",
+      "packName": "SP//dr",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/31001a.png",
+      "preconAspect": "Protection"
+    },
+    {
+      "key": "colossus",
+      "name": "Colossus",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Colossus",
+      "packName": "Mutant Genesis",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/32001a.png",
+      "preconAspect": "Protection"
+    },
+    {
+      "key": "shadowcat",
+      "name": "Shadowcat",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Shadowcat",
+      "packName": "Mutant Genesis",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/32030a.png",
+      "preconAspect": "Protection"
+    },
+    {
+      "key": "cyclops",
+      "name": "Cyclops",
+      "currentAspect": "Leadership",
+      "marvelCdbName": "Cyclops",
+      "packName": "Cyclops",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/33001a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "phoenix",
+      "name": "Phoenix",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Phoenix",
+      "packName": "Phoenix",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/34001a.png",
+      "preconAspect": "Justice"
+    },
+    {
+      "key": "wolverine",
+      "name": "Wolverine",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Wolverine",
+      "packName": "Wolverine",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/35001a.png",
+      "preconAspect": "Aggression"
+    },
+    {
+      "key": "storm",
+      "name": "Storm",
+      "currentAspect": "Leadership",
+      "marvelCdbName": "Storm",
+      "packName": "Storm",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/36001a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "gambit",
+      "name": "Gambit",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Gambit",
+      "packName": "Gambit",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/37001a.png",
+      "preconAspect": "Justice"
+    },
+    {
+      "key": "rogue",
+      "name": "Rogue",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Rogue",
+      "packName": "Rogue",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/38001a.png",
+      "preconAspect": "Protection"
+    },
+    {
+      "key": "cable",
+      "name": "Cable",
+      "currentAspect": "Leadership",
+      "marvelCdbName": "Cable",
+      "packName": "NeXt Evolution",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/40001a.png",
+      "preconAspect": null
+    },
+    {
+      "key": "domino",
+      "name": "Domino",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Domino",
+      "packName": "NeXt Evolution",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/40037a.png",
+      "preconAspect": null
+    },
+    {
+      "key": "psylocke",
+      "name": "Psylocke",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Psylocke",
+      "packName": "Psylocke",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/41001a.png",
+      "preconAspect": "Justice"
+    },
+    {
+      "key": "angel",
+      "name": "Angel",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Angel",
+      "packName": "Angel",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/42001a.png",
+      "preconAspect": "Protection"
+    },
+    {
+      "key": "x23",
+      "name": "X-23",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "X-23",
+      "packName": "X-23",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/43001a.png",
+      "preconAspect": "Aggression"
+    },
+    {
+      "key": "deadpool",
+      "name": "Deadpool",
+      "currentAspect": "Pool",
+      "marvelCdbName": "Deadpool",
+      "packName": "Deadpool",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/44001a.png",
+      "preconAspect": "Pool"
+    },
+    {
+      "key": "bishop",
+      "name": "Bishop",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Bishop",
+      "packName": "Age of Apocalypse",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/45001a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "magik",
+      "name": "Magik",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Magik",
+      "packName": "Age of Apocalypse",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/45030a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "iceman",
+      "name": "Iceman",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Iceman",
+      "packName": "Iceman",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/46001a.png",
+      "preconAspect": "Aggression"
+    },
+    {
+      "key": "jubilee",
+      "name": "Jubilee",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Jubilee",
+      "packName": "Jubilee",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/47001a.png",
+      "preconAspect": "Justice"
+    },
+    {
+      "key": "nightcrawler",
+      "name": "Nightcrawler",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Nightcrawler",
+      "packName": "Nightcrawler",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/48001a.png",
+      "preconAspect": "Protection"
+    },
+    {
+      "key": "magneto",
+      "name": "Magneto",
+      "currentAspect": "Leadership",
+      "marvelCdbName": "Magneto",
+      "packName": "Magneto",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/49001a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "mariahill",
+      "name": "Maria Hill",
+      "currentAspect": "Leadership",
+      "marvelCdbName": "Maria Hill",
+      "packName": "Agents of S.H.I.E.L.D.",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/50001a.png",
+      "preconAspect": "Justice"
+    },
+    {
+      "key": "nickfury",
+      "name": "Nick Fury",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Nick Fury",
+      "packName": "Agents of S.H.I.E.L.D.",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/50034a.png",
+      "preconAspect": "Justice"
+    },
+    {
+      "key": "panthershuri",
+      "name": "Black Panther/Shuri",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Black Panther (Shuri)",
+      "packName": "Black Panther",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/51001a.png",
+      "preconAspect": "Justice"
+    },
+    {
+      "key": "silk",
+      "name": "Silk",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Silk",
+      "packName": "Silk",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/52001a.png",
+      "preconAspect": "Protection"
+    },
+    {
+      "key": "falcon",
+      "name": "Falcon",
+      "currentAspect": "Leadership",
+      "marvelCdbName": "Falcon",
+      "packName": "Falcon",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/53001a.png",
+      "preconAspect": "Leadership"
+    },
+    {
+      "key": "wintersoldier",
+      "name": "Winter Soldier",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Winter Soldier",
+      "packName": "Winter Soldier",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/54001a.png",
+      "preconAspect": "Aggression"
+    },
+    {
+      "key": "hulkling",
+      "name": "Hulkling",
+      "currentAspect": "Protection",
+      "marvelCdbName": "Hulkling",
+      "packName": "Civil War",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/56029a.png",
+      "preconAspect": null
+    },
+    {
+      "key": "tigra",
+      "name": "Tigra",
+      "currentAspect": "Aggression",
+      "marvelCdbName": "Tigra",
+      "packName": "Civil War",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/56001a.png",
+      "preconAspect": null
+    },
+    {
+      "key": "wonderman",
+      "name": "Wonder Man",
+      "currentAspect": "Justice",
+      "marvelCdbName": "Wonder Man",
+      "packName": "Wonder Man",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/58001a.png",
+      "preconAspect": "Justice"
+    },
+    {
+      "key": "hercules",
+      "name": "Hercules",
+      "currentAspect": "Leadership",
+      "marvelCdbName": "Hercules",
+      "packName": "Hercules",
+      "imageUrl": "https://marvelcdb.com/bundles/cards/59001a.png",
+      "preconAspect": "Leadership"
+    }
+  ],
+  "missingInApp": []
+}

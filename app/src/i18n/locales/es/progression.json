@@ -1,17 +1,19 @@
 {
-  "title": "Guía de Campaña",
-  "description": "Orden optimizado para dificultad Experto/Heroica con estrategia de construcción de reserva de cartas.",
+  "title": "Gu\u00eda de Campa\u00f1a",
+  "description": "Orden optimizado para dificultad Experto/Heroica con estrategia de construcci\u00f3n de reserva de cartas.",
+  "phases": "Fases",
+  "owned": "En colecci\u00f3n",
   "types": {
-    "campaign": "📦 Campaña",
-    "scenario": "🎯 Scenario",
-    "heroes": "🦸 Heroes"
+    "campaign": "Campa\u00f1a",
+    "scenario": "Escenario",
+    "heroes": "H\u00e9roes"
   },
   "criticalNotes": {
-    "title": "⚠️ Notas Críticas",
-    "note1": "Construir reserva de cartas entre campañas es CRÍTICO para éxito en Experto",
-    "note2": "Galaxy's Most Wanted es ÚLTIMO - extremadamente punitivo (Ronan 26% win rate)",
-    "note3": "Rise of Red Skull es la expansión más recomendada por la comunidad después del Core",
-    "note4": "La dificultad Experto escala con el tamaño de la reserva de cartas - más opciones = más manejable",
-    "note5": "Wrecking Crew SOLO para completistas - la comunidad dice \"no lo necesitas\""
+    "title": "Notas cr\u00edticas",
+    "note1": "Construir reserva de cartas entre campa\u00f1as es CR\u00cdTICO para tener \u00e9xito en Experto",
+    "note2": "Galaxy's Most Wanted va al FINAL: extremadamente punitivo (Ronan 26% win rate)",
+    "note3": "Rise of Red Skull es la expansi\u00f3n m\u00e1s recomendada por la comunidad despu\u00e9s del Core",
+    "note4": "La dificultad Experto escala con el tama\u00f1o de la reserva de cartas: m\u00e1s opciones = m\u00e1s manejable",
+    "note5": "Wrecking Crew SOLO para completistas: la comunidad dice \"no lo necesitas\""
   }
 }

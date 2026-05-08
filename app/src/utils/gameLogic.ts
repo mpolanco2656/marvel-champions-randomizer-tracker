@@ -1,5 +1,5 @@
-import type { Hero, Villain, ModularSet } from '../types';
-import { campaigns, scenarioPacks, heroPacks } from '../data';
+import type { Hero, ModularSet, Villain } from '../types';
+import { campaigns, heroPacks, scenarioPacks } from '../data';
 
 export function getOwnedSources(campaignKeys: string[], packKeys: string[], heroPackKeys: string[]): string[] {
   const sources = new Set<string>();
@@ -30,53 +30,47 @@ export function generateWarningsAndSuggestions(
   const warnings: string[] = [];
   const suggestions: string[] = [];
 
-  // 2-handed warnings
   if (playerCount === 2 && heroes.length === 2) {
     const aspects = heroes.map(h => h.aspect);
     if (aspects.includes('Aggression') && aspects.includes('Protection') && !aspects.includes('Justice')) {
-      warnings.push('⚠️ Aggression + Protection en 2-handed puede tener problemas con threat. Considera añadir Justice.');
+      warnings.push('Aggression + Protection en 2-handed puede tener problemas con threat. Considera añadir Justice.');
     }
   }
 
-  // Deadpool multiplayer warning
   if (playerCount > 1 && heroes.some(h => h.key === 'deadpool')) {
-    warnings.push('⚠️ Deadpool es S+ solo pero C-tier multiplayer. ¡Unkillable es un problema para el equipo!');
+    warnings.push('Deadpool es S+ solo pero C-tier multiplayer. Unkillable es un problema para el equipo!');
   }
 
-  // Setup heroes warning
   const setupHeroes = heroes.filter(h => h.playstyle.includes('Setup'));
   if (setupHeroes.length > 1) {
-    warnings.push(`⚠️ Múltiples héroes setup (${setupHeroes.map(h => h.name).join(', ')}). El early game será lento.`);
+    warnings.push(`Múltiples héroes setup (${setupHeroes.map(h => h.name).join(', ')}). El early game será lento.`);
   }
 
-  // Villain-specific warnings
   if (villain) {
     if (villain.key === 'ronan') {
-      warnings.push('🔴 RONAN: Villano más difícil (26% win). Overkill + Piercing contrarrestan todas las defensas. Muchos saltan este.');
+      warnings.push('RONAN: Villano más difícil (26% win). Overkill + Piercing contrarrestan todas las defensas. Muchos saltan este.');
     } else if (villain.key === 'venomgoblin') {
-      suggestions.push('💡 Venom Goblin: Aspecto Justice altamente recomendado. Remover Advanced Glider ASAP.');
+      suggestions.push('Venom Goblin: Aspecto Justice altamente recomendado. Remover Advanced Glider ASAP.');
     } else if (villain.key === 'magneto_villain') {
-      suggestions.push('💡 Magneto: No puedes hacer daño hasta remover Orbital Decay. Prepárate para pérdida de tempo.');
+      suggestions.push('Magneto: No puedes hacer daño hasta remover Orbital Decay. Prepárate para pérdida de tempo.');
     } else if (villain.key === 'nebula_gmw') {
-      warnings.push('⚠️ Nebula: Densidad de Surge extrema = muy random. Uno de los villanos menos populares.');
+      warnings.push('Nebula: Densidad de Surge extrema = muy random. Uno de los villanos menos populares.');
     }
 
-    // Difficulty vs hero power
     if (villain.difficulty >= 8) {
-      const tierValues: Record<string, number> = { 'S+': 5, 'S': 4, 'A': 3, 'B': 2, 'C': 1 };
+      const tierValues: Record<string, number> = { 'S+': 5, S: 4, A: 3, B: 2, C: 1 };
       const avgTier = heroes.reduce((sum, h) => sum + tierValues[h.tier], 0) / heroes.length;
 
       if (avgTier < 3) {
-        suggestions.push(`💡 Villano dificultad ${villain.difficulty}/10 con héroes tier promedio ${avgTier < 2 ? 'B-C' : 'B'}. Considera héroes más fuertes o bajar dificultad.`);
+        suggestions.push(`Villano dificultad ${villain.difficulty}/10 con héroes tier promedio ${avgTier < 2 ? 'B-C' : 'B'}. Considera héroes más fuertes o bajar dificultad.`);
       }
     }
   }
 
-  // Solo-optimized heroes in multiplayer
   if (playerCount > 2) {
     const soloOptimized = heroes.filter(h => h.optimization === 'Solo');
     if (soloOptimized.length > 0) {
-      suggestions.push(`💡 ${soloOptimized.map(h => h.name).join(', ')} optimizado para solo. Puede rendir bajo en ${playerCount} jugadores.`);
+      suggestions.push(`${soloOptimized.map(h => h.name).join(', ')} optimizado para solo. Puede rendir bajo en ${playerCount} jugadores.`);
     }
   }
 
@@ -88,19 +82,16 @@ export function selectThematicModulars(
   availableModulars: ModularSet[],
   count: number
 ): ModularSet[] {
-  // Ronan: AVOID hard modulars (difficulty >= 4) - considered unfun by community
   if (villain.key === 'ronan') {
     const easyModulars = availableModulars.filter(m => m.difficulty < 4);
     if (easyModulars.length >= count) {
       const shuffled = easyModulars.sort(() => Math.random() - 0.5);
       return shuffled.slice(0, count);
     }
-    // If not enough easy modulars, use all available
     const shuffled = availableModulars.sort(() => Math.random() - 0.5);
     return shuffled.slice(0, Math.min(count, shuffled.length));
   }
 
-  // Venom Goblin gets Goblin Gear (guaranteed)
   if (villain.key === 'venomgoblin') {
     const goblinGear = availableModulars.find(m => m.key === 'goblingear');
     if (goblinGear) {
@@ -109,7 +100,6 @@ export function selectThematicModulars(
     }
   }
 
-  // Spider-Man villains get spider modulars (Green Goblin + Sinister Motives sets)
   if (['greengoblin', 'venomgoblin', 'mysterio'].includes(villain.key)) {
     const spiderModulars = availableModulars.filter(m =>
       ['messofthings', 'powerdrain', 'interference', 'osborntech', 'gimmicks', 'goblingear', 'downtoearth', 'cityinchaos'].includes(m.key)
@@ -119,7 +109,6 @@ export function selectThematicModulars(
     return shuffled.slice(0, Math.min(count, shuffled.length));
   }
 
-  // Thanos prioritizes Infinity-themed modulars (Mad Titan's Shadow)
   if (villain.key === 'thanos') {
     const infinityModulars = availableModulars.filter(m =>
       ['gauntlet', 'blackorder', 'childrenofthanos'].includes(m.key)
@@ -129,7 +118,6 @@ export function selectThematicModulars(
     return shuffled.slice(0, Math.min(count, shuffled.length));
   }
 
-  // Minion Swarm villains prioritize minion-heavy modulars
   if (villain.mechanics.includes('Minion Swarm')) {
     const minionModulars = availableModulars.filter(m =>
       ['mastersofevil', 'hydra', 'anachronauts'].includes(m.key)

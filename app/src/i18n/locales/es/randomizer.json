@@ -2,10 +2,11 @@
   "stats": {
     "games": "Juegos",
     "winRate": "% Victorias",
-    "campaigns": "Campañas",
+    "campaigns": "Campa\u00f1as",
     "scenarios": "Escenarios",
-    "heroPacks": "Packs de Héroe"
+    "heroPacks": "Packs de H\u00e9roe"
   },
+  "filters": "Filtros",
   "controls": {
     "players": "Jugadores",
     "difficulty": "Dificultad",
@@ -13,7 +14,8 @@
     "modulars": "Modulares",
     "playStyle": "Estilo de Juego",
     "tier": "Tier",
-    "optimization": "Optimización",
+    "optimization": "Optimizaci\u00f3n",
+    "aspect": "Aspecto",
     "gameMode": "Modo de Juego",
     "encounterSet": "Encounter Set"
   },
@@ -25,36 +27,16 @@
   },
   "difficultyOptions": {
     "any": "Cualquiera",
-    "easy": "Fácil (1-3)",
+    "easy": "F\u00e1cil (1-3)",
     "medium": "Medio (4-6)",
-    "hard": "Difícil (7-8)",
+    "hard": "Dif\u00edcil (7-8)",
     "expert": "Experto (9-10)"
-  },
-  "difficultyHelp": {
-    "title": "Dificultad de Villanos:",
-    "easy": "Fácil (1-3):",
-    "easyDesc": "Rhino, Crossbones - para aprender",
-    "medium": "Medio (4-6):",
-    "mediumDesc": "Klaw, Hela - desafío balanceado",
-    "hard": "Difícil (7-8):",
-    "hardDesc": "Red Skull, Loki - estrategia sólida",
-    "expert": "Experto (9-10):",
-    "expertDesc": "Thanos, Ronan - los más duros"
   },
   "complexityOptions": {
     "any": "Cualquiera",
     "beginner": "Principiante",
     "intermediate": "Intermedio",
     "advanced": "Avanzado"
-  },
-  "complexityHelp": {
-    "title": "Complejidad de Héroes:",
-    "beginner": "Principiante:",
-    "beginnerDesc": "Mecánicas simples, pocas decisiones (Cap America, Quicksilver)",
-    "intermediate": "Intermedio:",
-    "intermediateDesc": "Timing y planificación (Black Widow, Spider-Ham)",
-    "advanced": "Avanzado:",
-    "advancedDesc": "Múltiples capas de decisión (Doctor Strange, Adam Warlock)"
   },
   "modularOptions": {
     "oneSet": "1 Set",
@@ -74,34 +56,45 @@
   },
   "optimizationOptions": {
     "any": "Cualquiera",
-    "both": "Ambos"
+    "both": "Solo / Multiplayer"
   },
   "gameModeOptions": {
-    "standard": "Estándar",
+    "standard": "Est\u00e1ndar",
     "expert": "Experto"
   },
   "checkboxes": {
-    "unplayedHeroes": "Solo Héroes No Jugados",
-    "thematicPairing": "Emparejamiento Temático"
+    "unplayedHeroes": "Solo H\u00e9roes No Jugados",
+    "thematicPairing": "Emparejamiento Tem\u00e1tico"
   },
   "buttons": {
     "generateComplete": "Generar Setup Completo",
-    "onlyHeroes": "Solo Héroes",
+    "onlyHeroes": "Solo H\u00e9roes",
     "onlyVillain": "Solo Villano",
     "export": "Exportar",
+    "saveWithoutResult": "Guardar sin resultado",
     "victory": "Victoria",
     "defeat": "Derrota",
     "save": "Guardar"
   },
   "results": {
-    "heroes": "Héroes",
+    "heroes": "H\u00e9roes",
+    "villain": "Villano",
+    "modularSets": "Modulares",
+    "win": "Victoria",
+    "loss": "Derrota",
     "aspect": "Aspecto:",
     "complexity": "Complejidad:",
     "playStyle": "Estilo:",
     "villainAndModulars": "Villano & Modulares",
-    "mechanics": "Mecánicas:",
+    "mechanics": "Mec\u00e1nicas:",
     "mode": "Modo:",
     "standardDesc": "Stage I + II villain cards + Standard encounter set",
     "expertDesc": "Stage II + III villain cards + Expert encounter set (Exhaustion, Masterplan, Under Fire)"
+  },
+  "saved": "Guardado",
+  "recordResult": "Registrar resultado:",
+  "empty": {
+    "title": "Listo para generar",
+    "subtitle": "Colecci\u00f3n: {{campaigns}}% campa\u00f1as, {{heroPacks}}% hero packs"
   }
 }

@@ -1,156 +1,210 @@
-import type { Campaign, Collection } from '../../types';
-import { Check, RotateCcw } from 'lucide-react';
-import { useCampaignTracker } from '../../hooks/useCampaignTracker';
+import type { Campaign, CampaignScenario, Collection, ModularSet, Villain } from '../../types';
+import { BookOpen, Check, Dices, RotateCcw } from 'lucide-react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import CampaignRandomizerTab from './CampaignRandomizerTab';
+import { campaignImagePath, villainImagePath } from '../../utils/assetPaths';
 
 interface CampaignTabProps {
   campaigns: Campaign[];
+  villains: Villain[];
   collection: Collection;
+  modularSets: ModularSet[];
+  trackerActiveCampaign: string | null;
+  completedScenarios: Record<string, number>;
+  setTrackerActiveCampaign: (campaignKey: string | null) => void;
+  toggleScenario: (campaignKey: string, scenarioIndex: number) => void;
+  getCompletedCount: (campaignKey: string, totalScenarios: number) => number;
+  clearCampaign: (campaignKey: string) => void;
+  randomizerActiveCampaign: string | null;
+  randomMode: 'campaign' | 'mixed';
+  campaignScenarios: CampaignScenario[];
+  mixedScenarios: CampaignScenario[];
+  setRandomizerActiveCampaign: (campaignKey: string | null) => void;
+  setCampaignScenarios: (scenarios: CampaignScenario[]) => void;
+  markCampaignScenarioComplete: (index: number) => void;
+  setRandomMode: (mode: 'campaign' | 'mixed') => void;
+  setMixedScenarios: (scenarios: CampaignScenario[]) => void;
+  markMixedScenarioComplete: (index: number) => void;
+  clearCampaignScenarios: () => void;
+  clearMixedScenarios: () => void;
 }
+
+type CampaignSubTab = 'tracker' | 'randomizer';
 
 export default function CampaignTab({
   campaigns,
+  villains,
   collection,
+  modularSets,
+  trackerActiveCampaign,
+  completedScenarios,
+  setTrackerActiveCampaign,
+  toggleScenario,
+  getCompletedCount,
+  clearCampaign,
+  randomizerActiveCampaign,
+  randomMode,
+  campaignScenarios,
+  mixedScenarios,
+  setRandomizerActiveCampaign,
+  setCampaignScenarios,
+  markCampaignScenarioComplete,
+  setRandomMode,
+  setMixedScenarios,
+  markMixedScenarioComplete,
+  clearCampaignScenarios,
+  clearMixedScenarios,
 }: CampaignTabProps) {
   const { t } = useTranslation('campaign');
-  const {
-    activeCampaign,
-    completedScenarios,
-    setActiveCampaign,
-    toggleScenario,
-    getCompletedCount,
-    clearCampaign
-  } = useCampaignTracker();
-
+  const [activeSubTab, setActiveSubTab] = useState<CampaignSubTab>('tracker');
   const filteredCampaigns = campaigns.filter(c => collection.campaigns.includes(c.key));
-  const activeCampaignData = campaigns.find(c => c.key === activeCampaign);
+  const activeCampaignData = campaigns.find(c => c.key === trackerActiveCampaign);
 
   return (
-    <div className="space-y-6">
-      <div className="bg-black bg-opacity-40 rounded-lg p-6">
-        <h2 className="text-3xl font-bold text-yellow-300 mb-4">{t('title')}</h2>
-        <p className="text-gray-300 mb-6">
-          {t('description')}
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredCampaigns.map(campaign => {
-            const completed = getCompletedCount(campaign.key, campaign.villains.length);
-            const isActive = activeCampaign === campaign.key;
-
-            return (
-              <div
-                key={campaign.key}
-                onClick={() => setActiveCampaign(campaign.key)}
-                className={`bg-gradient-to-br from-purple-800 to-blue-800 rounded-lg p-5 border-2 cursor-pointer transition-all ${
-                  isActive ? 'border-yellow-300' : 'border-yellow-400 hover:border-yellow-300'
-                }`}
-              >
-                <h3 className="text-xl font-bold text-yellow-300 mb-2">{campaign.name}</h3>
-                <div className="text-sm text-gray-300 mb-2">
-                  {t('wave')} {campaign.wave === 0 ? t('core') : campaign.wave} • {campaign.villains.length} {t('scenarios')}
-                </div>
-
-                <div className="bg-black bg-opacity-40 rounded p-3">
-                  <div className="text-sm font-bold mb-2">
-                    {t('progress')} {completed}/{campaign.villains.length}
-                  </div>
-                  <div className="w-full bg-gray-700 rounded h-2">
-                    <div
-                      className="bg-yellow-500 h-2 rounded transition-all"
-                      style={{ width: `${(completed / campaign.villains.length) * 100}%` }}
-                    />
-                  </div>
-                  {completed === campaign.villains.length && (
-                    <div className="text-center text-green-400 font-bold text-sm mt-2">
-                      {t('completed')}
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+    <div className="mc-stack">
+      <div className="mc-campaign-hero">
+        <div>
+          <h2>{t('title')}</h2>
+          <p>{t('description')}</p>
         </div>
-
-        {filteredCampaigns.length === 0 && (
-          <div className="text-center text-gray-400 py-8">
-            {t('noCampaigns')}
-          </div>
-        )}
+        <div className="mc-subtabs" role="tablist" aria-label="Campaign tools">
+          <button
+            type="button"
+            role="tab"
+            data-active={activeSubTab === 'tracker' ? '1' : '0'}
+            onClick={() => setActiveSubTab('tracker')}
+          >
+            <BookOpen size={16} />
+            {t('trackerTab')}
+          </button>
+          <button
+            type="button"
+            role="tab"
+            data-active={activeSubTab === 'randomizer' ? '1' : '0'}
+            onClick={() => setActiveSubTab('randomizer')}
+          >
+            <Dices size={16} />
+            {t('randomizerTab')}
+          </button>
+        </div>
       </div>
 
-      {/* Scenario Checklist */}
-      {activeCampaign && activeCampaignData && (
-        <div className="bg-black bg-opacity-40 rounded-lg p-6">
-          <h3 className="text-2xl font-bold text-yellow-300 mb-4">
-            {activeCampaignData.name} - {t('checklist')}
-          </h3>
-          <p className="text-sm text-gray-400 mb-4">
-            {t('checklistDescription')}
-          </p>
+      {activeSubTab === 'tracker' ? (
+        <>
+          <div className="mc-panel">
+            <div className="mc-campaign-grid">
+              {filteredCampaigns.map(campaign => {
+                const completed = getCompletedCount(campaign.key, campaign.villains.length);
+                const isActive = trackerActiveCampaign === campaign.key;
 
-          <div className="space-y-3">
-            {activeCampaignData.villains.map((villainKey, idx) => {
-              const isCompleted = completedScenarios[`${activeCampaign}_${idx}`];
-
-              return (
-                <div
-                  key={idx}
-                  onClick={() => toggleScenario(activeCampaign, idx)}
-                  className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
-                    isCompleted
-                      ? 'bg-green-900 bg-opacity-30 border-green-500'
-                      : 'bg-gray-800 bg-opacity-50 border-gray-600 hover:border-yellow-400'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-6 h-6 rounded border-2 flex items-center justify-center ${
-                        isCompleted ? 'bg-green-600 border-green-400' : 'border-gray-500'
-                      }`}>
-                        {isCompleted ? <Check size={16} className="text-white" /> : null}
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-400">{t('scenario')} {idx + 1}</div>
-                        <div className="font-bold text-white capitalize">{villainKey.replace(/_/g, ' ')}</div>
-                      </div>
+                return (
+                  <button
+                    key={campaign.key}
+                    type="button"
+                    onClick={() => setTrackerActiveCampaign(campaign.key)}
+                    className="mc-campaign-card"
+                    data-active={isActive ? '1' : '0'}
+                  >
+                    <img src={campaignImagePath(campaign)} alt="" onError={(event) => { event.currentTarget.hidden = true; }} />
+                    <span>{campaign.name}</span>
+                    <small>
+                      {t('wave')} {campaign.wave === 0 ? t('core') : campaign.wave} / {campaign.villains.length} {t('scenarios')}
+                    </small>
+                    <div>
+                      <strong>{t('progress')} {completed}/{campaign.villains.length}</strong>
+                      <i>
+                        <b style={{ width: `${(completed / campaign.villains.length) * 100}%` }} />
+                      </i>
                     </div>
-                    {isCompleted ? (
-                      <span className="bg-green-600 text-white text-xs px-3 py-1 rounded font-bold">
-                        {t('completedBadge')}
-                      </span>
-                    ) : null}
-                  </div>
-                </div>
-              );
-            })}
+                    {completed === campaign.villains.length ? <em>{t('completed')}</em> : null}
+                  </button>
+                );
+              })}
+            </div>
+
+            {filteredCampaigns.length === 0 ? (
+              <div className="text-center text-gray-400 py-8">
+                {t('noCampaigns')}
+              </div>
+            ) : null}
           </div>
 
-          {/* Reset Campaign Button */}
-          {getCompletedCount(activeCampaign, activeCampaignData.villains.length) > 0 && (
-            <div className="mt-6">
-              <button
-                onClick={() => {
-                  if (window.confirm(t('resetConfirm', { name: activeCampaignData.name }))) {
-                    clearCampaign(activeCampaign);
-                  }
-                }}
-                className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition-all flex items-center justify-center gap-2"
-              >
-                <RotateCcw size={18} />
-                {t('resetButton')}
-              </button>
-            </div>
-          )}
-
-          {getCompletedCount(activeCampaign, activeCampaignData.villains.length) === activeCampaignData.villains.length && (
-            <div className="mt-6 bg-green-900 bg-opacity-40 rounded p-4 text-center">
-              <div className="text-green-400 font-bold text-lg">
-                {t('campaignCompleted')}
+          {trackerActiveCampaign && activeCampaignData ? (
+            <div className="mc-panel">
+              <div className="mc-campaign-checklist-head">
+                <div>
+                  <h3>{activeCampaignData.name} - {t('checklist')}</h3>
+                  <p>{t('checklistDescription')}</p>
+                </div>
               </div>
+
+              <div className="mc-campaign-checklist">
+                {activeCampaignData.villains.map((villainKey, idx) => {
+                  const isCompleted = Boolean(completedScenarios[`${trackerActiveCampaign}_${idx}`]);
+
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => toggleScenario(trackerActiveCampaign, idx)}
+                      className="mc-campaign-scenario"
+                      data-completed={isCompleted ? '1' : '0'}
+                    >
+                      <span>
+                        {isCompleted ? <Check size={15} /> : null}
+                      </span>
+                      <img src={villainImagePath(villainKey)} alt="" onError={(event) => { event.currentTarget.hidden = true; }} />
+                      <div>
+                        <small>{t('scenario')} {idx + 1}</small>
+                        <strong>{villainKey.replace(/_/g, ' ')}</strong>
+                      </div>
+                      {isCompleted ? <em>{t('completedBadge')}</em> : null}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {getCompletedCount(trackerActiveCampaign, activeCampaignData.villains.length) > 0 ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (window.confirm(t('resetConfirm', { name: activeCampaignData.name }))) {
+                      clearCampaign(trackerActiveCampaign);
+                    }
+                  }}
+                  className="mc-danger-button"
+                >
+                  <RotateCcw size={18} />
+                  {t('resetButton')}
+                </button>
+              ) : null}
+
+              {getCompletedCount(trackerActiveCampaign, activeCampaignData.villains.length) === activeCampaignData.villains.length ? (
+                <div className="mc-complete-message">{t('campaignCompleted')}</div>
+              ) : null}
             </div>
-          )}
-        </div>
+          ) : null}
+        </>
+      ) : (
+        <CampaignRandomizerTab
+          campaigns={campaigns}
+          villains={villains}
+          collection={collection}
+          modularSets={modularSets}
+          activeCampaign={randomizerActiveCampaign}
+          randomMode={randomMode}
+          campaignScenarios={campaignScenarios}
+          mixedScenarios={mixedScenarios}
+          setActiveCampaign={setRandomizerActiveCampaign}
+          setCampaignScenarios={setCampaignScenarios}
+          markScenarioComplete={markCampaignScenarioComplete}
+          setRandomMode={setRandomMode}
+          setMixedScenarios={setMixedScenarios}
+          markMixedScenarioComplete={markMixedScenarioComplete}
+          clearCampaignScenarios={clearCampaignScenarios}
+          clearMixedScenarios={clearMixedScenarios}
+        />
       )}
     </div>
   );

@@ -7,10 +7,16 @@
     "exportAll": "Export All",
     "importAll": "Import All"
   },
+  "stats": {
+    "heroes": "Heroes",
+    "villains": "Villains",
+    "modulars": "Modulars",
+    "games": "Games"
+  },
   "tooltips": {
     "exportData": "Export all data to JSON",
     "importData": "Import data from JSON",
-    "switchToSpanish": "Cambiar a Español",
+    "switchToSpanish": "Switch to Spanish",
     "switchToEnglish": "Switch to English"
   }
 }

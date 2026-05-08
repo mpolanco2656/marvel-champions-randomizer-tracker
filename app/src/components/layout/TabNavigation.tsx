@@ -1,11 +1,4 @@
-import {
-  Shuffle,
-  BookOpen,
-  Archive,
-  TrendingUp,
-  Target,
-  Dices,
-} from 'lucide-react';
+import { Archive, BookOpen, Shuffle, Target, TrendingUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface TabNavigationProps {
@@ -16,39 +9,31 @@ interface TabNavigationProps {
 const tabs = [
   { id: 'randomizer', translationKey: 'randomizer', icon: Shuffle },
   { id: 'campaign', translationKey: 'campaign', icon: BookOpen },
-  { id: 'campaignrandomizer', translationKey: 'campaignRandomizer', icon: Dices },
   { id: 'collection', translationKey: 'collection', icon: Archive },
   { id: 'progression', translationKey: 'progression', icon: Target },
   { id: 'history', translationKey: 'history', icon: TrendingUp },
 ];
 
-export default function TabNavigation({
-  activeTab,
-  onTabChange,
-}: TabNavigationProps) {
+export default function TabNavigation({ activeTab, onTabChange }: TabNavigationProps) {
   const { t } = useTranslation('tabs');
 
   return (
-    <div className="flex gap-2 mb-6 flex-wrap justify-center">
+    <nav className="mc-tabs" aria-label="Main navigation">
       {tabs.map((tab) => {
         const Icon = tab.icon;
-        const isActive = activeTab === tab.id;
-
         return (
           <button
             key={tab.id}
+            type="button"
+            className="mc-tab-button"
+            data-active={activeTab === tab.id ? '1' : '0'}
             onClick={() => onTabChange(tab.id)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all ${
-              isActive
-                ? 'bg-yellow-400 text-black'
-                : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-            }`}
           >
-            <Icon size={20} />
-            {t(tab.translationKey)}
+            <Icon size={17} />
+            <span>{t(tab.translationKey)}</span>
           </button>
         );
       })}
-    </div>
+    </nav>
   );
 }

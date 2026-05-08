@@ -1,16 +1,22 @@
 {
   "app": {
     "title": "Marvel Champions",
-    "subtitle": "Randomizador Definitivo con Seguimiento de Colección"
+    "subtitle": "Randomizador Definitivo con Seguimiento de Colecci\u00f3n"
   },
   "buttons": {
     "exportAll": "Exportar",
     "importAll": "Importar"
   },
+  "stats": {
+    "heroes": "H\u00e9roes",
+    "villains": "Villanos",
+    "modulars": "Modulares",
+    "games": "Juegos"
+  },
   "tooltips": {
     "exportData": "Exportar todos los datos a JSON",
     "importData": "Importar datos desde JSON",
-    "switchToSpanish": "Cambiar a Español",
+    "switchToSpanish": "Cambiar a espa\u00f1ol",
     "switchToEnglish": "Switch to English"
   }
 }
