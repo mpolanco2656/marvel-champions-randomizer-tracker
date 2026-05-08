@@ -14,12 +14,6 @@ interface ProgressionTabProps {
 
 const phaseColors = ['#2ecc71', '#d4a20a', '#e67e22', '#c0392b'];
 
-function itemTypeLabel(item: ProgressionItem) {
-  if (item.type === 'campaign') return 'Campaign';
-  if (item.type === 'scenario') return 'Scenario';
-  return 'Heroes';
-}
-
 export default function ProgressionTab({ progressionGuide, collection, campaigns, scenarioPacks }: ProgressionTabProps) {
   const { t } = useTranslation('progression');
   const [openPhase, setOpenPhase] = useState(0);
@@ -52,7 +46,7 @@ export default function ProgressionTab({ progressionGuide, collection, campaigns
         </div>
         <div className="mc-guide-meter">
           <strong>{progressionGuide.length}</strong>
-          <span>Phases</span>
+          <span>{t('phases')}</span>
         </div>
       </div>
 
@@ -79,7 +73,7 @@ export default function ProgressionTab({ progressionGuide, collection, campaigns
                 <em>
                   {complete ? (
                     <>
-                      <Check size={13} /> Owned
+                      <Check size={13} /> {t('owned')}
                     </>
                   ) : (
                     `${ownedItems}/${ownableItems}`
@@ -109,7 +103,7 @@ export default function ProgressionTab({ progressionGuide, collection, campaigns
                         )}
                         <div>
                           <span className="mc-guide-type" data-type={item.type}>
-                            {itemTypeLabel(item)}
+                            {t(`types.${item.type}`)}
                           </span>
                           <strong>{item.name}</strong>
                           <p>{item.mode}</p>
