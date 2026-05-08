@@ -1,4 +1,5 @@
-import { Check, Trash2, X } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, Trash2, X } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { GameHistory, Hero, Stats, Villain } from '../../types';
 import { heroImagePath, villainImagePath } from '../../utils/assetPaths';
@@ -16,6 +17,8 @@ function formatDate(date: string) {
   return new Date(date).toLocaleDateString();
 }
 
+const PAGE_SIZE_OPTIONS = [5, 10, 50, 100];
+
 export default function HistoryTab({
   history,
   stats,
@@ -27,6 +30,17 @@ export default function HistoryTab({
   const wins = history.filter(game => game.result === 'win').length;
   const losses = history.filter(game => game.result === 'loss').length;
   const mostPlayedHero = heroes.find(hero => hero.name === stats.mostPlayed.hero);
+  const [pageSize, setPageSize] = useState(10);
+  const [page, setPage] = useState(1);
+  const totalPages = Math.max(1, Math.ceil(history.length / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const pageStart = (currentPage - 1) * pageSize;
+  const pageEnd = Math.min(pageStart + pageSize, history.length);
+  const visibleHistory = useMemo(() => history.slice(pageStart, pageEnd), [history, pageEnd, pageStart]);
+
+  useEffect(() => {
+    setPage(previous => Math.min(previous, totalPages));
+  }, [totalPages]);
 
   return (
     <div className="mc-stack">
@@ -76,11 +90,59 @@ export default function HistoryTab({
       ) : null}
 
       <div className="mc-panel">
-        <SectionHeading>{t('recentGames')}</SectionHeading>
+        <div className="mc-history-panel-head">
+          <SectionHeading>{t('recentGames')}</SectionHeading>
+
+          {history.length > 0 ? (
+            <div className="mc-history-pagination">
+              <label>
+                <span>{t('pagination.perPage')}</span>
+                <select
+                  value={pageSize}
+                  onChange={event => {
+                    setPageSize(Number(event.target.value));
+                    setPage(1);
+                  }}
+                >
+                  {PAGE_SIZE_OPTIONS.map(option => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <button
+                type="button"
+                className="mc-icon-button"
+                onClick={() => setPage(value => Math.max(1, value - 1))}
+                disabled={currentPage === 1}
+                aria-label={t('pagination.previous')}
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <strong>
+                {currentPage}/{totalPages}
+              </strong>
+              <button
+                type="button"
+                className="mc-icon-button"
+                onClick={() => setPage(value => Math.min(totalPages, value + 1))}
+                disabled={currentPage === totalPages}
+                aria-label={t('pagination.next')}
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
+          ) : null}
+        </div>
 
         {history.length > 0 ? (
-          <div className="mc-history-list">
-            {history.map(game => {
+          <>
+            <div className="mc-history-page-note">
+              {t('pagination.showing', { start: pageStart + 1, end: pageEnd, total: history.length })}
+            </div>
+            <div className="mc-history-list">
+            {visibleHistory.map(game => {
               const gameHeroes = heroes.filter(hero => game.heroes.includes(hero.key));
               const gameVillain = villains.find(villain => villain.key === game.villain);
 
@@ -124,7 +186,8 @@ export default function HistoryTab({
                 </article>
               );
             })}
-          </div>
+            </div>
+          </>
         ) : (
           <EmptyState title={t('empty')} />
         )}

@@ -18,5 +18,11 @@
   "recentGames": "Recent Games",
   "noResult": "No Result",
   "modularSets": "Modular Sets",
+  "pagination": {
+    "perPage": "Per page",
+    "previous": "Previous page",
+    "next": "Next page",
+    "showing": "Showing {{start}}-{{end}} of {{total}} games"
+  },
   "empty": "No games in history yet. Play some games and save the results to see statistics."
 }

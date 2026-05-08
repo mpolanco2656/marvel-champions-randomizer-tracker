@@ -18,5 +18,11 @@
   "recentGames": "Partidas recientes",
   "noResult": "Sin resultado",
   "modularSets": "Sets modulares",
+  "pagination": {
+    "perPage": "Por p\u00e1gina",
+    "previous": "P\u00e1gina anterior",
+    "next": "P\u00e1gina siguiente",
+    "showing": "Mostrando {{start}}-{{end}} de {{total}} partidas"
+  },
   "empty": "No hay juegos en el historial a\u00fan. Juega algunas partidas y guarda los resultados para ver estad\u00edsticas."
 }

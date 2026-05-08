@@ -810,6 +810,87 @@ input:focus-visible {
   gap: 8px;
 }
 
+.mc-history-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.mc-history-panel-head .mc-section-heading {
+  flex: 1;
+  min-width: 150px;
+  margin-bottom: 0;
+}
+
+.mc-history-pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mc-history-pagination label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #5a6080;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.mc-history-pagination select {
+  min-width: 70px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #c0c8e8;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 8px;
+}
+
+.mc-history-pagination strong {
+  min-width: 46px;
+  color: #c0c8e8;
+  font-size: 12px;
+  text-align: center;
+}
+
+.mc-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #7b82a8;
+  transition: 0.15s ease;
+}
+
+.mc-icon-button:hover:not(:disabled) {
+  border-color: rgba(212, 162, 10, 0.35);
+  color: #d4a20a;
+}
+
+.mc-icon-button:disabled {
+  opacity: 0.4;
+}
+
+.mc-history-page-note {
+  margin-bottom: 10px;
+  color: #424866;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .mc-history-list {
   display: flex;
   flex-direction: column;
@@ -1832,6 +1913,20 @@ input:focus-visible {
   .mc-history-card {
     grid-template-columns: 1fr;
     align-items: flex-start;
+  }
+
+  .mc-history-panel-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .mc-history-panel-head .mc-section-heading,
+  .mc-history-pagination {
+    width: 100%;
+  }
+
+  .mc-history-pagination label {
+    flex: 1;
   }
 
   .mc-history-media {
