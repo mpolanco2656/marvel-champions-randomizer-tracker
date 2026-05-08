@@ -895,7 +895,7 @@ input:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-height: 460px;
+  max-height: clamp(560px, 62vh, 780px);
   overflow-y: auto;
   padding-right: 4px;
 }
@@ -1401,7 +1401,19 @@ input:focus-visible {
 .mc-optimization {
   color: #7b82a8;
   font-size: 10px;
-  margin: 0 0 0 3px;
+  margin: 0;
+}
+
+.mc-optimization {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 1px;
+  border: 1px solid rgba(93, 173, 226, 0.18);
+  border-radius: 3px;
+  background: rgba(93, 173, 226, 0.08);
+  color: #9ab6d8;
+  font-weight: 700;
+  padding: 2px 5px;
 }
 
 .mc-tag-list {
@@ -1913,6 +1925,10 @@ input:focus-visible {
   .mc-history-card {
     grid-template-columns: 1fr;
     align-items: flex-start;
+  }
+
+  .mc-history-list {
+    max-height: min(560px, 58vh);
   }
 
   .mc-history-panel-head {

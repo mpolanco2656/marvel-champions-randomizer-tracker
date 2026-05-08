@@ -142,50 +142,50 @@ export default function HistoryTab({
               {t('pagination.showing', { start: pageStart + 1, end: pageEnd, total: history.length })}
             </div>
             <div className="mc-history-list">
-            {visibleHistory.map(game => {
-              const gameHeroes = heroes.filter(hero => game.heroes.includes(hero.key));
-              const gameVillain = villains.find(villain => villain.key === game.villain);
+              {visibleHistory.map(game => {
+                const gameHeroes = heroes.filter(hero => game.heroes.includes(hero.key));
+                const gameVillain = villains.find(villain => villain.key === game.villain);
 
-              return (
-                <article key={game.id} className="mc-history-card" data-result={game.result || 'none'}>
-                  <div className="mc-history-media">
-                    {gameHeroes.slice(0, 2).map(hero => (
-                      <img key={hero.key} src={heroImagePath(hero)} alt="" onError={event => { event.currentTarget.hidden = true; }} />
-                    ))}
-                    {gameVillain ? (
-                      <img src={villainImagePath(gameVillain)} alt="" onError={event => { event.currentTarget.hidden = true; }} />
-                    ) : null}
-                  </div>
-
-                  <div className="mc-history-body">
-                    <div className="mc-history-card-head">
-                      <div>
-                        <strong>{gameHeroes.map(hero => hero.name).join(', ') || '-'}</strong>
-                        <span>vs {gameVillain?.name || game.villain}</span>
-                      </div>
-                      <time>{formatDate(game.date)}</time>
-                    </div>
-
-                    <div className="mc-history-tags">
-                      {gameHeroes.map(hero => (
-                        <span key={hero.key} data-tone="hero">{hero.name}</span>
+                return (
+                  <article key={game.id} className="mc-history-card" data-result={game.result || 'none'}>
+                    <div className="mc-history-media">
+                      {gameHeroes.slice(0, 2).map(hero => (
+                        <img key={hero.key} src={heroImagePath(hero)} alt="" onError={event => { event.currentTarget.hidden = true; }} />
                       ))}
-                      <span data-tone="villain">vs {gameVillain?.name || game.villain}</span>
-                      {game.modulars.length > 0 ? (
-                        <span data-tone="modular">
-                          {t('modularSets')}: {game.modulars.length}
-                        </span>
+                      {gameVillain ? (
+                        <img src={villainImagePath(gameVillain)} alt="" onError={event => { event.currentTarget.hidden = true; }} />
                       ) : null}
                     </div>
-                  </div>
 
-                  <span className="mc-result-badge" data-result={game.result || 'none'}>
-                    {game.result === 'win' ? <Check size={13} /> : game.result === 'loss' ? <X size={13} /> : null}
-                    {game.result === 'win' ? t('results.win') : game.result === 'loss' ? t('results.loss') : t('noResult')}
-                  </span>
-                </article>
-              );
-            })}
+                    <div className="mc-history-body">
+                      <div className="mc-history-card-head">
+                        <div>
+                          <strong>{gameHeroes.map(hero => hero.name).join(', ') || '-'}</strong>
+                          <span>vs {gameVillain?.name || game.villain}</span>
+                        </div>
+                        <time>{formatDate(game.date)}</time>
+                      </div>
+
+                      <div className="mc-history-tags">
+                        {gameHeroes.map(hero => (
+                          <span key={hero.key} data-tone="hero">{hero.name}</span>
+                        ))}
+                        <span data-tone="villain">vs {gameVillain?.name || game.villain}</span>
+                        {game.modulars.length > 0 ? (
+                          <span data-tone="modular">
+                            {t('modularSets')}: {game.modulars.length}
+                          </span>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    <span className="mc-result-badge" data-result={game.result || 'none'}>
+                      {game.result === 'win' ? <Check size={13} /> : game.result === 'loss' ? <X size={13} /> : null}
+                      {game.result === 'win' ? t('results.win') : game.result === 'loss' ? t('results.loss') : t('noResult')}
+                    </span>
+                  </article>
+                );
+              })}
             </div>
           </>
         ) : (

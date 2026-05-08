@@ -1,17 +1,19 @@
 {
-  "title": "Progreso de Campaña",
-  "description": "Rastrea tu progreso jugando campañas según el manual oficial. Los modulares están especificados en el rulebook de cada campaña.",
+  "title": "Progreso de Campa\u00f1a",
+  "description": "Rastrea tu progreso jugando campa\u00f1as seg\u00fan el manual oficial. Los modulares est\u00e1n especificados en el rulebook de cada campa\u00f1a.",
+  "trackerTab": "Tracker",
+  "randomizerTab": "Generador de Campa\u00f1a",
   "wave": "Wave",
   "core": "Core",
   "scenarios": "Escenarios",
   "progress": "Progreso:",
-  "completed": "✓ ¡Completada!",
-  "noCampaigns": "No tienes campañas en tu colección. Ve a la pestaña Colección para añadirlas.",
+  "completed": "Completada",
+  "noCampaigns": "No tienes campa\u00f1as en tu colecci\u00f3n. Ve a la pesta\u00f1a Colecci\u00f3n para a\u00f1adirlas.",
   "checklist": "Checklist",
-  "checklistDescription": "Consulta el manual de la campaña para los modulares oficiales de cada escenario.",
+  "checklistDescription": "Consulta el manual de la campa\u00f1a para los modulares oficiales de cada escenario.",
   "scenario": "Escenario",
-  "completedBadge": "✓ COMPLETADO",
-  "resetButton": "Resetear Progreso de Campaña",
-  "resetConfirm": "¿Resetear todo el progreso de {{name}}?",
-  "campaignCompleted": "🎉 ¡Campaña Completada!"
+  "completedBadge": "COMPLETADO",
+  "resetButton": "Resetear Progreso de Campa\u00f1a",
+  "resetConfirm": "\u00bfResetear todo el progreso de {{name}}?",
+  "campaignCompleted": "Campa\u00f1a Completada!"
 }

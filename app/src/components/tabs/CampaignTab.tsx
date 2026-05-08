@@ -76,7 +76,7 @@ export default function CampaignTab({
             onClick={() => setActiveSubTab('tracker')}
           >
             <BookOpen size={16} />
-            Tracker
+            {t('trackerTab')}
           </button>
           <button
             type="button"
@@ -85,7 +85,7 @@ export default function CampaignTab({
             onClick={() => setActiveSubTab('randomizer')}
           >
             <Dices size={16} />
-            Campaign Randomizer
+            {t('randomizerTab')}
           </button>
         </div>
       </div>
@@ -109,7 +109,7 @@ export default function CampaignTab({
                     <img src={campaignImagePath(campaign)} alt="" onError={(event) => { event.currentTarget.hidden = true; }} />
                     <span>{campaign.name}</span>
                     <small>
-                      {t('wave')} {campaign.wave === 0 ? t('core') : campaign.wave} · {campaign.villains.length} {t('scenarios')}
+                      {t('wave')} {campaign.wave === 0 ? t('core') : campaign.wave} / {campaign.villains.length} {t('scenarios')}
                     </small>
                     <div>
                       <strong>{t('progress')} {completed}/{campaign.villains.length}</strong>

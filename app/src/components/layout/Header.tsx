@@ -42,10 +42,10 @@ export default function Header({ onExport, onImport, stats }: HeaderProps) {
 
           <div className="mc-header-actions">
             <div className="mc-stats-bar" aria-label="Collection stats">
-              <div className="mc-stat"><strong style={{ color: '#5dade2' }}>{stats.heroes}</strong><span>Heroes</span></div>
-              <div className="mc-stat"><strong style={{ color: '#e74c3c' }}>{stats.villains}</strong><span>Villains</span></div>
-              <div className="mc-stat"><strong style={{ color: '#d4a20a' }}>{stats.modulars}</strong><span>Modulars</span></div>
-              <div className="mc-stat"><strong style={{ color: '#2ecc71' }}>{stats.games}</strong><span>Games</span></div>
+              <div className="mc-stat"><strong style={{ color: '#5dade2' }}>{stats.heroes}</strong><span>{t('stats.heroes')}</span></div>
+              <div className="mc-stat"><strong style={{ color: '#e74c3c' }}>{stats.villains}</strong><span>{t('stats.villains')}</span></div>
+              <div className="mc-stat"><strong style={{ color: '#d4a20a' }}>{stats.modulars}</strong><span>{t('stats.modulars')}</span></div>
+              <div className="mc-stat"><strong style={{ color: '#2ecc71' }}>{stats.games}</strong><span>{t('stats.games')}</span></div>
             </div>
 
             <button

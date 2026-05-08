@@ -61,9 +61,14 @@ export function TierBadge({ tier }: { tier: Tier }) {
   const color = TIER_COLORS[tier];
   return (
     <span className="mc-tier-badge" style={{ background: color.bg, borderColor: color.border, color: color.text }}>
-      {tier}
+      Tier {tier}
     </span>
   );
+}
+
+function bestForLabel(value: Hero['optimization']) {
+  if (value === 'Both') return 'Solo / Multiplayer';
+  return value;
 }
 
 export function ComplexityDots({ level }: { level: Complexity }) {
@@ -306,7 +311,8 @@ export function HeroCard({ hero, index = 0, revealed = true }: { hero: Hero; ind
             <PlaystyleTag key={tag} tag={tag} />
           ))}
         </div>
-        {hero.optimization !== 'Both' ? <p className="mc-optimization">{hero.optimization}</p> : null}
+        <div className="mc-card-label">Best for</div>
+        <p className="mc-optimization">{bestForLabel(hero.optimization)}</p>
       </div>
       <p className="mc-card-description">{hero.description}</p>
       <footer>{hero.source}</footer>
