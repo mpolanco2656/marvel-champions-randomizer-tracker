@@ -1,11 +1,11 @@
 {
-  "title": "Historial & Estadísticas",
+  "title": "Historial & Estad\u00edsticas",
   "stats": {
     "totalGames": "Total Juegos",
     "winRate": "% Victorias",
-    "playedHeroes": "Héroes Jugados",
+    "playedHeroes": "H\u00e9roes Jugados",
     "facedVillains": "Villanos Enfrentados",
-    "mostPlayedHero": "Héroe Más Jugado",
+    "mostPlayedHero": "H\u00e9roe M\u00e1s Jugado",
     "games": "juegos"
   },
   "results": {
@@ -15,5 +15,8 @@
   "buttons": {
     "clearHistory": "Limpiar Historial"
   },
-  "empty": "No hay juegos en el historial aún. Juega algunas partidas y guarda los resultados para ver estadísticas."
+  "recentGames": "Partidas recientes",
+  "noResult": "Sin resultado",
+  "modularSets": "Sets modulares",
+  "empty": "No hay juegos en el historial a\u00fan. Juega algunas partidas y guarda los resultados para ver estad\u00edsticas."
 }

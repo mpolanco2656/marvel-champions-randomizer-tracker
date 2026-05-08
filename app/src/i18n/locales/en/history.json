@@ -15,5 +15,8 @@
   "buttons": {
     "clearHistory": "Clear History"
   },
+  "recentGames": "Recent Games",
+  "noResult": "No Result",
+  "modularSets": "Modular Sets",
   "empty": "No games in history yet. Play some games and save the results to see statistics."
 }
