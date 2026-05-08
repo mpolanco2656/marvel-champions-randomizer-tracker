@@ -1,15 +1,18 @@
-version: '3.8'
-
 services:
   web:
     build:
       context: ./app
       dockerfile: Dockerfile
     container_name: marvel-champions-web
+    restart: unless-stopped
     ports:
-      - "3000:80"
-    environment:
-      - NODE_ENV=production
+      - "${APP_PORT:-3000}:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/ >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     networks:
       - marvel-champions-network
 
