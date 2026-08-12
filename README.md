@@ -251,6 +251,7 @@ La aplicación detecta automáticamente el idioma de tu navegador (Español o In
 ## 📚 Documentación Adicional
 
 Consulta la carpeta `/docs` para documentación adicional:
+- [`content-update-workflow.md`](docs/content-update-workflow.md) - Flujo completo para descubrir, registrar, auditar y validar contenido
 - `REACT_PROJECT_SETUP.md` - Setup original con Create React App
 - `QUICK_START.md` - Guía rápida de inicio
 - `TROUBLESHOOTING.md` - Solución de problemas
